@@ -596,7 +596,7 @@ FocusScope {
 
         if (monthViewDate.getYear() == now.getYear() && monthViewDate.getMonth() == now.getMonth()) {
             agendaModel.showNextNumDays = 14;
-            agendaModel.clipPastEvents = false;
+            agendaModel.clipPastEvents = true;
         } else {
             agendaModel.showNextNumDays = 0;
             agendaModel.clipPastEvents = false;
