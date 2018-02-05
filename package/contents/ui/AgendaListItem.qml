@@ -11,10 +11,8 @@ import "../code/WeatherApi.js" as WeatherApi
 
 GridLayout {
     id: agendaListItem
-    Layout.fillWidth: true
-    anchors.left: parent.left
-    anchors.right: parent.right
     columnSpacing: 0
+    property var agendaItemEvents: model.events
     property date agendaItemDate: model.date
     property bool agendaItemIsToday: false
     function checkIfToday() {
@@ -30,15 +28,37 @@ GridLayout {
     property bool agendaItemInProgress: agendaItemIsToday
     property bool weatherOnRight: plasmoid.configuration.agendaWeatherOnRight
 
+    Connections {
+        target: agendaModel
+        onPopulatingChanged: {
+            if (!agendaModel.populating) {
+                agendaListItem.reset()
+            }
+        }
+    }
+    function reset() {
+        newEventForm.active = false
+        agendaListItem.checkIfToday()
+    }
+
     LinkRect {
         visible: agendaModel.showDailyWeather
         Layout.alignment: Qt.AlignTop
         Layout.column: weatherOnRight ? 2 : 0
+        Layout.minimumWidth: appletConfig.agendaDateColumnWidth
+        implicitWidth: itemWeatherColumn.implicitWidth
+        onWidthChanged: {
+            if (width > appletConfig.agendaDateColumnWidth) {
+                appletConfig.agendaDateColumnWidth = width
+            }
+        }
+        implicitHeight: itemWeatherColumn.implicitHeight
 
-        Column {
+        ColumnLayout {
             id: itemWeatherColumn
-            width: appletConfig.agendaWeatherColumnWidth
             Layout.alignment: Qt.AlignTop
+            spacing: 0
+            anchors.horizontalCenter: parent.horizontalCenter
 
             FontIcon {
                 visible: showWeather && plasmoid.configuration.agenda_weather_show_icon
@@ -59,11 +79,7 @@ GridLayout {
                 color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
                 opacity: agendaItemIsToday ? 1 : 0.75
                 font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                horizontalAlignment: paintedWidth > parent.width ? Text.AlignLeft  : Text.AlignHCenter
+                horizontalAlignment: Text.AlignHCenter
             }
 
             Text {
@@ -73,11 +89,7 @@ GridLayout {
                 color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
                 opacity: agendaItemIsToday ? 1 : 0.75
                 font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                horizontalAlignment: paintedWidth > parent.width ? Text.AlignLeft  : Text.AlignHCenter
+                horizontalAlignment: Text.AlignHCenter
             }
         }
 
@@ -96,7 +108,7 @@ GridLayout {
     LinkRect {
         Layout.alignment: Qt.AlignTop
         Layout.column: weatherOnRight ? 0 : 1
-        width: appletConfig.agendaDateColumnWidth
+        implicitWidth: appletConfig.agendaDateColumnWidth
         Column {
             id: itemDateColumn
             anchors.left: parent.left
@@ -168,7 +180,7 @@ GridLayout {
             Layout.fillWidth: true
 
             Repeater {
-                model: events
+                model: agendaItemEvents
 
                 delegate: AgendaEventItem {
                     id: agendaEventItem

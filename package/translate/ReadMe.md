@@ -1,10 +1,10 @@
-> Version 2 of Zren's i18n scripts.
+> Version 3 of Zren's i18n scripts.
 
 With KDE Frameworks v5.37 and above, translations are bundled with the *.plasmoid file downloaded from the store.
 
 ## Install Translations
 
-Go to `~/.local/share/plasma/plasmoids/org.kde.plasma.eventcalendar/locale/` and run `sh ./build --restartplasma`.
+Go to `~/.local/share/plasma/plasmoids/org.kde.plasma.eventcalendar/translate/` and run `sh ./build --restartplasma`.
 
 ## New Translations
 
@@ -37,6 +37,6 @@ Or if you know how to make a pull request
 |Template	|172	|	|
 |de	|143/172	|83%	|
 |es	|146/172	|84%	|
-|fr	|128/172	|74%	|
+|fr	|156/172	|90%	|
 |pt_BR	|153/172	|88%	|
 |uk	|162/172	|94%	|

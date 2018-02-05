@@ -77,8 +77,7 @@ FocusScope {
     property bool showCalendar: plasmoid.configuration.widget_show_calendar
     property bool agendaScrollOnSelect: true
     property bool cfg_agenda_scroll_on_monthchange: false
-    
-    property alias agendaListView: agendaView.agendaListView
+
     property alias today: monthView.today
     property alias selectedDate: monthView.currentDate
     property alias monthViewDate: monthView.displayedDate
@@ -307,7 +306,7 @@ FocusScope {
                     PlasmaComponents.Label {
                         text: i18n("Weather not configured.\nGo to Weather in the config and set your city,\nand/or disable the meteogram to hide this area.")
                         anchors.centerIn: parent
-                        width: Math.min(parent.width, implicitWidth)
+                        width: Math.min(parent.width, implicitWidth) // Binding loop detected
                         height: Math.min(parent.height, implicitHeight)
                         fontSizeMode: Text.Fit
                         wrapMode: Text.Wrap
@@ -366,10 +365,18 @@ FocusScope {
                     iconSource: 'view-refresh'
                     anchors.bottom: parent.bottom
                     anchors.right: parent.right
+                    anchors.rightMargin: agendaView.scrollbarWidth
                     onClicked: {
                         updateEvents()
                         updateWeather(true)
                     }
+
+                    // Timer {
+                    //     running: true
+                    //     repeat: true
+                    //     interval: 2000
+                    //     onTriggered: parent.clicked()
+                    // }
                 }
             }
 
@@ -482,19 +489,19 @@ FocusScope {
         }
         onAllDataFetched: {
             // logger.log('onAllDataFetched')
-            popup.updateUI()
+            popup.deferredUpdateUI()
         }
         onEventCreated: {
             logger.logJSON('onEventCreated', calendarId, data)
-            popup.updateUI()
+            popup.deferredUpdateUI()
         }
         onEventUpdated: {
             logger.logJSON('onEventUpdated', calendarId, eventId, data)
-            popup.updateUI()
+            popup.deferredUpdateUI()
         }
         onEventDeleted: {
             logger.logJSON('onEventDeleted', calendarId, eventId, data)
-            popup.updateUI()
+            popup.deferredUpdateUI()
         }
     }
     function deferredUpdateEvents() {

@@ -1,38 +1,38 @@
-# Translation of eventcalendar in fr
+# Translation of eventcalendar in uk
 # Copyright (C) 2017
 # This file is distributed under the same license as the eventcalendar package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: eventcalendar \n"
+"Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2018-01-12 23:23-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Mathieu Provençal <mth.provencal@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-02-02 22:22-0500\n"
+"PO-Revision-Date: 2017-10-31 20:08+0200\n"
+"Last-Translator: Serhii Golovko <cappelikan@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../contents/config/config.qml:6
 msgid "General"
-msgstr "Général"
+msgstr "Загальний"
 
 #: ../contents/config/config.qml:16
 msgid "Timezones"
-msgstr ""
+msgstr "Часові зони"
 
 #: ../contents/config/config.qml:21 ../contents/ui/UpcomingEvents.qml:124
 msgid "Calendar"
-msgstr "Calendrier"
+msgstr "Календар"
 
 #: ../contents/config/config.qml:26
 msgid "Agenda"
-msgstr "Agenda"
+msgstr "Порядок денний"
 
 #: ../contents/config/config.qml:31
 msgid "ICalendar (.ics)"
@@ -40,39 +40,39 @@ msgstr ""
 
 #: ../contents/config/config.qml:37
 msgid "Google Calendar"
-msgstr "Google Calendar"
+msgstr "Календар Google"
 
 #: ../contents/config/config.qml:42
 msgid "Weather"
-msgstr "Météo"
+msgstr "Погода"
 
 #: ../contents/config/config.qml:47
 msgid "Advanced"
-msgstr "Avancé"
+msgstr "Розширений"
 
 #: ../contents/ui/AgendaEventItem.qml:68
 msgid "Event Summary"
-msgstr "Résumé d'événement"
+msgstr "Підсумок події"
 
 #: ../contents/ui/AgendaEventItem.qml:139
 msgid "to"
-msgstr "à"
+msgstr "до"
 
 #: ../contents/ui/AgendaEventItem.qml:164
 msgid "All Day"
-msgstr "Toute la journée"
+msgstr "Весь день"
 
 #: ../contents/ui/AgendaEventItem.qml:169
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Зберегти"
 
 #: ../contents/ui/AgendaEventItem.qml:177
 msgid "Discard"
-msgstr "Retirer"
+msgstr "Відхилити"
 
 #: ../contents/ui/AgendaEventItem.qml:207
 msgid "Edit description"
-msgstr "Modifier la description"
+msgstr "Редагувати опис"
 
 #: ../contents/ui/AgendaEventItem.qml:216
 msgid "Edit date/time"
@@ -80,58 +80,58 @@ msgstr ""
 
 #: ../contents/ui/AgendaEventItem.qml:224
 msgid "Delete Event"
-msgstr "Effacer l'événement"
+msgstr "Видалити подію"
 
 #: ../contents/ui/AgendaEventItem.qml:227
 msgid "Confirm Deletion"
-msgstr "Confirmer la suppression"
+msgstr "Підтвердити видалення"
 
 #: ../contents/ui/AgendaEventItem.qml:239
 msgid "Edit in browser"
-msgstr "Modifier dans le navigateur"
+msgstr "Редагувати в браузері"
 
-#: ../contents/ui/AgendaListItem.qml:109
+#: ../contents/ui/AgendaListItem.qml:121
 msgctxt "agenda date format line 1"
 msgid "MMM d"
-msgstr ""
+msgstr "MMM d"
 
-#: ../contents/ui/AgendaListItem.qml:129
+#: ../contents/ui/AgendaListItem.qml:141
 msgctxt "agenda date format line 2"
 msgid "ddd"
-msgstr ""
+msgstr "ddd"
 
-#: ../contents/ui/AgendaView.qml:29 ../contents/ui/AgendaView.qml:42 ../contents/ui/UpcomingEvents.qml:129 ../contents/ui/UpcomingEvents.qml:146
+#: ../contents/ui/AgendaView.qml:22 ../contents/ui/AgendaView.qml:35 ../contents/ui/UpcomingEvents.qml:129 ../contents/ui/UpcomingEvents.qml:146
 msgid "Event Calendar"
-msgstr ""
+msgstr "Календар подій"
 
-#: ../contents/ui/CalendarManager.qml:107
+#: ../contents/ui/CalendarManager.qml:113
 msgctxt "event with no summary"
 msgid "(No title)"
-msgstr ""
+msgstr "(Без назви)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:29
 msgid "Show agenda"
-msgstr "Afficher l'agenda"
+msgstr "Показати порядок денний"
 
 #: ../contents/ui/config/ConfigAgenda.qml:35
 msgid "Agenda above the month (Single Column)"
-msgstr "Agenda au-dessus du mois"
+msgstr "Порядок денний над місяцем (Одинарна колонка)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:42
 msgid "Agenda to the left (Two Columns)"
-msgstr "Agenda à gauche du mois"
+msgstr "Порядок денного ліворуч (дві стовпці)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:55
 msgid "Weather Icon"
-msgstr "Icône de météo"
+msgstr "Піктограма погоди"
 
 #: ../contents/ui/config/ConfigAgenda.qml:73
 msgid "Icon Outline"
-msgstr "Contour d'icône"
+msgstr "Значок контуру"
 
 #: ../contents/ui/config/ConfigAgenda.qml:79
 msgid "Weather Text"
-msgstr "Texte de la météo"
+msgstr "Текст погоди"
 
 #: ../contents/ui/config/ConfigAgenda.qml:83
 msgid "Position:"
@@ -147,163 +147,163 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigAgenda.qml:100
 msgid "Click Weather:"
-msgstr "Cliquer sur la météo:"
+msgstr "Натисніть \"Погода\":"
 
 #: ../contents/ui/config/ConfigAgenda.qml:103
 msgid "Open City Forecast In Browser"
-msgstr "Ouvrir le navigateur pour afficher les prévisions"
+msgstr "Відкрийте прогноз міста в браузері"
 
 #: ../contents/ui/config/ConfigAgenda.qml:112 ../contents/ui/config/ConfigCalendar.qml:27
 msgid "Click Date:"
-msgstr "Cliquer sur la date:"
+msgstr "Натисніть Дата:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:115 ../contents/ui/config/ConfigCalendar.qml:42
 msgid "Open New Event In Browser"
-msgstr "Ouvrir un nouvel événement dans le navigateur"
+msgstr "Відкрийте нову подію в браузері"
 
 #: ../contents/ui/config/ConfigAgenda.qml:120
 msgid "Open New Event Form"
-msgstr ""
+msgstr "Відкрийте форму нової події"
 
 #: ../contents/ui/config/ConfigAgenda.qml:129
 msgid "Click Event:"
-msgstr "Cliquer sur l'événement:"
+msgstr "Натисніть \"Подія\":"
 
 #: ../contents/ui/config/ConfigAgenda.qml:132
 msgid "Open Event In Browser"
-msgstr "Ouverture de l'événement dans le navigateur"
+msgstr "Відкрита подія в браузері"
 
 #: ../contents/ui/config/ConfigAgenda.qml:142
 msgid "Show multi-day events:"
-msgstr "Afficher les événements qui s'étalent sur plusieurs jours:"
+msgstr "Показати події в декілька днів:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:147
 msgid "On all days"
-msgstr "Tous les jours"
+msgstr "На всі дні"
 
 #: ../contents/ui/config/ConfigAgenda.qml:155
 msgid "Only on the first and current day"
-msgstr "Seulement le premier et pour la journée en cours"
+msgstr "Тільки на перший і поточний день"
 
 #: ../contents/ui/config/ConfigAgenda.qml:168
 msgid "Remember selected calendar in New Event Form"
-msgstr "Se souvenir du calendrier sélectionné lors de la création d'un nouvel événement"
+msgstr "Запам'ятайте вибраний календар у формі нової події"
 
 #: ../contents/ui/config/ConfigAgenda.qml:173
 msgid "Current Month"
-msgstr "Mois en cours"
+msgstr "Поточний місяць"
 
 #: ../contents/ui/config/ConfigAgenda.qml:178
 msgid "Always show next 14 days"
-msgstr "Toujours afficher les 14 prochains jours"
+msgstr "Завжди показувати наступні 14 днів"
 
 #: ../contents/ui/config/ConfigAgenda.qml:183
 msgid "Hide completed events"
-msgstr "Cacher les événements complétés"
+msgstr "Сховати завершені події"
 
 #: ../contents/ui/config/ConfigAgenda.qml:188
 msgid "Show all events of the current day (including completed events)"
-msgstr "Afficher tous les événements de la journée (incluant les événements complétés)"
+msgstr "Показати всі події поточного дня (включаючи завершені події)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:194 ../contents/ui/config/ConfigWeather.qml:177
 msgid "Colors"
-msgstr "Couleurs"
+msgstr "Кольори"
 
 #: ../contents/ui/config/ConfigAgenda.qml:198
 msgid "In Progress"
-msgstr ""
+msgstr "В процесі"
 
 #: ../contents/ui/config/ConfigCalendar.qml:22
 msgid "Show calendar"
-msgstr "Afficher le calendrier"
+msgstr "Показати календар"
 
 #: ../contents/ui/config/ConfigCalendar.qml:30
 msgid "Scroll to event in Agenda"
-msgstr "Défiler jusqu'à l'événement dans l'agenda"
+msgstr "Перейдіть до події в Порядок денний"
 
 #: ../contents/ui/config/ConfigCalendar.qml:39
 msgid "DoubleClick Date:"
-msgstr "Doucle-cliquer sur la date"
+msgstr "Дата DoubleClick:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:50 ../contents/ui/config/ConfigWeather.qml:120
 msgid "Style"
-msgstr "Style"
+msgstr "Стиль"
 
 #: ../contents/ui/config/ConfigCalendar.qml:55
 msgid "Show Borders"
-msgstr "Afficher les contours"
+msgstr "Показати кордони"
 
 #: ../contents/ui/config/ConfigCalendar.qml:59
 msgid "Show Week Numbers"
-msgstr "Afficher les numéros de semaine"
+msgstr "Показати номери тижня"
 
 #: ../contents/ui/config/ConfigCalendar.qml:62
 msgid "Event Badge:"
-msgstr "Badge d'événement:"
+msgstr "Значок події:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:65 ../contents/ui/config/ConfigCalendar.qml:120 ../contents/ui/config/ConfigCalendar.qml:136
 msgid "Theme"
-msgstr "Thème"
+msgstr "Тема"
 
 #: ../contents/ui/config/ConfigCalendar.qml:73
 msgid "Dots (3 Maximum)"
-msgstr "Points (maximum 3)"
+msgstr "Точки (3 Максимум)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:81
 msgid "Bottom Bar (Event Color)"
-msgstr "Barre inférieure (couleur d'événement)"
+msgstr "Нижній бар (колір події)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:89
 msgid "Bottom Bar (Highlight)"
-msgstr "Barre inférieure"
+msgstr "Нижня панель (виділити)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:97
 msgid "Count"
-msgstr "Compteur"
+msgstr "Рахувати"
 
 #: ../contents/ui/config/ConfigCalendar.qml:110
 msgid "Radius:"
-msgstr ""
+msgstr "Радіус:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:115
 msgid "Selected:"
-msgstr "Sélectionné:"
+msgstr "Вибрано:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:124
 msgid "Solid Color (Highlight)"
-msgstr "Couleur unie (surlignée)"
+msgstr "Solid Color (виділити)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:131
 msgid "Today:"
-msgstr "Aujourd'hui"
+msgstr "Сьогодні:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:140
 msgid "Solid Color (Inverted)"
-msgstr "Couleur unie (inversée)"
+msgstr "Твердий колір (інвертований)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:146
 msgid "Big Number"
-msgstr "Gros numéro"
+msgstr "Велике число"
 
 #: ../contents/ui/config/ConfigGeneral.qml:77 ../contents/ui/lib/ConfigNotification.qml:59
 msgid "Chose a sound effect"
-msgstr "Choisir le son"
+msgstr "Вибрали звуковий ефект"
 
 #: ../contents/ui/config/ConfigGeneral.qml:98
 msgid "Widgets"
-msgstr ""
+msgstr "Віджети"
 
 #: ../contents/ui/config/ConfigGeneral.qml:104
 msgid "Show/Hide widgets above the calendar. Toggle Agenda/Calendar on their respective tabs."
-msgstr ""
+msgstr "Показати / сховати віджети над календарем. Перемкнути порядок денний / календар у відповідних вкладках."
 
 #: ../contents/ui/config/ConfigGeneral.qml:111
 msgid "Meteogram"
-msgstr "Météogramme"
+msgstr "Метеограма"
 
 #: ../contents/ui/config/ConfigGeneral.qml:118 ../contents/ui/TimerView.qml:326
 msgid "Timer"
-msgstr "Minuterie"
+msgstr "Таймер"
 
 #: ../contents/ui/config/ConfigGeneral.qml:124
 msgid "SFX:"
@@ -311,36 +311,36 @@ msgstr "SFX:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:127
 msgid "Choose"
-msgstr "Choisir"
+msgstr "Виберіть"
 
 #: ../contents/ui/config/ConfigGeneral.qml:141
 msgid "Clock"
-msgstr "Horloge"
+msgstr "Годинник"
 
 #: ../contents/ui/config/ConfigGeneral.qml:145
 msgid "Time Format"
-msgstr "Format de l'heure"
+msgstr "Формат часу"
 
 #: ../contents/ui/config/ConfigGeneral.qml:156
 msgid "The default font for the Breeze theme is Noto Sans which is hard to read with small text. Try using the Sans Serif font if you find the text too small when adding a second line."
-msgstr "La police qu'utilise Breeze par défaut est Noto Sans, mais les petits caractères sont difficiles à lire. Essayer Sans Serif si la deuxième ligne paraît illisible."
+msgstr "Шрифт за замовчуванням для теми Breeze - це Noto Sans, який важко читати з невеликим текстом. Спробуйте використати шрифт Sans Serif, якщо ви знайдете текст занадто малий при додаванні другої лінії."
 
 #: ../contents/ui/config/ConfigGeneral.qml:162
 msgid "You can also use <b>'&lt;b&gt;'ddd'&lt;/b&gt;'</b> or <b>'&lt;font color=\"#77aaadd\"&gt;'ddd'&lt;/font&gt;'</b> to style a section. Note the single quotes around the tags are used to bypass the time format."
-msgstr ""
+msgstr "Ви також можете використовувати <b>'&lt;b&gt;'ddd'&lt;/b&gt;'</b> або <b>'&lt;font color=\"#77aaadd\"&gt;'ddd'&lt;/font&gt;'</b>, щоб створити розділ. Зауважте, що окремі лапки навколо тегів використовуються для обходу формату часу."
 
 #: ../contents/ui/config/ConfigGeneral.qml:168
 msgid "Font:"
-msgstr "Police"
+msgstr "Шрифт:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:179
 msgctxt "Use default font"
 msgid "Default"
-msgstr "Défaut"
+msgstr "За замовчуванням"
 
 #: ../contents/ui/config/ConfigGeneral.qml:200
 msgid "Fixed Clock Height: "
-msgstr "Aujuster la hauteur de l'horloge: "
+msgstr "Виправлена ​​висота годинника:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:206
 msgid "px"
@@ -348,136 +348,139 @@ msgstr "px"
 
 #: ../contents/ui/config/ConfigGeneral.qml:212
 msgid " (0px = scale to fit)"
-msgstr " (0px = adapter à l'échelle)"
+msgstr " (0px = шкала відповідності)"
 
 #: ../contents/ui/config/ConfigGeneral.qml:222
 msgid "Line 1:"
-msgstr "Ligne 1:"
+msgstr "Рядок 1:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:239 ../contents/ui/config/ConfigGeneral.qml:265 ../contents/ui/config/ConfigGeneral.qml:314
 msgid "Preset:"
-msgstr "Présélection:"
+msgstr "Попереднє встановлення:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:287 ../contents/ui/config/ConfigGeneral.qml:351
 msgid "Bold"
-msgstr "Gras"
+msgstr "Сміливий"
 
 #: ../contents/ui/config/ConfigGeneral.qml:298
 msgid "Line 2:"
-msgstr "Ligne 2"
+msgstr "Лінія 2:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:359
 msgid "Height:"
-msgstr "Hauteur:"
+msgstr "Висота:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:379
 msgid "Mouse Wheel"
-msgstr "Molette de la souris"
+msgstr "Колесо миші"
 
 #: ../contents/ui/config/ConfigGeneral.qml:389
 msgid "Run Commands"
-msgstr "Exécuter"
+msgstr "Запустити команди"
 
 #: ../contents/ui/config/ConfigGeneral.qml:398
 msgid "Scoll Up:"
-msgstr "Défiler vers le haut:"
+msgstr "Прокрутити вгору:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:409
 msgid "Scroll Down:"
-msgstr "Défiler vers le bas:"
+msgstr "Прокрутити вниз:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:420
 msgid "Volume (No UI) (amixer)"
-msgstr "Volume (sans notification) (amixer)"
+msgstr "Об'єм (без інтерфейсу) (amixer)"
 
 #: ../contents/ui/config/ConfigGeneral.qml:429
 msgid "Volume (UI) (qdbus)"
-msgstr "Volume (avec notification) (qdbus)"
+msgstr "Гучність (інтерфейс користувача) (qdbus)"
 
 #: ../contents/ui/config/ConfigGeneral.qml:441 ../contents/ui/config/ConfigGoogleCalendar.qml:174
 msgid "Misc"
-msgstr "Divers"
+msgstr "Різне"
 
 #: ../contents/ui/config/ConfigGeneral.qml:447
 msgid "Desktop Widget: Show background"
-msgstr "Widget de bureau: Afficher le fond d'écran"
+msgstr "Настільний віджет: Показувати фон"
 
 #: ../contents/ui/config/ConfigGeneral.qml:452
 msgid "Debugging"
-msgstr ""
+msgstr "Налагодження"
 
 #: ../contents/ui/config/ConfigGeneral.qml:458
 msgid ""
 "Enable Debugging\n"
 "This will log sensitive information to ~/.xsession-errors"
 msgstr ""
+"Увімкнути налагодження\n"
+"Це буде записувати конфіденційну інформацію до ~/.xsession-помилок"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:58
 msgid "Login"
-msgstr "Connexion"
+msgstr "Увійти"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:63
 msgid "Currently Synched."
-msgstr "Synchronisé"
+msgstr "В даний час синхронізовано."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:67
 msgid "Logout"
-msgstr "Déconnexion"
+msgstr "Вийти"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:77
 msgid "To sync with Google Calendar"
-msgstr "Synchroniser avec Google Calendar"
+msgstr "Синхронізувати з Календарем Google"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:81
 msgid "Enter the following code at <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
-msgstr "Entrer le code sur <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
+msgstr "Введіть цей код на <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:87
 msgid "Generating Code..."
-msgstr "Génération du code..."
+msgstr "Генерації коду ..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:106 ../contents/ui/config/ConfigICal.qml:51
 msgid "Calendars"
-msgstr "Calendriers"
+msgstr "Календарі"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:111
 msgid "Refresh"
-msgstr "Rafraîchir"
+msgstr "Оновити"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:180
 msgid "Refresh events every: "
-msgstr "Rafraîchir les événements à toutes les: "
+msgstr "Оновити події щотижня:"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:186 ../contents/ui/config/ConfigWeather.qml:112
 msgctxt "Polling interval in minutes"
 msgid "min"
 msgid_plural "min"
-msgstr[0] "min"
-msgstr[1] "min"
+msgstr[0] "хв"
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:194
 msgid "Notifications"
-msgstr ""
+msgstr "Сповіщення"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:199
 msgid "Event Starting"
-msgstr ""
+msgstr "Початок події"
 
 #: ../contents/ui/config/ConfigICal.qml:55
 msgid "Add Calendar"
-msgstr ""
+msgstr "Додати календар"
 
 #: ../contents/ui/config/ConfigICal.qml:60
 msgid "New Calendar"
-msgstr ""
+msgstr "Новий календар"
 
 #: ../contents/ui/config/ConfigICal.qml:96
 msgid "Calendar Label"
-msgstr ""
+msgstr "Мітка календаря"
 
 #: ../contents/ui/config/ConfigICal.qml:113
 msgid "Browse"
-msgstr ""
+msgstr "Перегляд"
 
 #: ../contents/ui/config/ConfigICal.qml:121
 msgid "iCalendar (*.ics)"
@@ -485,113 +488,114 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigTimezones.qml:64
 msgid "Tooltip"
-msgstr ""
+msgstr "Підказка"
 
 #: ../contents/ui/config/ConfigTimezones.qml:73
 msgid "Cannot deselect Local time from the tooltip"
-msgstr ""
+msgstr "Неможливо скасувати вибір місцевого часу з підказки"
 
 #: ../contents/ui/config/ConfigWeather.qml:23
 msgid "Data"
-msgstr "Données"
+msgstr "Дані"
 
 #: ../contents/ui/config/ConfigWeather.qml:41
 msgid "API App Id:"
-msgstr ""
+msgstr "Ідентифікатор додатка API:"
 
 #: ../contents/ui/config/ConfigWeather.qml:53 ../contents/ui/config/ConfigWeather.qml:77
 msgid "City Id:"
-msgstr "Id de la ville"
+msgstr "Ідентифікатор міста:"
 
 #: ../contents/ui/config/ConfigWeather.qml:58
 msgid "Eg: 5983720"
-msgstr "Ex: 5983720"
+msgstr "Наприклад: 5983720"
 
 #: ../contents/ui/config/ConfigWeather.qml:61 ../contents/ui/config/ConfigWeather.qml:85
 msgid "Find City"
-msgstr "Trouver une ville"
+msgstr "Знайдіть місто"
 
 #: ../contents/ui/config/ConfigWeather.qml:82
 msgid "Eg: on-14"
-msgstr ""
+msgstr "Наприклад: на-14"
 
 #: ../contents/ui/config/ConfigWeather.qml:99
 msgid "Settings"
-msgstr "Paramètres"
+msgstr "Налаштування"
 
 #: ../contents/ui/config/ConfigWeather.qml:105
 msgid "Update forecast every: "
-msgstr "Mise à jour des prévisions à toutes les: "
+msgstr "Щоденно оновлювати прогноз:"
 
 #: ../contents/ui/config/ConfigWeather.qml:126
 msgid "Show next "
-msgstr "Montrer "
+msgstr "Показати наступний"
 
 #: ../contents/ui/config/ConfigWeather.qml:133
 msgid " hours"
 msgid_plural " hours"
-msgstr[0] " heure"
-msgstr[1] " heures"
+msgstr[0] "годин"
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../contents/ui/config/ConfigWeather.qml:140
 msgid " in the meteogram."
-msgstr " dans le météogramme."
+msgstr " в метеограмі."
 
 #: ../contents/ui/config/ConfigWeather.qml:147
 msgid "Units:"
-msgstr "Unités:"
+msgstr "Одиниці:"
 
 #: ../contents/ui/config/ConfigWeather.qml:150
 msgid "Celsius"
-msgstr "Celsius"
+msgstr "Цельсій"
 
 #: ../contents/ui/config/ConfigWeather.qml:158
 msgid "Fahrenheit"
-msgstr "Fahrenheit"
+msgstr "Фаренгейт"
 
 #: ../contents/ui/config/ConfigWeather.qml:166
 msgid "Kelvin"
-msgstr "Kelvin"
+msgstr "Келвін"
 
 #: ../contents/ui/config/ConfigWeather.qml:184
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: ../contents/ui/config/ConfigWeather.qml:189
 msgid "Grid"
-msgstr ""
+msgstr "Сітки"
 
 #: ../contents/ui/config/ConfigWeather.qml:194
 msgid "Rain"
-msgstr ""
+msgstr "Дощ"
 
 #: ../contents/ui/config/ConfigWeather.qml:199
 msgid "Positive Temp"
-msgstr ""
+msgstr "Позитивний Темп"
 
 #: ../contents/ui/config/ConfigWeather.qml:204
 msgid "Negative Temp"
-msgstr ""
+msgstr "Негативний темп"
 
 #: ../contents/ui/config/ConfigWeather.qml:209
 msgid "Icons"
-msgstr ""
+msgstr "Іконки"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:12 ../contents/ui/config/WeatherCanadaCityDialog.qml:13
 msgid "Select city"
-msgstr "Choisir une ville"
+msgstr "Виберіть місто"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:65
 msgid "Fetched from <a href=\"http://openweathermap.org/help/city_list.txt\">http://openweathermap.org/help/city_list.txt</a>"
-msgstr "Récupérée depuis <a href=\"http://openweathermap.org/help/city_list.txt\">http://openweathermap.org/help/city_list.txt</a>"
+msgstr "Отримано з <a href=\"http://openweathermap.org/help/city_list.txt\">http://openweathermap.org/help/city_list.txt</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:71 ../contents/ui/config/WeatherCanadaCityDialog.qml:91
 msgid "Search"
-msgstr "Chercher"
+msgstr "Пошук"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:84 ../contents/ui/config/WeatherCanadaCityDialog.qml:104
 msgid "Name"
-msgstr "Nom"
+msgstr "Ім'я"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:89 ../contents/ui/config/WeatherCanadaCityDialog.qml:109
 msgid "Id"
@@ -599,19 +603,19 @@ msgstr "Id"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:94 ../contents/ui/config/WeatherCanadaCityDialog.qml:114
 msgid "City Webpage"
-msgstr "Page web de la ville"
+msgstr "Міська веб-сторінка"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:96 ../contents/ui/config/WeatherCanadaCityDialog.qml:116
 msgid "Open Link"
-msgstr "Ouvrir le lien"
+msgstr "Відкрити посилання"
 
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml:68
 msgid "Fetched from <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>"
-msgstr "Récupérée depuis <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>"
+msgstr "Отримано з <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>"
 
 #: ../contents/ui/lib/AppletVersion.qml:41
 msgid "<b>Version:</b> %1"
-msgstr "<b>Version:</b> %1"
+msgstr "<b>Версія:</b> %1"
 
 #: ../contents/ui/main.qml:222
 msgid "Set Language..."
@@ -619,12 +623,12 @@ msgstr ""
 
 #: ../contents/ui/main.qml:225
 msgid "Set Locale..."
-msgstr "Paramètres régionaux..."
+msgstr "Встановити мову ..."
 
 #: ../contents/ui/MeteogramView.qml:333
 #, c-format
 msgid "%1mm"
-msgstr "%1mm"
+msgstr "%1мм"
 
 #: ../contents/ui/MonthView.qml:348
 msgctxt "calendar title format for current month"
@@ -643,103 +647,97 @@ msgstr ""
 
 #: ../contents/ui/NewEventForm.qml:24
 msgid "[No Calendars]"
-msgstr "[Aucun calendrier]"
+msgstr "[Без календарів]"
 
 #: ../contents/ui/NewEventForm.qml:31
 msgid "Eg: 9am-5pm Work"
-msgstr "Ex: 9am-5pm Travail"
+msgstr "Наприклад: 9: 00-17: 00 Робота"
 
-#: ../contents/ui/PopupView.qml:308
+#: ../contents/ui/PopupView.qml:307
 msgid ""
 "Weather not configured.\n"
 "Go to Weather in the config and set your city,\n"
 "and/or disable the meteogram to hide this area."
 msgstr ""
-"Météo non paramétrée.\n"
-"Aller sélectionner votre ville dans les paramètres Météo,\n"
-"et/ou désactiver l'affichage du météogramme."
+"Погода не налаштована.\n"
+"Перейдіть до погоди в налаштуваннях і встановіть своє місто,\n"
+"і / або вимкнути метеограму, щоб приховати цю область."
 
 #: ../contents/ui/TimerView.qml:23
 msgid "30s"
-msgstr "30s"
+msgstr "30с"
 
 #: ../contents/ui/TimerView.qml:27
 msgid "1m"
-msgstr "1m"
+msgstr "1м"
 
 #: ../contents/ui/TimerView.qml:31
 msgid "5m"
-msgstr "5m"
+msgstr "5м"
 
 #: ../contents/ui/TimerView.qml:35
 msgid "10m"
-msgstr "10m"
+msgstr "10 м"
 
 #: ../contents/ui/TimerView.qml:39
 msgid "15m"
-msgstr "15m"
+msgstr "15 м"
 
 #: ../contents/ui/TimerView.qml:43
 msgid "20m"
-msgstr "20m"
+msgstr "20 м"
 
 #: ../contents/ui/TimerView.qml:47
 msgid "30m"
-msgstr "30m"
+msgstr "30 м"
 
 #: ../contents/ui/TimerView.qml:51
 msgid "45m"
-msgstr "45m"
+msgstr "45м"
 
 #: ../contents/ui/TimerView.qml:55
 msgid "1h"
-msgstr "1h"
+msgstr "1ч"
 
 #: ../contents/ui/TimerView.qml:97
 msgid "Pause Timer"
-msgstr ""
+msgstr "Призупинити таймер"
 
 #: ../contents/ui/TimerView.qml:99
 msgid "Start Timer"
-msgstr ""
+msgstr "Запустити таймер"
 
 #: ../contents/ui/TimerView.qml:103
 msgid "Scroll to add to duration"
-msgstr ""
+msgstr "Прокрутіть, щоб додати тривалість"
 
 #: ../contents/ui/TimerView.qml:158 ../contents/ui/TimerView.qml:167 ../contents/ui/TimerView.qml:354
 msgid "Repeat"
-msgstr "Répéter"
+msgstr "Повторити"
 
 #: ../contents/ui/TimerView.qml:176 ../contents/ui/TimerView.qml:185 ../contents/ui/TimerView.qml:363
 msgid "Sound"
-msgstr "Son"
+msgstr "Звук"
 
 #: ../contents/ui/TimerView.qml:328
 msgid "Timer finished"
-msgstr ""
+msgstr "Таймер закінчився"
 
 #: ../contents/ui/TimerView.qml:329
 msgid "%1 has passed"
-msgstr ""
+msgstr "%1 пройшло"
 
 #: ../contents/ui/UpcomingEvents.qml:114
 msgid "Events Starting"
-msgstr "Événements qui débutent"
+msgstr "Початок подій"
 
 #: ../contents/ui/UpcomingEvents.qml:117
 msgid "Events In Progress"
-msgstr "Événements en cours"
+msgstr "Події в процесі"
 
 #: ../contents/ui/UpcomingEvents.qml:120
 msgid "Upcoming Events"
-msgstr "Événements à venir"
+msgstr "Майбутні події"
 
-#~ msgid "Event In Progress:"
-#~ msgstr "Événement en cours:"
-
-#~ msgid "Highlight"
-#~ msgstr "Surligner"
-
-#~ msgid "Normal"
-#~ msgstr "Normal"
+#~ msgid "Adjust Date and Time..."
+#~ msgstr "Налаштування дати та часу ..."
