@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 import "utils.js" as Utils
 import "shared.js" as Shared
+import "./calendars"
 import "../code/ColorIdMap.js" as ColorIdMap
 
 CalendarManager {
@@ -68,10 +69,15 @@ CalendarManager {
 		id: googleCalendarManager
 	}
 
+	PlasmaCalendarManager {
+		id: plasmaCalendarManager
+	}
+
 	Component.onCompleted: {
 		bindSignals(icalManager)
 		bindSignals(debugCalendarManager)
 		bindSignals(googleCalendarManager)
+		bindSignals(plasmaCalendarManager)
 	}
 
 	property var deferredUpdate: Timer {
@@ -85,6 +91,7 @@ CalendarManager {
 
 	onFetchAllCalendars: {
 		googleCalendarManager.fetchAll(dateMin, dateMax)
+		plasmaCalendarManager.fetchAll(dateMin, dateMax)
 		// icalManager.fetchAll(dateMin, dateMax)
 		// debugCalendarManager.importGoogleSession = true
 		// debugCalendarManager.fetchAll(dateMin, dateMax)

@@ -1,7 +1,10 @@
-import QtQuick 2.0
+import QtQuick 2.1
 import org.kde.plasma.configuration 2.0
+import org.kde.plasma.calendar 2.0 as PlasmaCalendar
 
 ConfigModel {
+    id: configModel
+
     ConfigCategory {
         name: i18n("General")
         icon: "clock"
@@ -28,6 +31,11 @@ ConfigModel {
         source: "config/ConfigAgenda.qml"
     }
     ConfigCategory {
+        name: i18n("Events")
+        icon: "view-calendar-week"
+        source: "config/ConfigEvents.qml"
+    }
+    ConfigCategory {
         name: i18n("ICalendar (.ics)")
         icon: "text-calendar"
         source: "config/ConfigICal.qml"
@@ -48,5 +56,18 @@ ConfigModel {
         icon: "applications-development"
         source: "lib/ConfigAdvanced.qml"
         visible: plasmoid.configuration.debugging
+    }
+
+    property Instantiator __eventPlugins: Instantiator {
+        model: PlasmaCalendar.EventPluginsManager.model
+        delegate: ConfigCategory {
+            name: model.display
+            icon: model.decoration
+            source: model.configUi
+            visible: plasmoid.configuration.enabledCalendarPlugins.indexOf(model.pluginPath) > -1
+        }
+
+        onObjectAdded: configModel.appendCategory(object)
+        onObjectRemoved: configModel.removeCategory(object)
     }
 }

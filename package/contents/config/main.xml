@@ -46,6 +46,7 @@
       <default></default>
     </entry>
     <entry name="clock_timeformat" type="string">
+      <!-- For Testing:  '&lt;font color="#888"&gt;'ddd'&lt;&gt;'d'&lt;/font&gt;' h:m:s'&lt;'AP'&gt;' -->
       <default></default>
     </entry>
     <entry name="clock_timeformat_2" type="string">
@@ -149,6 +150,9 @@
     <entry name="agenda_inProgressColor" type="string" stringType="color">
       <default></default>
     </entry>
+    <entry name="agenda_fontSize" type="uint">
+      <default>0</default>
+    </entry>
   </group>
 
 
@@ -164,6 +168,10 @@
     </entry>
     <entry name="eventStartingSfxPath" type="string">
       <default>/usr/share/sounds/KDE-Im-Nudge.ogg</default>
+    </entry>
+    <entry name="enabledCalendarPlugins" type="StringList">
+      <label>A list of plugins where additional calendar event data can be sourced.</label>
+      <default>/usr/lib/x86_64-linux-gnu/qt5/plugins/plasmacalendarplugins/holidaysevents.so</default>
     </entry>
   </group>
 
