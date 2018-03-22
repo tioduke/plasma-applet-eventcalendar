@@ -120,6 +120,9 @@ CalendarManager {
 			var calendarId = parseCalendarId(dayItem)
 			var eventId = calendarId + "_" + startDateTime.getTime() + "_" + endDateTime.getTime()
 
+			var eventColor = dayItem.eventColor || theme.highlightColor
+			eventColor = "" + eventColor // Cast to string, as dayItem.eventColor is a QColor which JSON treats as an object
+
 			var event = {
 				"id": eventId,
 				"calendarId": calendarId,
@@ -127,6 +130,7 @@ CalendarManager {
 				"summary": dayItem.title,
 				"start": start,
 				"end": end,
+				"backgroundColor": eventColor,
 			}
 			items.push(event)
 		}
@@ -138,17 +142,58 @@ CalendarManager {
 	}
 
 	function getEventsForDate(date) {
-		var dayEvents = calendarBackend.daysModel.eventsForDate(new Date())
+		var dayEvents = calendarBackend.daysModel.eventsForDate(date)
 		return parseEventsForDate(dayEvents)
 	}
 
 	function getEventsForDuration(dateMin, dateMax) {
+		var numDays = 0
+		for (var day = new Date(dateMin); day < dateMax; day.setDate(day.getDate() + 1)) {
+			numDays += 1;
+		}
+		// CalendarBackend needs the actual month we're looking at. We can't arbitrarily grab events for random days.
+		var middleDay = new Date(dateMin)
+		middleDay.setDate(middleDay.getDate() + Math.floor(numDays/2))
+		calendarBackend.displayedDate = middleDay
+
 		var items = []
 		for (var day = new Date(dateMin); day < dateMax; day.setDate(day.getDate() + 1)) {
 			var dayEvents = calendarBackend.daysModel.eventsForDate(day)
 			logger.debugJSON(day, dayEvents)
 			items = items.concat(parseEventsForDate(dayEvents))
 		}
+
+		// We need to filter out the repeated items for multi-day events as Plasma creates a new "event item"
+		// for each day of the event.
+		for (var i = 0; i < items.length; i++) {
+			var itemA = items[i]
+
+			// Check every event before this one.
+			for (var j = 0; j < i; j++) {
+				var itemB = items[j]
+				if (itemA.eventId == itemB.eventId) {
+					// There's a conflict, TODO: generate a better eventIds
+
+					if (itemA.start.date == itemB.start.date
+						&& itemA.start.dateTime == itemB.start.dateTime
+						&& itemA.end.date == itemB.end.date
+						&& itemA.end.dateTime == itemB.end.dateTime
+						&& itemA.summary == itemB.summary
+					) {
+						// Same event.
+
+						// logger.debug('itemA == itemB, removing')
+						// logger.debugJSON('\titemA', itemA)
+						// logger.debugJSON('\titemB', itemB)
+
+						items.splice(i, 1) // remove this event item
+						i -= 1 // start this index again
+						break // exit j/itemB loop
+					}
+				}
+			}
+		}
+
 		return items
 	}
 
@@ -183,7 +228,7 @@ CalendarManager {
 	}
 
 	function parseEvent(calendar, event) {
-		event.backgroundColor = calendar.backgroundColor
+		// event.backgroundColor = calendar.backgroundColor
 		event.canEdit = false
 	}
 
