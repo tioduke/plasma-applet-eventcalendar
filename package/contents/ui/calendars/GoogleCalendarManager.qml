@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
-import "../utils.js" as Utils
-import "../shared.js" as Shared
+import "../lib/Requests.js" as Requests
+import "../Shared.js" as Shared
 import "../../code/ColorIdMap.js" as ColorIdMap
 
 CalendarManager {
@@ -42,12 +42,12 @@ CalendarManager {
 			access_token: accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
-				logger.logJSON('onGCalError: ', err);
+				logger.logJSON('onErrorFetchingEvents: ', err);
 				if (xhr.status === 404) {
 					return;
 				}
 				googleCalendarManager.asyncRequestsDone += 1
-				return onGCalError(err);
+				return onErrorFetchingEvents(err);
 			}
 
 			setCalendarData(calendarId, data)
@@ -104,7 +104,7 @@ CalendarManager {
 		if (args.pageToken) {
 			url += '&pageToken=' + encodeURIComponent(args.pageToken);
 		}
-		Utils.getJSON({
+		Requests.getJSON({
 			url: url,
 			headers: {
 				"Authorization": "Bearer " + args.access_token,
@@ -119,24 +119,36 @@ CalendarManager {
 		});
 	}
 
-	function onGCalError(err) {
-		logger.logJSON('onGCalError: ', err);
-		deferredUpdateAccessToken.restart()
+	function onErrorFetchingEvents(err) {
+		logger.logJSON('onErrorFetchingEvents: ', err);
+		deferredUpdateAccessTokenThenUpdateEvents.restart()
 	}
-
-
-
-
-
-
 
 	Timer {
-		id: deferredUpdateAccessToken
+		id: deferredUpdateAccessTokenThenUpdateEvents
 		interval: 200
-		onTriggered: updateAccessToken()
+		onTriggered: updateAccessTokenThenUpdateEvents()
 	}
 
-	function updateAccessToken() {
+	function updateAccessTokenThenUpdateEvents() {
+		updateAccessToken(function(err){
+			if (err) {
+				accessTokenError(err)
+			} else {
+				deferredUpdate.restart()
+			}
+		})
+	}
+
+	function checkAccessToken(callback) {
+		if (plasmoid.configuration.access_token_expires_at < Date.now() + 5000) {
+			updateAccessToken(callback)
+		} else {
+			callback(null)
+		}
+	}
+
+	function updateAccessToken(callback) {
 		// logger.debug('access_token_expires_at', plasmoid.configuration.access_token_expires_at);
 		// logger.debug('                    now', Date.now());
 		// logger.debug('refresh_token', plasmoid.configuration.refresh_token);
@@ -144,24 +156,33 @@ CalendarManager {
 			logger.debug('updateAccessToken');
 			fetchNewAccessToken(function(err, data, xhr) {
 				if (err || (!err && data && data.error)) {
-					return logger.log('Error when using refreshToken:', err, data);
+					logger.log('Error when using refreshToken:', err, data)
+					return callback(err)
 				}
-				logger.debug('onAccessToken', data);
-				data = JSON.parse(data);
+				logger.debug('onAccessToken', data)
+				data = JSON.parse(data)
 
-				plasmoid.configuration.access_token = data.access_token;
-				plasmoid.configuration.access_token_type = data.token_type;
-				plasmoid.configuration.access_token_expires_at = Date.now() + data.expires_in * 1000;
+				googleCalendarManager.applyAccessToken(data)
 
-				deferredUpdate.restart()
+				callback(null)
 			});
 		}
+	}
+
+	signal accessTokenError(string msg)
+	signal newAccessToken()
+
+	function applyAccessToken(data) {
+		plasmoid.configuration.access_token = data.access_token
+		plasmoid.configuration.access_token_type = data.token_type
+		plasmoid.configuration.access_token_expires_at = Date.now() + data.expires_in * 1000
+		newAccessToken()
 	}
 
 	function fetchNewAccessToken(callback) {
 		logger.debug('fetchNewAccessToken');
 		var url = 'https://www.googleapis.com/oauth2/v4/token';
-		Utils.post({
+		Requests.post({
 			url: url,
 			data: {
 				client_id: plasmoid.configuration.client_id,
@@ -222,7 +243,7 @@ CalendarManager {
 		if (accessToken) {
 			var dateString = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
 			var eventText = dateString + ' ' + text
-			Shared.createGCalEvent({
+			createGCalEvent({
 				access_token: accessToken,
 				calendarId: calendarId,
 				text: eventText,
@@ -235,6 +256,27 @@ CalendarManager {
 				}
 			})
 		}
+	}
+
+	function createGCalEvent(args, callback) {
+		// https://www.googleapis.com/calendar/v3/calendars/calendarId/events/quickAdd
+		var url = 'https://www.googleapis.com/calendar/v3';
+		url += '/calendars/'
+		url += encodeURIComponent(args.calendarId);
+		url += '/events/quickAdd';
+		url += '?text=' + encodeURIComponent(args.text);
+		Requests.postJSON({
+			url: url,
+			headers: {
+				"Authorization": "Bearer " + args.access_token,
+			}
+		}, function(err, data, xhr) {
+			console.log('createGCalEvent.response', err, data, xhr.status);
+			if (!err && data && data.error) {
+				return callback(data, null, xhr);
+			}
+			callback(err, data, xhr);
+		});
 	}
 
 
@@ -253,6 +295,11 @@ CalendarManager {
 		updateGoogleCalendarEvent(accessToken, calendarId, eventId, {
 			summary: summary
 		})
+		// patchGoogleCalendarEvent(accessToken, calendarId, eventId, {
+		// 	summary: summary
+		// }, function(err, data, xhr) {
+		// 	logger.debug('setGoogleCalendarEventSummary.done')
+		// })
 	}
 
 	function updateGoogleCalendarEvent(accessToken, calendarId, eventId, args) {
@@ -299,7 +346,7 @@ CalendarManager {
 		url += encodeURIComponent(args.calendarId);
 		url += '/events/';
 		url += encodeURIComponent(args.eventId);
-		Utils.postJSON({
+		Requests.postJSON({
 			method: 'PUT',
 			url: url,
 			headers: {
@@ -315,12 +362,53 @@ CalendarManager {
 		})
 	}
 
+	function patchGoogleCalendarEvent(accessToken, calendarId, eventId, eventProps, callback) {
+		logger.debugJSON('patchGoogleCalendarEvent.sent', eventProps)
+		
+		patchGCalEvent({
+			accessToken: accessToken,
+			calendarId: calendarId,
+			eventId: eventId,
+			data: eventProps,
+		}, function(err, data, xhr) {
+			logger.debugJSON('patchGoogleCalendarEvent.response', err, data)
+			
+			parseSingleEvent(calendarId, data)
+			eventUpdated(calendarId, eventId, data)
+			callback(err, data, xhr)
+		})
+	}
+
 	function patchGCalEvent(args, callback) {
-		// Note: Qt 5.7+ still doesn't support the PATCH method type
+		// Requires Qt 5.8 (Plasma 5.12 depends on Qt 5.9)
+		// Note: Qt 5.7 and below doesn't support the PATCH method type.
 		// https://bugreports.qt.io/browse/QTBUG-38175
-		// Qt 5.8 supports it, but KDE depends on Qt 5.7 or less still so we must support it.
-		// Instead, we'll use "update" with PUT.
-		throw new Exception("Qt 5.7+ still doesn't support the PATCH method type")
+
+		// Even though Qt 5.10's qmlscene can send a PATCH request with a body,
+		// plasmashell + plasmoidviewer is doesn't something weird, as while both
+		// send the PATCH request to the server, it does not send the body.
+		// Demo: https://gist.github.com/Zren/3cdee1cd6fce144c234cdca9d3f32fc1
+		throw new Exception("plasmashell with Qt 5.10 still doesn't fully support the PATCH method type")
+
+		// var url = 'https://www.googleapis.com/calendar/v3'
+		// url += '/calendars/'
+		// url += encodeURIComponent(args.calendarId)
+		// url += '/events/'
+		// url += encodeURIComponent(args.eventId)
+		// Requests.postJSON({
+		// 	method: 'PATCH',
+		// 	url: url,
+		// 	headers: {
+		// 		"Authorization": "Bearer " + args.accessToken,
+		// 	},
+		// 	data: args.data,
+		// }, function(err, data, xhr) {
+		// 	logger.debug('patchGCalEvent.response', err, data, xhr.status)
+		// 	if (!err && data && data.error) {
+		// 		return callback(data, null, xhr)
+		// 	}
+		// 	callback(err, data, xhr)
+		// })
 	}
 
 	function deleteEvent(calendarId, eventId) {
@@ -352,7 +440,7 @@ CalendarManager {
 		url += encodeURIComponent(args.calendarId);
 		url += '/events/';
 		url += encodeURIComponent(args.eventId);
-		Utils.postJSON({
+		Requests.postJSON({
 			method: 'DELETE',
 			url: url,
 			headers: {

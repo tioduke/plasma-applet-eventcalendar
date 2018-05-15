@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
-import "utils.js" as Utils
-import "shared.js" as Shared
+import "./lib/Requests.js" as Requests
+import "Shared.js" as Shared
 import "./calendars"
 import "../code/ColorIdMap.js" as ColorIdMap
 
@@ -93,6 +93,7 @@ CalendarManager {
 		googleCalendarManager.fetchAll(dateMin, dateMax)
 		plasmaCalendarManager.fetchAll(dateMin, dateMax)
 		// icalManager.fetchAll(dateMin, dateMax)
+		// debugCalendarManager.showDebugEvents = true
 		// debugCalendarManager.importGoogleSession = true
 		// debugCalendarManager.fetchAll(dateMin, dateMax)
 	}
