@@ -1,103 +1,103 @@
-# Translation of eventcalendar in pt_BR
-# Copyright (C) 2017
+# Translation of eventcalendar in el
+# Copyright (C) 2018
 # This file is distributed under the same license as the eventcalendar package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: eventcalendar \n"
+"Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
 "POT-Creation-Date: 2018-06-26 13:56-0400\n"
-"PO-Revision-Date: 2017-06-10 HO:MI+ZONE\n"
-"Last-Translator: Clayton Magalhães <helpdir@gmail.com>\n"
-"Language-Team: SACI <helpdir@gmail.com>\n"
-"Language: pt_BR\n"
+"PO-Revision-Date: 2018-06-07 01:37+0300\n"
+"Last-Translator: Chris P <skylin@protonmail.com>\n"
+"Language-Team: Chris P <skylin@protonmail.com>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #: ../contents/config/config.qml:9
 msgid "General"
-msgstr "Geral"
+msgstr "Γενικά"
 
 #: ../contents/config/config.qml:19
 msgid "Timezones"
-msgstr "Fusos horários"
+msgstr "Ζώνες 'Ωρας"
 
 #: ../contents/config/config.qml:24 ../contents/ui/UpcomingEvents.qml:124
 msgid "Calendar"
-msgstr "Calendário"
+msgstr "Ημερολόγιο"
 
 #: ../contents/config/config.qml:29
 msgid "Agenda"
-msgstr "Agenda"
+msgstr "Ατζέντα"
 
 #: ../contents/config/config.qml:34
 msgid "Events"
-msgstr ""
+msgstr "Συμβάντα"
 
 #: ../contents/config/config.qml:39 ../contents/ui/config/ConfigEvents.qml:21
 msgid "ICalendar (.ics)"
-msgstr ""
+msgstr "ICalendar (*.ics)"
 
 #: ../contents/config/config.qml:45 ../contents/ui/config/ConfigEvents.qml:27
 msgid "Google Calendar"
-msgstr "Google Agenda"
+msgstr "Ημερολόγιο Google"
 
 #: ../contents/config/config.qml:50
 msgid "Weather"
-msgstr "Clima"
+msgstr "Καιρός"
 
 #: ../contents/config/config.qml:55
 msgid "Advanced"
-msgstr "Avançado"
+msgstr "Προχωρημένα"
 
 #: ../contents/ui/AgendaEventItem.qml:71
 msgid "Event Summary"
-msgstr "Resumo de Eventos"
+msgstr "Σύνοψη Συμβάντων"
 
 #: ../contents/ui/AgendaEventItem.qml:145
 msgid "to"
-msgstr "Para"
+msgstr "προς"
 
 #: ../contents/ui/AgendaEventItem.qml:170 ../contents/ui/LocaleFuncs.js:42
 msgid "All Day"
-msgstr "Todo o dia"
+msgstr "Όλη την Ημέρα"
 
 #: ../contents/ui/AgendaEventItem.qml:175
 msgid "Save"
-msgstr "Salvar"
+msgstr "Αποθήκευση"
 
 #: ../contents/ui/AgendaEventItem.qml:183
 msgid "Discard"
-msgstr "Descartar"
+msgstr "Απόρριψη"
 
 #: ../contents/ui/AgendaEventItem.qml:213
 msgid "Edit description"
-msgstr "Editar a descrição"
+msgstr "Επεξεργασία περιγραφής"
 
 #: ../contents/ui/AgendaEventItem.qml:222
 msgid "Edit date/time"
-msgstr ""
+msgstr "Ρύθμιση ημερομηνίας και ώρας"
 
 #: ../contents/ui/AgendaEventItem.qml:230
 msgid "Delete Event"
-msgstr "Remover o Evento"
+msgstr "Διαγραφή Συμβάντος"
 
 #: ../contents/ui/AgendaEventItem.qml:233
 msgid "Confirm Deletion"
-msgstr "Confirmar a Remoção"
+msgstr "Επιβεβαίωση Διαγραφής"
 
 #: ../contents/ui/AgendaEventItem.qml:245
 msgid "Edit in browser"
-msgstr "Editar no navegador"
+msgstr "Επεξεργασία στον φυλλομετρητή"
 
 #: ../contents/ui/AgendaListItem.qml:131
 msgctxt "agenda date format line 1"
 msgid "MMM d"
-msgstr "MMM d"
+msgstr "d MMM"
 
 #: ../contents/ui/AgendaListItem.qml:151
 msgctxt "agenda date format line 2"
@@ -106,534 +106,534 @@ msgstr "ddd"
 
 #: ../contents/ui/AgendaView.qml:23 ../contents/ui/AgendaView.qml:36 ../contents/ui/UpcomingEvents.qml:129 ../contents/ui/UpcomingEvents.qml:146
 msgid "Event Calendar"
-msgstr "Calendário de eventos"
+msgstr "Ημερολόγιο Συμβάντων"
 
 #: ../contents/ui/calendars/CalendarManager.qml:113
 msgctxt "event with no summary"
 msgid "(No title)"
-msgstr ""
+msgstr "(Χωρίς Τίτλο)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:29
 msgid "Show agenda"
-msgstr "Mostrar agenda"
+msgstr "Εμφάνιση Ατζέντας"
 
 #: ../contents/ui/config/ConfigAgenda.qml:35
 msgid "Agenda above the month (Single Column)"
-msgstr "Agenda do mês no topo (coluna única)"
+msgstr "Ατζέντα πάνω από τον μήνα (Μία Στήλη)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:42
 msgid "Agenda to the left (Two Columns)"
-msgstr "Agenda do mês à esquerda (duas colunas)"
+msgstr "Ατζέντα στα αριστερά (Δύο Στήλες)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:53
 msgid "Font Size:"
-msgstr ""
+msgstr "Μέγεθος γραμματοσειράς:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:54 ../contents/ui/config/ConfigGeneral.qml:206
 msgid "px"
-msgstr "px"
+msgstr "πίξελ"
 
 #: ../contents/ui/config/ConfigAgenda.qml:55
 msgid " (0px = <b>System Settings > Fonts > General</b>)"
-msgstr ""
+msgstr " (0 πίξελ = <b>Ρυθμίσεις Συστήματος > Γραμματοσειρά > Γενικά</b>)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:64
 msgid "Weather Icon"
-msgstr "Ícone do clima"
+msgstr "Εικονίδιο Καιρού"
 
 #: ../contents/ui/config/ConfigAgenda.qml:82
 msgid "Icon Outline"
-msgstr "Esboço do ícone"
+msgstr "Εικονίδιο Περιγράμματος"
 
 #: ../contents/ui/config/ConfigAgenda.qml:88
 msgid "Weather Text"
-msgstr "Texto do clima"
+msgstr "Κείμενο Καιρού"
 
 #: ../contents/ui/config/ConfigAgenda.qml:92
 msgid "Position:"
-msgstr ""
+msgstr "Θέση:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:95
 msgid "Left"
-msgstr ""
+msgstr "Αριστερά"
 
 #: ../contents/ui/config/ConfigAgenda.qml:101
 msgid "Right"
-msgstr ""
+msgstr "Δεξιά"
 
 #: ../contents/ui/config/ConfigAgenda.qml:109
 msgid "Click Weather:"
-msgstr "Clique no clima:"
+msgstr "Κλικ στον Καιρό:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:112
 msgid "Open City Forecast In Browser"
-msgstr "Abrir previsão para a cidade no navegador"
+msgstr "Άνοιγμα Πρόγνωσης Καιρού στον Φυλλομετρητή"
 
 #: ../contents/ui/config/ConfigAgenda.qml:121 ../contents/ui/config/ConfigCalendar.qml:27
 msgid "Click Date:"
-msgstr "Clique na data:"
+msgstr "Κλικ στην Ημέρα:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:124 ../contents/ui/config/ConfigCalendar.qml:42
 msgid "Open New Event In Browser"
-msgstr "Abrir novo evento no navegador"
+msgstr "Άνοιγμα Νέου Συμβάντος στον Φυλλομετρητή"
 
 #: ../contents/ui/config/ConfigAgenda.qml:129
 msgid "Open New Event Form"
-msgstr "Abrir novo evento"
+msgstr "Άνοιγμα Νέας Μορφής Συμβάντος"
 
 #: ../contents/ui/config/ConfigAgenda.qml:138
 msgid "Click Event:"
-msgstr "Clique no evento:"
+msgstr "Κλικ στο Συμβάν:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:141
 msgid "Open Event In Browser"
-msgstr "Abrir o evento no navegador"
+msgstr "Άνοιξε το Συμβάν στον Φυλλομετρητή"
 
 #: ../contents/ui/config/ConfigAgenda.qml:151
 msgid "Show multi-day events:"
-msgstr "Mostre eventos de vários dias:"
+msgstr "Εμφάνιση συμβάντων πολλαπλών ημερών:"
 
 #: ../contents/ui/config/ConfigAgenda.qml:156
 msgid "On all days"
-msgstr "Em todos os dias"
+msgstr "Σε όλες τις ημέρες"
 
 #: ../contents/ui/config/ConfigAgenda.qml:164
 msgid "Only on the first and current day"
-msgstr "Somente no primeiro e atual dia"
+msgstr "Μόνο την πρώτη ημέρα και σήμερα"
 
 #: ../contents/ui/config/ConfigAgenda.qml:177
 msgid "Remember selected calendar in New Event Form"
-msgstr "Lembre-se do calendário selecionado no Formulário de novo evento"
+msgstr "Θυμήσου το επιλεγμένο ημερολόγιο στην Νέα Μορφή Συμβάντος"
 
 #: ../contents/ui/config/ConfigAgenda.qml:182
 msgid "Current Month"
-msgstr "Mês atual"
+msgstr "Παρών Μήνας"
 
 #: ../contents/ui/config/ConfigAgenda.qml:187
 msgid "Always show next 14 days"
-msgstr "Mostre sempre os próximos 14 dias"
+msgstr "Πάντα εμφάνιση των επόμενων 14 ημερών"
 
 #: ../contents/ui/config/ConfigAgenda.qml:192
 msgid "Hide completed events"
-msgstr "Ocultar eventos concluídos"
+msgstr "Απόκρυψη ολοκληρωμένων συμβάντων"
 
 #: ../contents/ui/config/ConfigAgenda.qml:197
 msgid "Show all events of the current day (including completed events)"
-msgstr "Mostre todos os eventos do dia atual (incluindo eventos concluídos)"
+msgstr "Εμφάνιση όλων των σημερινών συμβάντων (συμπεριλαμβανομένων των ολοκληρωμένων)"
 
 #: ../contents/ui/config/ConfigAgenda.qml:203 ../contents/ui/config/ConfigWeather.qml:177
 msgid "Colors"
-msgstr "Cores"
+msgstr "Χρώματα"
 
 #: ../contents/ui/config/ConfigAgenda.qml:207
 msgid "In Progress"
-msgstr "Em progresso"
+msgstr "Σε Εξέλιξη"
 
 #: ../contents/ui/config/ConfigCalendar.qml:22
 msgid "Show calendar"
-msgstr "Mostrar calendário"
+msgstr "Εμφάνιση ημερολογίου"
 
 #: ../contents/ui/config/ConfigCalendar.qml:30
 msgid "Scroll to event in Agenda"
-msgstr "Desloque-se para evento no Calendário"
+msgstr "Μετάβαση σε συμβάν στην Ατζέντα"
 
 #: ../contents/ui/config/ConfigCalendar.qml:39
 msgid "DoubleClick Date:"
-msgstr "Duplo clique na data:"
+msgstr "Διπλό κλικ στην Ημερομηνία:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:50 ../contents/ui/config/ConfigWeather.qml:120
 msgid "Style"
-msgstr "Estilo"
+msgstr "Στιλ"
 
 #: ../contents/ui/config/ConfigCalendar.qml:55
 msgid "Show Borders"
-msgstr "Mostrar bordas"
+msgstr "Εμφάνιση Περιθωρίων"
 
 #: ../contents/ui/config/ConfigCalendar.qml:59
 msgid "Show Week Numbers"
-msgstr "Mostrar números de semanas"
+msgstr "Εμφάνιση Αριθμών Εβδομάδων στο Ημερολόγιο"
 
 #: ../contents/ui/config/ConfigCalendar.qml:62
 msgid "Event Badge:"
-msgstr "Descrição de Evento:"
+msgstr "Σήμα Συμβάντος:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:65 ../contents/ui/config/ConfigCalendar.qml:120 ../contents/ui/config/ConfigCalendar.qml:136
 msgid "Theme"
-msgstr "Tema"
+msgstr "Θέμα"
 
 #: ../contents/ui/config/ConfigCalendar.qml:73
 msgid "Dots (3 Maximum)"
-msgstr "Pontos (3 Máximo)"
+msgstr "Κουκίδες (Μέγιστο 3)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:81
 msgid "Bottom Bar (Event Color)"
-msgstr "Barra inferior (cor do evento)"
+msgstr "Κάτω Μπάρα (Χρώμα Συμβάντος)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:89
 msgid "Bottom Bar (Highlight)"
-msgstr "Barra inferior (Destacada)"
+msgstr "Κάτω Μπάρα (Τονισμένο)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:97
 msgid "Count"
-msgstr "Número de eventos"
+msgstr "Μέτρημα"
 
 #: ../contents/ui/config/ConfigCalendar.qml:110
 msgid "Radius:"
-msgstr "Tamanho:"
+msgstr "Ακτίνα:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:115
 msgid "Selected:"
-msgstr "Selecionado:"
+msgstr "Επιλεγμένα:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:124
 msgid "Solid Color (Highlight)"
-msgstr "Cor sólida (Destacada)"
+msgstr "Συμπαγές Χρώμα (Τονισμένο)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:131
 msgid "Today:"
-msgstr "Hoje:"
+msgstr "Σήμερα:"
 
 #: ../contents/ui/config/ConfigCalendar.qml:140
 msgid "Solid Color (Inverted)"
-msgstr "Cor sólida (invertida)"
+msgstr "Συμπαγές Χρώμα (Ανεστραμένο)"
 
 #: ../contents/ui/config/ConfigCalendar.qml:146
 msgid "Big Number"
-msgstr "Número grande"
+msgstr "Μεγάλος Αριθμός"
 
 #: ../contents/ui/config/ConfigEvents.qml:16
 msgid "Event Calendar Plugins"
-msgstr ""
+msgstr "Πρόσθετα Event Calendar"
 
 #: ../contents/ui/config/ConfigEvents.qml:35
 msgid "Plasma Calendar Plugins"
-msgstr ""
+msgstr "Πρόσθετα Ημερολογίου Plasma"
 
 #: ../contents/ui/config/ConfigEvents.qml:63 ../contents/ui/config/ConfigGeneral.qml:441
 msgid "Misc"
-msgstr "Diversos"
+msgstr "Διάφορα"
 
 #: ../contents/ui/config/ConfigEvents.qml:69
 msgid "Refresh events every: "
-msgstr "Atualize eventos a cada:"
+msgstr "Ανανέωση συμβάντων κάθε: "
 
 #: ../contents/ui/config/ConfigEvents.qml:70 ../contents/ui/config/ConfigWeather.qml:112
 msgctxt "Polling interval in minutes"
 msgid "min"
 msgid_plural "min"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "λεπτό"
+msgstr[1] "λεπτά"
 
 #: ../contents/ui/config/ConfigEvents.qml:77
 msgid "Notifications"
-msgstr ""
+msgstr "Ειδοποιήσεις"
 
 #: ../contents/ui/config/ConfigEvents.qml:82
 msgid "Event Starting"
-msgstr ""
+msgstr "Έναρξη Συμβάντος"
 
 #: ../contents/ui/config/ConfigGeneral.qml:77 ../contents/ui/lib/ConfigNotification.qml:59
 msgid "Chose a sound effect"
-msgstr "Escolha um efeito sonoro"
+msgstr "Επιλογή ηχητικού εφέ"
 
 #: ../contents/ui/config/ConfigGeneral.qml:98
 msgid "Widgets"
-msgstr "Interface"
+msgstr "Μικροεφαρμογές"
 
 #: ../contents/ui/config/ConfigGeneral.qml:104
 msgid "Show/Hide widgets above the calendar. Toggle Agenda/Calendar on their respective tabs."
-msgstr "Mostrar ou ocultar funções extras acima do calendário. Alternar agenda/calendário em suas respectivas guias."
+msgstr "Εμφάνιση/Απόκρυψη μικροεφαρμογών πάνω από το ημερολόγιο. Εναλλαγή Ατζέντας/Ημερολογίου στις αντίστοιχες καρτέλες."
 
 #: ../contents/ui/config/ConfigGeneral.qml:111
 msgid "Meteogram"
-msgstr "Meteograma"
+msgstr "Μετεωρογράφημα"
 
 #: ../contents/ui/config/ConfigGeneral.qml:118 ../contents/ui/TimerView.qml:348
 msgid "Timer"
-msgstr "Cronômetro"
+msgstr "Χρονομετρητής"
 
 #: ../contents/ui/config/ConfigGeneral.qml:124
 msgid "SFX:"
-msgstr "Som de Evento:"
+msgstr "Ηχητικά Εφέ:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:127
 msgid "Choose"
-msgstr "Procurar"
+msgstr "Επιλογή"
 
 #: ../contents/ui/config/ConfigGeneral.qml:141
 msgid "Clock"
-msgstr "Relógio"
+msgstr "Ρολόϊ"
 
 #: ../contents/ui/config/ConfigGeneral.qml:145
 msgid "Time Format"
-msgstr "Formato de hora"
+msgstr "Μορφή Ώρας"
 
 #: ../contents/ui/config/ConfigGeneral.qml:156
 msgid "The default font for the Breeze theme is Noto Sans which is hard to read with small text. Try using the Sans Serif font if you find the text too small when adding a second line."
-msgstr "A fonte padrão para o tema Breeze é Noto Sans, que é difícil de ler em fonte pequeno. Caso tenha problema, tente usar a fonte Sans Serif se o texto ficar muito pequeno ao adicionar uma segunda linha."
+msgstr "Η προεπιλεγμένη γραμματοσειρά για το θέμα Breeze είναι το Noto Sans το οποίο είναι δύσκολο να διαβαστεί με μικρό κείμενο. Δοκιμάστε να χρησιμοποιήσετε τη γραμματοσειρά Sans Serif αν βρείτε το κείμενο πολύ μικρό όταν προσθέτετε μια δεύτερη γραμμή."
 
 #: ../contents/ui/config/ConfigGeneral.qml:162
 msgid "You can also use <b>'&lt;b&gt;'ddd'&lt;/b&gt;'</b> or <b>'&lt;font color=\"#77aaadd\"&gt;'ddd'&lt;/font&gt;'</b> to style a section. Note the single quotes around the tags are used to bypass the time format."
-msgstr "Você também pode usar <b>'&lt;b&gt;'ddd'&lt;/b&gt;'</b> o <b>'&lt;font color=\"#77aaadd\"&gt;'ddd'&lt;/font&gt;'</b> para mudar o estilo de apresentação. Observe que as aspas em torno das tags, são usadas para delimitar a formatação dos dados."
+msgstr "Μπορείτε επίσης να χρησιμοποιήσετε <b>'&lt;b&gt;'ddd'&lt;/b&gt;'</b> ή <b>'&lt;font color=\"#77aaadd\"&gt;'ddd'&lt;/font&gt;'</b> για να διαμορφώσετε ένα τμήμα. Σημειώστε ότι τα μονά εισαγωγικά γύρω από τις ετικέτες χρησιμοποιούνται για να παρακάμψουν την μορφή ώρας."
 
 #: ../contents/ui/config/ConfigGeneral.qml:168
 msgid "Font:"
-msgstr "Fonte:"
+msgstr "Γραμματοσειρά:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:179
 msgctxt "Use default font"
 msgid "Default"
-msgstr "Padrão"
+msgstr "Προεπιλογή"
 
 #: ../contents/ui/config/ConfigGeneral.qml:200
 msgid "Fixed Clock Height: "
-msgstr "Tamanho fixo da fonte do relógio: "
+msgstr "Σταθερό Ύψος Ρολογιού: "
 
 #: ../contents/ui/config/ConfigGeneral.qml:212
 msgid " (0px = scale to fit)"
-msgstr " (0px = Escala padrão)"
+msgstr " (0 πίξελ = κλιμάκωση για να ταιριάξει)"
 
 #: ../contents/ui/config/ConfigGeneral.qml:222
 msgid "Line 1:"
-msgstr "Linha 1:"
+msgstr "Γραμμή 1:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:239 ../contents/ui/config/ConfigGeneral.qml:265 ../contents/ui/config/ConfigGeneral.qml:314
 msgid "Preset:"
-msgstr "Predefinições"
+msgstr "Προκαθορισμένο:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:287 ../contents/ui/config/ConfigGeneral.qml:351
 msgid "Bold"
-msgstr "Negrito"
+msgstr "Έντονο κείμενο"
 
 #: ../contents/ui/config/ConfigGeneral.qml:298
 msgid "Line 2:"
-msgstr "Line 2:"
+msgstr "Γραμμή 2:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:359
 msgid "Height:"
-msgstr "Tamanho:"
+msgstr "Ύψος:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:379
 msgid "Mouse Wheel"
-msgstr "Roda do mouse"
+msgstr "Ροδέλα Ποντικιού"
 
 #: ../contents/ui/config/ConfigGeneral.qml:389
 msgid "Run Commands"
-msgstr "Executar Comandos"
+msgstr "Εκτέλεση Εντολών"
 
 #: ../contents/ui/config/ConfigGeneral.qml:398
 msgid "Scoll Up:"
-msgstr "Rodar para cima:"
+msgstr "Κύλιση προς τα πάνω:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:409
 msgid "Scroll Down:"
-msgstr "Rodar para baixo:"
+msgstr "Κύλιση προς τα κάτω:"
 
 #: ../contents/ui/config/ConfigGeneral.qml:420
 msgid "Volume (No UI) (amixer)"
-msgstr "Volume (Sem efeito gráfico) (amixer)"
+msgstr "Ένταση Ήχου (Χωρίς Γραφική Διεπαφή) (amixer)"
 
 #: ../contents/ui/config/ConfigGeneral.qml:429
 msgid "Volume (UI) (qdbus)"
-msgstr "Volume (Com efeito gráfico) (qdbus)"
+msgstr "Ένταση Ήχου (Με Γραφική Διεπαφή) (qdbus)"
 
 #: ../contents/ui/config/ConfigGeneral.qml:447
 msgid "Desktop Widget: Show background"
-msgstr "Elemento gráfico da área de trabalho: mostra o plano de fundo"
+msgstr "Μικροεφαρμογές Επιφάνειας Εργασίας: Εμφάνιση Φόντου"
 
 #: ../contents/ui/config/ConfigGeneral.qml:452
 msgid "Debugging"
-msgstr "Depuração"
+msgstr "Αποσφαλμάτωση"
 
 #: ../contents/ui/config/ConfigGeneral.qml:458
 msgid ""
 "Enable Debugging\n"
 "This will log sensitive information to ~/.xsession-errors"
 msgstr ""
-"Ativar depuração\n"
-"Isso registrará informações confidenciais em ~/.xsession-errors"
+"Ενεργοποίηση Αποσφαλμάτωσης\n"
+"Αυτό θα καταγράψει ευαίσθητες πληροφορίες στο ~/.xsession-errors"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:60
 msgid "Login"
-msgstr "Entrar"
+msgstr "Σύνδεση"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:68
 msgid "Currently Synched."
-msgstr "Está sincronizado."
+msgstr "Αυτή τη στιγμή είναι συγχρονισμένο."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:72
 msgid "Logout"
-msgstr "Sair"
+msgstr "Αποσύνδεση"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:82
 msgid "To sync with Google Calendar"
-msgstr "Para sincronizar com o Google Calendar"
+msgstr "Για συγχρονισμό με το Ημερολόγιο Google"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:86
 msgid "Enter the following code at <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
-msgstr "Digite o seguinte código em <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
+msgstr "Καταχωρίστε τον ακόλουθο κωδικό στο <a href=\"https://www.google.com/device\">https://www.google.com/device</a>."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:92
 msgid "Generating Code..."
-msgstr "Gerando código..."
+msgstr "Δημιουργία κωδικού ..."
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:111 ../contents/ui/config/ConfigICal.qml:51
 msgid "Calendars"
-msgstr "Calendários"
+msgstr "Ημερολόγια"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml:116
 msgid "Refresh"
-msgstr "Atualizar"
+msgstr "Ανανέωση"
 
 #: ../contents/ui/config/ConfigICal.qml:55
 msgid "Add Calendar"
-msgstr ""
+msgstr "Προσθήκη Ημερολογίου"
 
 #: ../contents/ui/config/ConfigICal.qml:60
 msgid "New Calendar"
-msgstr ""
+msgstr "Νέο Ημερολόγιο"
 
 #: ../contents/ui/config/ConfigICal.qml:96
 msgid "Calendar Label"
-msgstr ""
+msgstr "Ετικέτα Ημερολογίου"
 
 #: ../contents/ui/config/ConfigICal.qml:113
 msgid "Browse"
-msgstr ""
+msgstr "Πλοήγηση"
 
 #: ../contents/ui/config/ConfigICal.qml:121
 msgid "iCalendar (*.ics)"
-msgstr ""
+msgstr "iCalendar (*.ics)"
 
 #: ../contents/ui/config/ConfigTimezones.qml:64
 msgid "Tooltip"
-msgstr "dica de contexto"
+msgstr "Συμβουλή Εργαλείου"
 
 #: ../contents/ui/config/ConfigTimezones.qml:73
 msgid "Cannot deselect Local time from the tooltip"
-msgstr "Não é possível desmarcar Hora local da dica de contexto"
+msgstr "Δεν είναι δυνατή η κατάργηση της επιλογής Τοπική Ώρα από τη συμβουλή εργαλείου"
 
 #: ../contents/ui/config/ConfigWeather.qml:23
 msgid "Data"
-msgstr "Datos"
+msgstr "Δεδομένα"
 
 #: ../contents/ui/config/ConfigWeather.qml:41
 msgid "API App Id:"
-msgstr "API App Id:"
+msgstr "Αναγνωριστικό API Εφαρμογής:"
 
 #: ../contents/ui/config/ConfigWeather.qml:53 ../contents/ui/config/ConfigWeather.qml:77
 msgid "City Id:"
-msgstr "Id da cidade:"
+msgstr "Αναγνωριστικό Πόλης:"
 
 #: ../contents/ui/config/ConfigWeather.qml:58
 msgid "Eg: 5983720"
-msgstr "EX: 5983720"
+msgstr "Πχ: 5983720"
 
 #: ../contents/ui/config/ConfigWeather.qml:61 ../contents/ui/config/ConfigWeather.qml:85
 msgid "Find City"
-msgstr "Encontrar Cidade"
+msgstr "Εύρεση Πόλης"
 
 #: ../contents/ui/config/ConfigWeather.qml:82
 msgid "Eg: on-14"
-msgstr "Ex: on-14"
+msgstr "Πχ: στις-14"
 
 #: ../contents/ui/config/ConfigWeather.qml:99
 msgid "Settings"
-msgstr "Configurações"
+msgstr "Ρυθμίσεις"
 
 #: ../contents/ui/config/ConfigWeather.qml:105
 msgid "Update forecast every: "
-msgstr "Atualize a previsão a cada:"
+msgstr "Ενημέρωση πρόγνωσης κάθε: "
 
 #: ../contents/ui/config/ConfigWeather.qml:126
 msgid "Show next "
-msgstr "Mostrar as próximas "
+msgstr "Εμφάνιση των επόμενων "
 
 #: ../contents/ui/config/ConfigWeather.qml:133
 msgid " hours"
 msgid_plural " hours"
-msgstr[0] " horas"
-msgstr[1] " horas"
+msgstr[0] " ωρών"
+msgstr[1] " ωρών"
 
 #: ../contents/ui/config/ConfigWeather.qml:140
 msgid " in the meteogram."
-msgstr " no meteograma."
+msgstr " στο μετεωρογράφημα."
 
 #: ../contents/ui/config/ConfigWeather.qml:147
 msgid "Units:"
-msgstr "Unidades:"
+msgstr "Μονάδες:"
 
 #: ../contents/ui/config/ConfigWeather.qml:150
 msgid "Celsius"
-msgstr "Celsius"
+msgstr "Κελσίου"
 
 #: ../contents/ui/config/ConfigWeather.qml:158
 msgid "Fahrenheit"
-msgstr "Fahrenheit"
+msgstr "Φαρενάϊτ"
 
 #: ../contents/ui/config/ConfigWeather.qml:166
 msgid "Kelvin"
-msgstr "Kelvin"
+msgstr "Κέλβιν"
 
 #: ../contents/ui/config/ConfigWeather.qml:184
 msgid "Text"
-msgstr "Texto"
+msgstr "Κείμενο"
 
 #: ../contents/ui/config/ConfigWeather.qml:189
 msgid "Grid"
-msgstr "grade"
+msgstr "Πλέγμα"
 
 #: ../contents/ui/config/ConfigWeather.qml:194
 msgid "Rain"
-msgstr "Chuva"
+msgstr "Βροχή"
 
 #: ../contents/ui/config/ConfigWeather.qml:199
 msgid "Positive Temp"
-msgstr "Clima bom"
+msgstr "Θετική Θερμοκρασία"
 
 #: ../contents/ui/config/ConfigWeather.qml:204
 msgid "Negative Temp"
-msgstr ""
+msgstr "Αρνητική Θερμοκρασία"
 
 #: ../contents/ui/config/ConfigWeather.qml:209
 msgid "Icons"
-msgstr "Ícones"
+msgstr "Εικονίδια"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:12 ../contents/ui/config/WeatherCanadaCityDialog.qml:13
 msgid "Select city"
-msgstr "Selecione a cidade"
+msgstr "Επιλέξτε Πόλη"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:65
 msgid "Fetched from <a href=\"http://openweathermap.org/help/city_list.txt\">http://openweathermap.org/help/city_list.txt</a>"
-msgstr "Obter a partir de <a href=\"http://openweathermap.org/help/city_list.txt\">http://openweathermap.org/help/city_list.txt</a>"
+msgstr "Ελήφθη από <a href=\"http://openweathermap.org/help/city_list.txt\">http://openweathermap.org/help/city_list.txt</a>"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:71 ../contents/ui/config/WeatherCanadaCityDialog.qml:91
 msgid "Search"
-msgstr "Pesquisar"
+msgstr "Αναζήτηση"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:84 ../contents/ui/config/WeatherCanadaCityDialog.qml:104
 msgid "Name"
-msgstr "Nome"
+msgstr "Όνομα"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:89 ../contents/ui/config/WeatherCanadaCityDialog.qml:109
 msgid "Id"
-msgstr "Id"
+msgstr "Αναγνωριστικό"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:94 ../contents/ui/config/WeatherCanadaCityDialog.qml:114
 msgid "City Webpage"
-msgstr "Página web da Cidade"
+msgstr "Ιστοσελίδα Πόλης"
 
 #: ../contents/ui/config/OpenWeatherMapCityDialog.qml:96 ../contents/ui/config/WeatherCanadaCityDialog.qml:116
 msgid "Open Link"
-msgstr "Abir linque"
+msgstr "Άνοιγμα Συνδέσμου"
 
 #: ../contents/ui/config/WeatherCanadaCityDialog.qml:68
 msgid "Fetched from <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>"
-msgstr "Obter a partir de <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>"
+msgstr "Ελήφθη από <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>"
 
 #: ../contents/ui/lib/AppletVersion.qml:41
 msgid "<b>Version:</b> %1"
-msgstr "<b>Versão:</b> %1"
+msgstr "<b>Έκδοση:</b> %1"
 
 #: ../contents/ui/LocaleFuncs.js:8
 msgctxt "event time on the hour (24 hour clock)"
@@ -672,11 +672,11 @@ msgstr ""
 
 #: ../contents/ui/main.qml:223
 msgid "Set Language..."
-msgstr ""
+msgstr "Ορισμός Γλώσσας..."
 
 #: ../contents/ui/main.qml:226
 msgid "Set Locale..."
-msgstr "Definir Localidade..."
+msgstr "Ρύθμιση Τοπικότητας..."
 
 #: ../contents/ui/MeteogramView.qml:333
 #, c-format
@@ -686,25 +686,25 @@ msgstr "%1mm"
 #: ../contents/ui/MonthView.qml:348
 msgctxt "calendar title format for current month"
 msgid "MMMM d, yyyy"
-msgstr ""
+msgstr "d MMMM, yyyy"
 
 #: ../contents/ui/MonthView.qml:352
 msgctxt "calendar title format for other months of current year"
 msgid "MMMM"
-msgstr ""
+msgstr "MMMM"
 
 #: ../contents/ui/MonthView.qml:355
 msgctxt "calendar title format for months not from current year"
 msgid "MMMM, yyyy"
-msgstr ""
+msgstr "MMMM, yyyy"
 
 #: ../contents/ui/NewEventForm.qml:24
 msgid "[No Calendars]"
-msgstr "[Não há calendários]"
+msgstr "[Χωρίς Ημερολόγια]"
 
 #: ../contents/ui/NewEventForm.qml:31
 msgid "Eg: 9am-5pm Work"
-msgstr "EX: 09:00-17:00 Trabalho"
+msgstr "Πχ: 9πμ-5μμ Εργασία"
 
 #: ../contents/ui/PopupView.qml:307
 msgid ""
@@ -712,6 +712,9 @@ msgid ""
 "Go to Weather in the config and set your city,\n"
 "and/or disable the meteogram to hide this area."
 msgstr ""
+"Ο καιρός δεν έχει ρυθμιστεί.\n"
+"Πηγαίνετε στο Καιρός στις ρυθμίσεις του Event Calendar και ορίστε την πόλη σας,\n"
+"και / ή απενεργοποιήστε το μετεωρογράφημα για να αποκρύψετε αυτήν την περιοχή."
 
 #: ../contents/ui/TimerInputView.qml:75
 msgid "Cancel"
@@ -723,67 +726,67 @@ msgstr ""
 
 #: ../contents/ui/TimerView.qml:25
 msgid "30s"
-msgstr "30s"
+msgstr "30δ"
 
 #: ../contents/ui/TimerView.qml:29
 msgid "1m"
-msgstr "1m"
+msgstr "1λ"
 
 #: ../contents/ui/TimerView.qml:33
 msgid "5m"
-msgstr "5m"
+msgstr "5λ"
 
 #: ../contents/ui/TimerView.qml:37
 msgid "10m"
-msgstr "10m"
+msgstr "10λ"
 
 #: ../contents/ui/TimerView.qml:41
 msgid "15m"
-msgstr "15m"
+msgstr "15λ"
 
 #: ../contents/ui/TimerView.qml:45
 msgid "20m"
-msgstr "20m"
+msgstr "20λ"
 
 #: ../contents/ui/TimerView.qml:49
 msgid "30m"
-msgstr "30m"
+msgstr "30λ"
 
 #: ../contents/ui/TimerView.qml:53
 msgid "45m"
-msgstr "45m"
+msgstr "45λ"
 
 #: ../contents/ui/TimerView.qml:57
 msgid "1h"
-msgstr "1h"
+msgstr "1ώ"
 
 #: ../contents/ui/TimerView.qml:105
 msgid "Pause Timer"
-msgstr "Pausar o cronômetro"
+msgstr "Παύση χρονομετρητή"
 
 #: ../contents/ui/TimerView.qml:107
 msgid "Start Timer"
-msgstr "Iniciar cronômetro"
+msgstr "Εκκίνηση χρονομετρητή"
 
 #: ../contents/ui/TimerView.qml:111
 msgid "Scroll to add to duration"
-msgstr "Gire a roda do mouse para adicionar à duração"
+msgstr "Κύλιση ροδέλας για προσθήκη/αφαίρεση στη διάρκεια"
 
 #: ../contents/ui/TimerView.qml:166 ../contents/ui/TimerView.qml:175 ../contents/ui/TimerView.qml:376
 msgid "Repeat"
-msgstr "Repetir"
+msgstr "Επανάληψη"
 
 #: ../contents/ui/TimerView.qml:184 ../contents/ui/TimerView.qml:193 ../contents/ui/TimerView.qml:385
 msgid "Sound"
-msgstr "Som"
+msgstr "Ήχος"
 
 #: ../contents/ui/TimerView.qml:350
 msgid "Timer finished"
-msgstr "O cronômetro terminou"
+msgstr "Ο χρονομετρητής τελείωσε"
 
 #: ../contents/ui/TimerView.qml:351
 msgid "%1 has passed"
-msgstr "%1 já passou"
+msgstr "%1 έχει παρέλθει"
 
 #: ../contents/ui/TimerView.qml:397
 msgid "Set Timer"
@@ -791,43 +794,12 @@ msgstr ""
 
 #: ../contents/ui/UpcomingEvents.qml:114
 msgid "Events Starting"
-msgstr "Início de Eventos"
+msgstr "Εκκίνηση Συμβάντων"
 
 #: ../contents/ui/UpcomingEvents.qml:117
 msgid "Events In Progress"
-msgstr "Eventos em andamento"
+msgstr "Συμβάντα Σε Εξέλιξη"
 
 #: ../contents/ui/UpcomingEvents.qml:120
 msgid "Upcoming Events"
-msgstr "próximos eventos"
-
-#~ msgid "Adjust Date and Time..."
-#~ msgstr "Ajustar data e hora..."
-
-#~ msgctxt "Intervalo de indicação em minutos"
-#~ msgid "min"
-#~ msgid_plural "min"
-#~ msgstr[0] "min"
-#~ msgstr[1] "min"
-
-#~ msgctxt "Evento sem resumo"
-#~ msgid "(No title)"
-#~ msgstr "(Sem título)"
-
-#~ msgid ""
-#~ "Weather not configured.\n"
-#~ "Vá para a configuração de clima e configure sua cidade,\n"
-#~ "and/or disable the meteogram to hide this area."
-#~ msgstr ""
-#~ "Clima não configurado.\n"
-#~ "Vaya a Tiempo en la configuración y establece tu ciudad,\n"
-#~ "Ative ou desative o meteograma para esconder essa área."
-
-#~ msgid "Event In Progress:"
-#~ msgstr "Evento em andamento:"
-
-#~ msgid "Highlight"
-#~ msgstr "Realçar"
-
-#~ msgid "Normal"
-#~ msgstr "Normal"
+msgstr "Επόμενα Συμβάντα"
