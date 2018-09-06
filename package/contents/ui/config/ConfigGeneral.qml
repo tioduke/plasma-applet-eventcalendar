@@ -176,7 +176,7 @@ ConfigPage {
                     Component.onCompleted: {
                         // org.kde.plasma.digitalclock
                         var arr = [] // use temp array to avoid constant binding stuff
-                        arr.push({text: i18nc("Use default font", "Default"), value: ""})
+                        arr.push({text: i18n("Default"), value: ""})
 
                         var fonts = Qt.fontFamilies()
                         var foundIndex = 0
@@ -322,7 +322,7 @@ ConfigPage {
                         // remove it + the delimiter and space
                         var format = Qt.locale().dateFormat(Locale.LongFormat);
                         format = format.replace(/(^dddd.?\s)|(,?\sdddd$)/, "");
-                        return;
+                        return format; 
                     }
                     text: Qt.formatDate(new Date(), dateFormat)
                     onClicked: cfg_clock_timeformat_2 = dateFormat
