@@ -188,6 +188,54 @@ LinkRect {
                     } // RowLayout
                 } // Component
             } // Loader
+
+            Item {
+                id: eventDescriptionSpacing
+                visible: eventDescription.visible
+                Layout.preferredHeight: 4 * units.devicePixelRatio
+            }
+
+            PlasmaComponents.Label {
+                id: eventDescription
+                visible: plasmoid.configuration.agendaShowEventDescription && text // && !editDescriptionForm.active
+                text: model.description
+                color: PlasmaCore.ColorScope.textColor
+                opacity: 0.75
+                font.pointSize: -1
+                font.pixelSize: appletConfig.agendaFontSize
+                height: paintedHeight
+                Layout.fillWidth: true
+                wrapMode: Text.Wrap // See warning at eventSummary.wrapMode
+                
+                linkColor: PlasmaCore.ColorScope.highlightColor
+                onLinkActivated: Qt.openUrlExternally(link)
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                    cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+            }
+
+            // Loader {
+            //     id: editDescriptionForm
+            //     active: false
+            //     visible: active
+            //     Layout.fillWidth: true
+            //     sourceComponent: Component {
+            //         RowLayout {
+            //             //... TODO
+            //         }
+            //     }
+            // }
+
+            PlasmaComponents.ToolButton {
+                id: eventHangoutLink
+                visible: plasmoid.configuration.agendaShowEventHangoutLink && !!model.hangoutLink
+                text: i18n("Hangout")
+                iconSource: plasmoid.file("", "icons/hangouts.svg")
+                onClicked: Qt.openUrlExternally(model.hangoutLink)
+            }
+
         } // eventColumn
     }
     
