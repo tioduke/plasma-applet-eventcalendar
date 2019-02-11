@@ -27,9 +27,11 @@ CalendarManager {
 	}
 
 	// https://github.com/KDE/plasma-framework/blob/master/src/declarativeimports/calendar/eventpluginsmanager.cpp
-	// Plugins are located at: /usr/lib/x86_64-linux-gnu/qt5/plugins/plasmacalendarplugins/
+	// Plugins are located at:
+	//     * (Ubuntu) /usr/lib/x86_64-linux-gnu/qt5/plugins/plasmacalendarplugins/
+	//     * (Arch) /usr/lib/qt/plugins/plasmacalendarplugins/
 	// DigitalClock's config in ~/.config/plasma-____-appletsrc is:
-	//   enabledCalendarPlugins=/usr/lib/x86_64-linux-gnu/qt5/plugins/plasmacalendarplugins/holidaysevents.so
+	//   enabledCalendarPlugins=/usr/lib/.../plugins/plasmacalendarplugins/holidaysevents.so
 	// Holidays stores the region in:
 	//   ~/.config/plasma_calendar_holiday_regions
 	//     [General]
@@ -169,7 +171,7 @@ CalendarManager {
 	function getEventsForDuration(dateMin, dateMax) {
 		var numDays = 0
 		for (var day = new Date(dateMin); day < dateMax; day.setDate(day.getDate() + 1)) {
-			numDays += 1;
+			numDays += 1
 		}
 		// CalendarBackend needs the actual month we're looking at. We can't arbitrarily grab events for random days.
 		var middleDay = new Date(dateMin)
@@ -186,7 +188,9 @@ CalendarManager {
 
 		for (var day = new Date(dateMinUtc); day < dateMax; day.setDate(day.getDate() + 1)) {
 			var dayEvents = calendarBackend.daysModel.eventsForDate(day)
-			logger.debugJSON(day, dayEvents)
+			if (dayEvents.length) {
+				logger.debugJSON(day, dayEvents)
+			}
 			items = items.concat(parseEventsForDate(day, dayEvents))
 		}
 		// logger.debugJSON(items)

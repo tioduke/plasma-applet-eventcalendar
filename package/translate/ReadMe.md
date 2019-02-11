@@ -19,7 +19,7 @@ Or if you know how to make a pull request
 * `./merge` will parse the `i18n()` calls in the `*.qml` files and write it to the `template.pot` file. Then it will merge any changes into the `*.po` language files.
 * `./build` will convert the `*.po` files to it's binary `*.mo` version and move it to `contents/locale/...` which will bundle the translations in the *.plasmoid without needing the user to manually install them.
 * `./install` will convert the `*.po` files to it's binary `*.mo` version and move it to `~/.local/share/locale/...`.
-* `./test` will run `./merge` then `./install`.
+* `./plasmoidlocaletest` will run `./build` then `plasmoidviewer` (part of `plasma-sdk`).
 
 ## Links
 
@@ -34,13 +34,13 @@ Or if you know how to make a pull request
 ## Status
 |  Locale  |  Lines  | % Done|
 |----------|---------|-------|
-| Template |     191 |       |
-| de       | 143/191 |   74% |
-| el       | 177/191 |   92% |
-| es       | 146/191 |   76% |
-| fr       | 156/191 |   81% |
-| nl_NL    | 187/191 |   97% |
-| pl       | 162/191 |   84% |
-| pt_BR    | 153/191 |   80% |
-| ru       | 177/191 |   92% |
-| uk       | 162/191 |   84% |
+| Template |     193 |       |
+| de       | 141/193 |   73% |
+| el       | 175/193 |   90% |
+| es       | 144/193 |   74% |
+| fr       | 154/193 |   79% |
+| nl_NL    | 193/193 |  100% |
+| pl       | 160/193 |   82% |
+| pt_BR    | 151/193 |   78% |
+| ru       | 181/193 |   93% |
+| uk       | 160/193 |   82% |
