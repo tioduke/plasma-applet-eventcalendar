@@ -74,7 +74,7 @@ LinkRect {
 							var event = events.get(index)
 							console.log(event)
 							console.log(JSON.stringify(event))
-							eventModel.setEventSummary(event.calendarId, event.id, text)
+							eventModel.setEventProperty(event.calendarId, event.id, 'summary', text)
 						}
 						Component.onCompleted: {
 							focus = true
@@ -197,7 +197,7 @@ LinkRect {
 
 			PlasmaComponents.Label {
 				id: eventDescription
-				visible: plasmoid.configuration.agendaShowEventDescription && text // && !editDescriptionForm.active
+				visible: plasmoid.configuration.agendaShowEventDescription && text && !editDescriptionForm.active
 				text: model.description || ""
 				color: PlasmaCore.ColorScope.textColor
 				opacity: 0.75
@@ -240,7 +240,17 @@ LinkRect {
 							}
 
 							Keys.onEscapePressed: editDescriptionItem.cancel()
-							Keys.onEnterPressed: console.log('onEnterPressed', event.key, event.modifiers)
+
+							Keys.onEnterPressed: _onEnterPressed(event) // ?
+							Keys.onReturnPressed: _onEnterPressed(event) // What's triggered on a US Keyboard
+							function _onEnterPressed(event) {
+								// console.log('onEnterPressed', event.key, event.modifiers)
+								if ((event.modifiers & Qt.ShiftModifier) || (event.modifiers & Qt.ControlModifier)) {
+									editDescriptionItem.submit()
+								} else {
+									event.accepted = false
+								}
+							}
 						}
 						RowLayout {
 							Item {
@@ -249,6 +259,7 @@ LinkRect {
 							PlasmaComponents.Button {
 								text: i18n("Submit")
 								implicitWidth: minimumWidth
+								onClicked: editDescriptionItem.submit()
 							}
 						}
 
@@ -258,7 +269,7 @@ LinkRect {
 							var event = events.get(index)
 							console.log(event)
 							console.log(JSON.stringify(event))
-							eventModel.setEventDescription(event.calendarId, event.id, text)
+							eventModel.setEventProperty(event.calendarId, event.id, 'description', text)
 						}
 
 						function cancel() {

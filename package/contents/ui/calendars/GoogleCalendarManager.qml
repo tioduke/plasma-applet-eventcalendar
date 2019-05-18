@@ -208,9 +208,11 @@ CalendarManager {
 			// user to click the edit icon after loading the page.
 			var eidRegex = /eid=(\w+)(\&|$)/
 			var eidMatch = eidRegex.exec(event.htmlLink)
-			var eid = eidMatch[1]
-			if (eid) {
-				event.htmlLink = 'https://calendar.google.com/calendar/r/eventedit/' + eid
+			if (eidMatch) {
+				var eid = eidMatch[1]
+				if (eid) {
+					event.htmlLink = 'https://calendar.google.com/calendar/r/eventedit/' + eid
+				}
 			}
 		}
 	}
@@ -291,14 +293,13 @@ CalendarManager {
 		return data
 	}
 
-	function setGoogleCalendarEventSummary(accessToken, calendarId, eventId, summary) {
-		updateGoogleCalendarEvent(accessToken, calendarId, eventId, {
-			summary: summary
-		})
-		// patchGoogleCalendarEvent(accessToken, calendarId, eventId, {
-		// 	summary: summary
-		// }, function(err, data, xhr) {
-		// 	logger.debug('setGoogleCalendarEventSummary.done')
+	function setEventProperty(accessToken, calendarId, eventId, key, value) {
+		console.log('googleCalendarManager.setEventProperty', key, value)
+		var args = {}
+		args[key] = value
+		updateGoogleCalendarEvent(accessToken, calendarId, eventId, args)
+		// patchGoogleCalendarEvent(accessToken, calendarId, eventId, args, function(err, data, xhr) {
+		// 	logger.debug('setEventProperty.done')
 		// })
 	}
 
@@ -308,6 +309,7 @@ CalendarManager {
 			logger.log('error, trying to update event that doesn\'t exist')
 			return
 		}
+		logger.debugJSON('googleCalendarManager.updateGoogleCalendarEvent', args)
 		
 		// Merge assigned values into a cloned object
 		var data = cloneRawEvent(event)
@@ -324,7 +326,7 @@ CalendarManager {
 			eventId: eventId,
 			data: data,
 		}, function(err, data, xhr) {
-			logger.debugJSON('setGoogleCalendarEventSummary.response', data)
+			logger.debugJSON('updateGoogleCalendarEvent.response', data)
 
 			// Merge serialized values
 			for (var i = 0; i < keys.length; i++) {

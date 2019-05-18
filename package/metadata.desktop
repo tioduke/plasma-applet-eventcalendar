@@ -12,8 +12,14 @@ X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-Name=org.kde.plasma.eventcalendar
 X-KDE-PluginInfo-Website=https://github.com/Zren/plasma-applet-eventcalendar
 X-KDE-PluginInfo-KdeStoreId=998901
-X-KDE-PluginInfo-Version=62
+X-KDE-PluginInfo-Version=63
 X-KDE-ServiceTypes=Plasma/Applet
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
 X-Plasma-Provides=org.kde.plasma.time,org.kde.plasma.date
+
+Name[pt]=Calendário de Eventos
+Name[pt_BR]=Calendário de Eventos
+Name[es]=Calendario de Eventos
+Name[nl]=Gebeurteniskalender
+Name[de]=Ereigniskalender
