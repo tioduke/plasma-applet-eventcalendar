@@ -286,7 +286,7 @@ FocusScope {
 				Layout.fillWidth: true
 				Layout.minimumHeight: popup.topRowHeight
 				Layout.preferredHeight: parent.height / 5
-				cfg_meteogram_hours: plasmoid.configuration.meteogram_hours
+				visibleDuration: plasmoid.configuration.meteogram_hours
 				showIconOutline: plasmoid.configuration.show_outlines
 				xAxisScale: 1 / hoursPerDataPoint
 				xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
@@ -558,10 +558,10 @@ FocusScope {
 	}
 
 	function updateDailyWeather() {
-		logger.debug('fetchDailyWeatherForecast', lastForecastAt, Date.now())
+		logger.debug('updateDailyWeather', lastForecastAt, Date.now())
 		WeatherApi.updateDailyWeather(function(err, data, xhr) {
-			if (err) return logger.log('fetchDailyWeatherForecast.err', err, xhr && xhr.status, data)
-			logger.debugJSON('fetchDailyWeatherForecast.response', data)
+			if (err) return logger.log('updateDailyWeather.err', err, xhr && xhr.status, data)
+			logger.debugJSON('updateDailyWeather.response', data)
 
 			lastForecastAt = Date.now()
 			dailyWeatherData = data
@@ -570,10 +570,10 @@ FocusScope {
 	}
 
 	function updateHourlyWeather() {
-		logger.debug('fetchHourlyWeatherForecast', lastForecastAt, Date.now())
+		logger.debug('updateHourlyWeather', lastForecastAt, Date.now())
 		WeatherApi.updateHourlyWeather(function(err, data, xhr) {
-			if (err) return logger.log('fetchHourlyWeatherForecast.err', err, xhr && xhr.status, data)
-			logger.debugJSON('fetchHourlyWeatherForecast.response', data)
+			if (err) return logger.log('updateHourlyWeather.err', err, xhr && xhr.status, data)
+			logger.debugJSON('updateHourlyWeather.response', data)
 
 			lastForecastAt = Date.now()
 			hourlyWeatherData = data

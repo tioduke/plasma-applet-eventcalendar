@@ -56,16 +56,16 @@ Dialog {
 	}
 
 	onVisibleChanged: {
-		if (!cityListLoaded && !loadingCityList) {
-			// loadCityList('https://weather.gc.ca/forecast/canada/index_e.html?id=AB')
+		if (visible && !cityListLoaded && !loadingCityList) {
+			loadProvinceCityList()
 		}
 	}
 
 
 	ColumnLayout {
 		anchors.fill: parent
-		LinkText { 
-			text: i18n("Fetched from <a href=\"https://weather.gc.ca/canada_e.html\">https://weather.gc.ca/canada_e.html</a>")
+		LinkText {
+			text: i18n("Fetched from <a href=\"%1\">%1</a>", "https://weather.gc.ca/canada_e.html")
 		}
 
 		Item {
@@ -157,6 +157,4 @@ Dialog {
 		var provinceUrl = 'https://weather.gc.ca/forecast/canada/index_e.html?id=' + provinceId
 		loadCityList(provinceUrl)
 	}
-
-	Component.onCompleted: loadProvinceCityList()
 }

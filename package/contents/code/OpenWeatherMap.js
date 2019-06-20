@@ -18,7 +18,6 @@ function fetchHourlyWeatherForecast(args, callback) {
 }
 
 function fetchDailyWeatherForecast(args, callback) {
-	console.log('fetchWeatherForecast')
 	if (!args.app_id) return callback('OpenWeatherMap AppId not set')
 	if (!args.city_id) return callback('OpenWeatherMap CityId not set')
 	
@@ -74,23 +73,29 @@ function parseHourlyData(weatherData) {
 	for (var j = 0; j < weatherData.list.length; j++) {
 		var forecastItem = weatherData.list[j]
 		
+		forecastItem.temp = forecastItem.main.temp
 		forecastItem.iconName = weatherIconMap[forecastItem.weather[0].icon]
-		forecastItem.text = forecastItem.weather[0].main
+		// forecastItem.text = forecastItem.weather[0].main
 		forecastItem.description = forecastItem.weather[0].description
+
+		var rain = forecastItem.rain && forecastItem.rain['3h'] || 0
+		var snow = forecastItem.snow && forecastItem.snow['3h'] || 0
+		var mm = rain + snow
+		forecastItem.precipitation = mm
 	}
 
 	return weatherData
 }
 
 function updateDailyWeather(callback) {
-	// console.log('fetchDailyWeatherForecast', lastForecastAt, Date.now())
+	logger.debug('fetchDailyWeatherForecast', lastForecastAt, Date.now())
 	fetchDailyWeatherForecast({
 		app_id: plasmoid.configuration.weather_app_id,
 		city_id: plasmoid.configuration.weather_city_id,
 		units: plasmoid.configuration.weather_units,
 	}, function(err, data, xhr) {
 		if (err) return console.log('fetchDailyWeatherForecast.err', err, xhr && xhr.status, data)
-		logger.log('fetchDailyWeatherForecast.response')
+		logger.debug('fetchDailyWeatherForecast.response')
 		// logger.debugJSON('fetchDailyWeatherForecast.response', data)
 
 		data = parseDailyData(data)
@@ -100,14 +105,14 @@ function updateDailyWeather(callback) {
 }
 
 function updateHourlyWeather(callback) {
-	// console.log('fetchHourlyWeatherForecast', lastForecastAt, Date.now())
+	logger.debug('fetchHourlyWeatherForecast', lastForecastAt, Date.now())
 	fetchHourlyWeatherForecast({
 		app_id: plasmoid.configuration.weather_app_id,
 		city_id: plasmoid.configuration.weather_city_id,
 		units: plasmoid.configuration.weather_units,
 	}, function(err, data, xhr) {
 		if (err) return console.log('fetchHourlyWeatherForecast.err', err, xhr && xhr.status, data)
-		logger.log('fetchHourlyWeatherForecast.response')
+		logger.debug('fetchHourlyWeatherForecast.response')
 		// logger.debugJSON('fetchHourlyWeatherForecast.response', data)
 
 		data = parseHourlyData(data)
