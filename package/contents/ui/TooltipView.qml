@@ -17,6 +17,7 @@ Item {
 	LayoutMirroring.childrenInherit: true
 
 	property var dataSource: timeModel.dataSource
+	readonly property string timezoneTimeFormat: Qt.locale().timeFormat(Locale.ShortFormat)
 
 	function timeForZone(zone) {
 		var compactRepresentationItem = plasmoid.compactRepresentationItem
@@ -31,7 +32,7 @@ Item {
 		// add the dataengine TZ offset to it
 		var dateTime = new Date(msUTC + (dataSource.data[zone]["Offset"] * 1000))
 
-		var formattedTime = Qt.formatTime(dateTime, 1)
+		var formattedTime = Qt.formatTime(dateTime, timezoneTimeFormat)
 
 		if (dateTime.getDay() != dataSource.data["Local"]["DateTime"].getDay()) {
 			formattedTime += " (" + Qt.formatDate(dateTime, 1) + ")"
@@ -49,6 +50,7 @@ Item {
 	}
 
 	ColumnLayout {
+		id: columnLayout
 		anchors {
 			left: parent.left
 			top: parent.top
@@ -70,6 +72,8 @@ Item {
 			}
 
 			ColumnLayout {
+				spacing: 0
+
 				PlasmaExtras.Heading {
 					id: tooltipMaintext
 					level: 3
@@ -91,6 +95,7 @@ Item {
 
 
 		GridLayout {
+			id: timezoneLayout
 			Layout.minimumWidth: Math.min(implicitWidth, preferredTextWidth)
 			Layout.maximumWidth: preferredTextWidth
 			// Layout.maximumHeight: childrenRect.height // Causes binding loop
@@ -105,7 +110,7 @@ Item {
 					// and once for the time and the Repeater delegate cannot
 					// be one Item with two Labels because that wouldn't work
 					// in a grid then
-					var timezones = [];
+					var timezones = []
 					for (var i = 0; i < plasmoid.configuration.selectedTimeZones.length; i++) {
 						var timezone = plasmoid.configuration.selectedTimeZones[i]
 						if (timezone != 'Local') {
@@ -114,17 +119,16 @@ Item {
 						}
 					}
 
-					return timezones;
+					return timezones
 				}
 
 				PlasmaComponents.Label {
 					id: timezone
-					// Layout.fillWidth is buggy here
 					Layout.alignment: index % 2 === 0 ? Qt.AlignRight : Qt.AlignLeft
-					Layout.fillWidth: index % 2 === 1
 
 					wrapMode: Text.NoWrap
 					text: index % 2 == 0 ? nameForZone(modelData) : timeForZone(modelData)
+					font.weight: index % 2 == 0 ? Font.Bold : Font.Normal
 					height: paintedHeight
 					elide: Text.ElideNone
 					opacity: 0.6

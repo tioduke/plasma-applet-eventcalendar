@@ -117,13 +117,13 @@ CalendarManager {
 		if (calendarId == "debug") {
 
 		} else if (true) { // Google Calendar
-			if (plasmoid.configuration.access_token) {
-				googleCalendarManager.createGoogleCalendarEvent(plasmoid.configuration.access_token, calendarId, date, text)
+			if (googleCalendarManager.accessToken) {
+				googleCalendarManager.createGoogleCalendarEvent(calendarId, date, text)
 			} else {
 				logger.log('attempting to create an event without an access token set')
 			}
 		} else {
-			logger.log('cannot create an new event for the calendar', calendarId)
+			logger.log('cannot create a new event for the calendar', calendarId)
 		}
 	}
 
@@ -138,11 +138,27 @@ CalendarManager {
 	}
 
 	function setEventProperty(calendarId, eventId, key, value) {
-		console.log('eventModel.setEventProperty', calendarId, eventId, key, value)
+		logger.debug('eventModel.setEventProperty', calendarId, eventId, key, value)
 		if (calendarId == "debug") {
 			debugCalendarManager.setEventProperty(calendarId, eventId, key, value)
 		} else if (true) { // Google Calendar
-			googleCalendarManager.setEventProperty(plasmoid.configuration.access_token, calendarId, eventId, key, value)
+			googleCalendarManager.setEventProperty(calendarId, eventId, key, value)
+		} else {
+			logger.log('cannot edit the event property for the calendar', calendarId, eventId)
+		}
+	}
+
+	function setEventProperties(calendarId, eventId, args) {
+		logger.debugJSON('eventModel.setEventProperties', calendarId, eventId, args)
+		if (calendarId == "debug") {
+			var keys = Object.keys(args)
+			for (var i = 0; i < keys.length; i++) {
+				var key = keys[i]
+				var value = args[key]
+				debugCalendarManager.setEventProperty(calendarId, eventId, key, value)
+			}
+		} else if (true) { // Google Calendar
+			googleCalendarManager.updateGoogleCalendarEvent(calendarId, eventId, args)
 		} else {
 			logger.log('cannot edit the event property for the calendar', calendarId, eventId)
 		}

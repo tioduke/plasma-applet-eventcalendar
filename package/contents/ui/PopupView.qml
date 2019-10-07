@@ -7,8 +7,10 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 import "Shared.js" as Shared
 import "../code/WeatherApi.js" as WeatherApi
 
-FocusScope {
+MouseArea {
 	id: popup
+
+	onClicked: focus = true
 
 	// use Layout.prefferedHeight instead of height so that the plasmoid resizes.
 	// width: columnWidth + 10 + columnWidth
@@ -80,6 +82,7 @@ FocusScope {
 	property var hourlyWeatherData: { "list": [] }
 	property var currentWeatherData: null
 	property var lastForecastAt: null
+	property var lastForecastErr: null
 
 	Connections {
 		target: monthView
@@ -293,15 +296,27 @@ FocusScope {
 				property int hoursPerDataPoint: WeatherApi.getDataPointDuration()
 
 				Rectangle {
+					id: meteogramMessageBox
 					anchors.fill: parent
 					anchors.margins: 10
 					color: "transparent"
 					border.color: theme.buttonBackgroundColor
 					border.width: 1
-					visible: !WeatherApi.weatherIsSetup()
+
+					readonly property string message: {
+						if (!WeatherApi.weatherIsSetup()) {
+							return i18n("Weather not configured.\nGo to Weather in the config and set your city,\nand/or disable the meteogram to hide this area.")
+						} else if (lastForecastErr && !meteogramView.populated) {
+							return i18n("Error fetching weather.") + '\n' + lastForecastErr
+						} else {
+							return ''
+						}
+					}
+
+					visible: !!message
 
 					PlasmaComponents.Label {
-						text: i18n("Weather not configured.\nGo to Weather in the config and set your city,\nand/or disable the meteogram to hide this area.")
+						text: meteogramMessageBox.message
 						anchors.fill: parent
 						fontSizeMode: Text.Fit
 						wrapMode: Text.Wrap
@@ -327,8 +342,7 @@ FocusScope {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 
-				onNewEventFormOpened: {
-					// logger.debug('onNewEventFormOpened')
+				function populateCalendarSelector(calendarSelector, selectedCalendarId) {
 					if (plasmoid.configuration.access_token) {
 						var calendarIdList = plasmoid.configuration.calendar_id_list ? plasmoid.configuration.calendar_id_list.split(',') : ['primary']
 						var calendarList = plasmoid.configuration.calendar_list ? JSON.parse(Qt.atob(plasmoid.configuration.calendar_list)) : []
@@ -336,25 +350,37 @@ FocusScope {
 						var list = []
 						var selectedIndex = 0
 						calendarList.forEach(function(calendar){
-							if (calendar.accessRole == 'writer' || calendar.accessRole == 'owner') {
-								if (plasmoid.configuration.agenda_newevent_remember_calendar && calendar.id === plasmoid.configuration.agenda_newevent_last_calendar_id) {
-									selectedIndex = list.length // index after insertion
-								}
+							var canEditCalendar = calendar.accessRole == 'writer' || calendar.accessRole == 'owner'
+							var isSelected = calendar.id === selectedCalendarId
+
+							if (isSelected) {
+								selectedIndex = list.length // index after insertion
+							}
+
+							if (canEditCalendar || isSelected) {
 								list.push({
 									'calendarId': calendar.id,
 									'text': calendar.summary,
+									'backgroundColor': calendar.backgroundColor,
 								})
 							}
 						})
-						newEventCalendarId.model = list
-						newEventCalendarId.currentIndex = selectedIndex
+						calendarSelector.model = list
+						calendarSelector.currentIndex = selectedIndex
 					}
+				}
+				onNewEventFormOpened: {
+					// logger.debug('onNewEventFormOpened')
+					var selectedCalendarId = ""
+					if (plasmoid.configuration.agenda_newevent_remember_calendar) {
+						selectedCalendarId = plasmoid.configuration.agenda_newevent_last_calendar_id
+					}
+					populateCalendarSelector(newEventCalendarId, selectedCalendarId)
 				}
 				onSubmitNewEventForm: {
 					// logger.debug('onSubmitNewEventForm', calendarId)
 					if (plasmoid.configuration.access_token) {
-						logger.debug(calendarId, calendarId.calendarId)
-						calendarId = calendarId.calendarId ? calendarId.calendarId : calendarId
+						logger.debug(calendarId)
 						eventModel.createEvent(calendarId, date, text)
 					}
 				}
@@ -365,7 +391,7 @@ FocusScope {
 					anchors.rightMargin: agendaView.scrollbarWidth
 					onClicked: {
 						updateEvents()
-						updateWeather(true)
+						updateWeather()
 					}
 
 					// Timer {
@@ -557,13 +583,24 @@ FocusScope {
 		}
 	}
 
+	function handleWeatherError(funcName, err, data, xhr) {
+		logger.log(funcName + '.err', err, xhr && xhr.status, data)
+		lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
+		if (xhr && xhr.status == 429) {
+			lastForecastErr = i18n("Weather API limit reached, will try again soon.")
+		} else {
+			lastForecastErr = err
+		}
+	}
+
 	function updateDailyWeather() {
 		logger.debug('updateDailyWeather', lastForecastAt, Date.now())
 		WeatherApi.updateDailyWeather(function(err, data, xhr) {
-			if (err) return logger.log('updateDailyWeather.err', err, xhr && xhr.status, data)
+			if (err) return handleWeatherError('updateDailyWeather', err, data, xhr)
 			logger.debugJSON('updateDailyWeather.response', data)
 
 			lastForecastAt = Date.now()
+			lastForecastErr = null
 			dailyWeatherData = data
 			updateUI()
 		})
@@ -572,10 +609,11 @@ FocusScope {
 	function updateHourlyWeather() {
 		logger.debug('updateHourlyWeather', lastForecastAt, Date.now())
 		WeatherApi.updateHourlyWeather(function(err, data, xhr) {
-			if (err) return logger.log('updateHourlyWeather.err', err, xhr && xhr.status, data)
+			if (err) return handleWeatherError('updateHourlyWeather', err, data, xhr)
 			logger.debugJSON('updateHourlyWeather.response', data)
 
 			lastForecastAt = Date.now()
+			lastForecastErr = null
 			hourlyWeatherData = data
 			currentWeatherData = data.list[0]
 			meteogramView.parseWeatherForecast(currentWeatherData, hourlyWeatherData)

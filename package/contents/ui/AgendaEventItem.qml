@@ -23,13 +23,19 @@ LinkRect {
 		onLoaded: agendaEventItem.checkIfInProgress()
 		onMinuteChanged: agendaEventItem.checkIfInProgress()
 	}
-	Component.onCompleted: agendaEventItem.checkIfInProgress()
+	Component.onCompleted: {
+		agendaEventItem.checkIfInProgress()
 
-	property bool isEditing: editSummaryForm.active || editDateTimeForm.active
+		//--- Debugging
+		// editEventForm.active = eventItemInProgress && !model.start.date
+	}
+
+	property bool isEditing: editSummaryForm.active || editDescriptionForm.active || editEventForm.active
 	enabled: !isEditing
 
 	RowLayout {
 		width: parent.width
+		spacing: 4 * units.devicePixelRatio
 
 		Rectangle {
 			Layout.preferredWidth: appletConfig.eventIndicatorWidth
@@ -50,7 +56,7 @@ LinkRect {
 				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: eventItemInProgress ? inProgressFontWeight : Font.Normal
 				height: paintedHeight
-				visible: !editSummaryForm.active
+				visible: !(editSummaryForm.active || editEventForm.active)
 				Layout.fillWidth: true
 
 				// The Following doesn't seem to be applicable anymore (left comment just in case).
@@ -77,7 +83,7 @@ LinkRect {
 							eventModel.setEventProperty(event.calendarId, event.id, 'summary', text)
 						}
 						Component.onCompleted: {
-							focus = true
+							forceActiveFocus()
 							agendaScrollView.positionViewAtEvent(agendaItemIndex, eventItemIndex)
 						}
 
@@ -89,10 +95,15 @@ LinkRect {
 			PlasmaComponents.Label {
 				id: eventDateTime
 				text: {
-					LocaleFuncs.formatEventDuration(model, {
+					var eventTimestamp = LocaleFuncs.formatEventDuration(model, {
 						relativeDate: agendaItemDate,
 						clock24h: appletConfig.clock24h,
 					})
+					if (model.location) {
+						return eventTimestamp + " | " + model.location
+					} else {
+						return eventTimestamp
+					}
 				}
 				color: eventItemInProgress ? inProgressColor : PlasmaCore.ColorScope.textColor
 				opacity: eventItemInProgress ? 1 : 0.75
@@ -100,94 +111,8 @@ LinkRect {
 				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: eventItemInProgress ? inProgressFontWeight : Font.Normal
 				height: paintedHeight
-				visible: !editDateTimeForm.active
+				visible: !editEventForm.active
 			}
-
-			Loader {
-				id: editDateTimeForm
-				active: false
-				visible: active
-				Layout.fillWidth: true
-				sourceComponent: Component {
-					RowLayout {
-						property alias isAllDayEvent: editAllDay.checked
-
-						ColumnLayout {
-							Layout.fillWidth: true
-							RowLayout {
-								DateSelector {
-									id: editStartDate
-									Layout.fillWidth: true
-									dateTime: model.start.dateTime
-									onDateTimeChanged: {
-										var t1 = model.start.dateTime.valueOf()
-										var t2 = dateTime.valueOf()
-										console.log('dt1', model.start.dateTime)
-										console.log('dt2', dateTime)
-										var dateDelta = Math.floor((t2 - t1) / (1000*60*60*24))
-										console.log('dateDelta', dateDelta)
-
-										var shiftedEndDate = new Date(model.end.dateTime)
-										shiftedEndDate.setDate(shiftedEndDate.getDate() + dateDelta)
-										editEndDate.dateTime = shiftedEndDate
-									}
-								}
-
-								PlasmaComponents.TextField {
-									id: editStartTime
-									Layout.fillWidth: true
-									enabled: !isAllDayEvent
-									placeholderText: '9:00am'
-									text: Qt.formatTime(model.start.dateTime)
-								}
-							}
-							PlasmaComponents.Label {
-								text: i18n("to")
-								Layout.fillWidth: true
-								horizontalAlignment: Text.AlignHCenter
-							}
-							RowLayout {
-								DateSelector {
-									id: editEndDate
-									Layout.fillWidth: true
-									dateTime: model.end.dateTime
-								}
-
-								PlasmaComponents.TextField {
-									id: editEndTime
-									Layout.fillWidth: true
-									enabled: !isAllDayEvent
-									placeholderText: '10:00am'
-									text: Qt.formatTime(model.end.dateTime)
-								}
-							}
-						}
-
-						ColumnLayout {
-							Layout.alignment: Qt.AlignTop
-							PlasmaComponents.CheckBox {
-								id: editAllDay
-								text: i18n("All Day")
-								Layout.minimumWidth: 0
-								checked: !!model.start.date
-							}
-							PlasmaComponents.Button {
-								text: i18n("Save")
-								Layout.minimumWidth: 0
-								onClicked: {
-									// ...
-									editDateTimeForm.active = false
-								}
-							}
-							PlasmaComponents.Button {
-								text: i18n("Discard")
-								Layout.minimumWidth: 0
-								onClicked: editDateTimeForm.active = false
-							}
-						}
-					} // RowLayout
-				} // Component
-			} // Loader
 
 			Item {
 				id: eventDescriptionSpacing
@@ -197,8 +122,9 @@ LinkRect {
 
 			PlasmaComponents.Label {
 				id: eventDescription
-				visible: plasmoid.configuration.agendaShowEventDescription && text && !editDescriptionForm.active
-				text: model.description || ""
+				readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && text
+				visible: showProperty && !(editDescriptionForm.active || editEventForm.active)
+				text: renderText(model.description)
 				color: PlasmaCore.ColorScope.textColor
 				opacity: 0.75
 				font.pointSize: -1
@@ -213,6 +139,45 @@ LinkRect {
 					anchors.fill: parent
 					acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
 					cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+				}
+
+				function renderText(text) {
+					// console.log('renderText')
+					if (typeof text === 'undefined') {
+						return ''
+					}
+					var out = text
+					// text && console.log('renderText', text)
+					
+					// Render links
+					// Google doesn't auto-convert links to anchor tags when you paste a link in the description.
+					// However, we should treat it as a link. This simple regex replacement works when we're not
+					// dealing with HTML. So if we see an HTML anchor tag, skip it and assume the link has been
+					// formatted.
+					if (out.indexOf('<a href') == -1) {
+						var rUrl = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi
+						out = out.replace(rUrl, function(m) {
+							// Google replaces ampersands with HTML the entity in the url text.
+							var encodedUrl = m.replace(/\&/g, '&amp;')
+
+							// console.log('        m', m)
+							// console.log('      enc', encodedUrl)
+
+							// Add extra space at the end to prevent styling entire text as a link when ending with a link.
+							return '<a href="' + m + '">' + encodedUrl + '</a>' + '&nbsp;'
+						})
+					}
+					// text && console.log('    Links', out)
+
+					// Render new lines
+					// out = out.replace(/\n/g, '<br>')
+					// text && console.log('    Newlines', out)
+
+					// Remove leading new line, as Google sometimes adds them.
+					out = out.replace(/^(\<br\>)+/, '')
+					// text && console.log('    LeadingBR', out)
+
+					return out
 				}
 			}
 
@@ -235,7 +200,7 @@ LinkRect {
 
 
 							Component.onCompleted: {
-								focus = true
+								forceActiveFocus()
 								agendaScrollView.positionViewAtEvent(agendaItemIndex, eventItemIndex)
 							}
 
@@ -279,6 +244,23 @@ LinkRect {
 				}
 			}
 
+			Item {
+				id: eventEditorSpacing
+				visible: editEventForm.visible
+				Layout.preferredHeight: 4 * units.devicePixelRatio
+			}
+
+			EditEventForm {
+				id: editEventForm
+				// active: true
+			}
+
+			Item {
+				id: eventEditorSpacingBelow
+				visible: editEventForm.visible
+				Layout.preferredHeight: 4 * units.devicePixelRatio
+			}
+
 			PlasmaComponents.ToolButton {
 				id: eventHangoutLink
 				visible: plasmoid.configuration.agendaShowEventHangoutLink && !!model.hangoutLink
@@ -315,14 +297,6 @@ LinkRect {
 		menuItem.clicked.connect(function() {
 			editSummaryForm.active = !editSummaryForm.active
 		})
-		contextMenu.addMenuItem(menuItem)
-
-		menuItem = contextMenu.newMenuItem()
-		menuItem.text = i18n("Edit date/time")
-		menuItem.enabled = event.canEdit
-		menuItem.clicked.connect(function() {
-			editDateTimeForm.active = !editDateTimeForm.active
-		})
 		// contextMenu.addMenuItem(menuItem)
 
 		menuItem = contextMenu.newMenuItem()
@@ -331,6 +305,15 @@ LinkRect {
 		menuItem.enabled = event.canEdit
 		menuItem.clicked.connect(function() {
 			editDescriptionForm.active = !editDescriptionForm.active
+		})
+		// contextMenu.addMenuItem(menuItem)
+
+		menuItem = contextMenu.newMenuItem()
+		menuItem.text = i18n("Edit")
+		menuItem.icon = "edit-rename"
+		menuItem.enabled = event.canEdit
+		menuItem.clicked.connect(function() {
+			editEventForm.active = !editEventForm.active
 		})
 		contextMenu.addMenuItem(menuItem)
 
