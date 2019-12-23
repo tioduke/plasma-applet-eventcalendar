@@ -1,4 +1,4 @@
-> Version 5 of Zren's i18n scripts.
+> Version 6 of Zren's i18n scripts.
 
 With KDE Frameworks v5.37 and above, translations are bundled with the `*.plasmoid` file downloaded from the store.
 
@@ -33,16 +33,16 @@ Or if you know how to make a pull request
 ## Status
 |  Locale  |  Lines  | % Done|
 |----------|---------|-------|
-| Template |     199 |       |
-| da       | 189/199 |   94% |
-| de       | 138/199 |   69% |
-| el       | 171/199 |   85% |
-| es       | 199/199 |  100% |
-| fr       | 170/199 |   85% |
-| nl_NL    | 199/199 |  100% |
-| pl       | 155/199 |   77% |
-| pt_BR    | 188/199 |   94% |
-| ru       | 176/199 |   88% |
-| tr       | 191/199 |   95% |
-| uk       | 157/199 |   78% |
-| zh_CN    | 163/199 |   81% |
+| Template |     190 |       |
+| da       | 182/190 |   95% |
+| de       | 131/190 |   68% |
+| el       | 164/190 |   86% |
+| es       | 190/190 |  100% |
+| fr       | 186/190 |   97% |
+| nl_NL    | 190/190 |  100% |
+| pl       | 154/190 |   81% |
+| pt_BR    | 181/190 |   95% |
+| ru       | 169/190 |   88% |
+| tr       | 182/190 |   95% |
+| uk       | 150/190 |   78% |
+| zh_CN    | 160/190 |   84% |
