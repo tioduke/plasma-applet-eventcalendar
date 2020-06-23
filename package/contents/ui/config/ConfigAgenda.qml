@@ -16,6 +16,7 @@ ConfigPage {
 	property alias cfg_agenda_weather_show_text: agenda_weather_show_text.checked
 	property alias cfg_agendaShowEventDescription: agendaShowEventDescription.checked
 	property alias cfg_agendaShowEventHangoutLink: agendaShowEventHangoutLink.checked
+	property alias cfg_agendaCondensedAllDayEvent: agendaCondensedAllDayEvent.checked
 	property bool cfg_agenda_breakup_multiday_events: false
 	property alias cfg_agenda_newevent_remember_calendar: agenda_newevent_remember_calendar.checked
 	property alias cfg_show_outlines: show_outlines.checked
@@ -139,6 +140,10 @@ ConfigPage {
 			text: i18n("Event description")
 		}
 		CheckBox {
+			id: agendaCondensedAllDayEvent
+			text: i18n("Hide 'All Day' text")
+		}
+		CheckBox {
 			id: agendaShowEventHangoutLink
 			text: i18n("Google Hangouts link")
 		}
@@ -214,6 +219,19 @@ ConfigPage {
 			configKey: 'agenda_inProgressColor'
 			label: i18n("In Progress")
 			defaultColor: config.agendaInProgressColorDefault
+		}
+	}
+
+	ConfigSection {
+		ConfigSpinBox {
+			configKey: 'agendaDaySpacing'
+			before: i18n("Day Spacing:")
+			suffix: i18n("px")
+		}
+		ConfigSpinBox {
+			configKey: 'agendaEventSpacing'
+			before: i18n("Event Spacing:")
+			suffix: i18n("px")
 		}
 	}
 

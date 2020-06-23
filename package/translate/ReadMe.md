@@ -1,4 +1,4 @@
-> Version 6 of Zren's i18n scripts.
+> Version 7 of Zren's i18n scripts.
 
 With KDE Frameworks v5.37 and above, translations are bundled with the `*.plasmoid` file downloaded from the store.
 
@@ -22,27 +22,29 @@ Or if you know how to make a pull request
 
 ## Links
 
+* https://zren.github.io/kde/docs/widget/#translations-i18n
 * https://techbase.kde.org/Development/Tutorials/Localization/i18n_Build_Systems
+* https://api.kde.org/frameworks/ki18n/html/prg_guide.html
 
 ## Examples
 
-* https://websvn.kde.org/trunk/l10n-kf5/fr/messages/kde-workspace/
+* https://l10n.kde.org/stats/gui/trunk-kf5/team/fr/plasma-desktop/
 * https://github.com/psifidotos/nowdock-plasmoid/tree/master/po
 * https://github.com/kotelnik/plasma-applet-redshift-control/tree/master/translations
 
 ## Status
 |  Locale  |  Lines  | % Done|
 |----------|---------|-------|
-| Template |     190 |       |
-| da       | 182/190 |   95% |
-| de       | 131/190 |   68% |
-| el       | 164/190 |   86% |
-| es       | 190/190 |  100% |
-| fr       | 186/190 |   97% |
-| nl_NL    | 190/190 |  100% |
-| pl       | 154/190 |   81% |
-| pt_BR    | 181/190 |   95% |
-| ru       | 169/190 |   88% |
-| tr       | 182/190 |   95% |
-| uk       | 150/190 |   78% |
-| zh_CN    | 160/190 |   84% |
+| Template |     193 |       |
+| da       | 182/193 |   94% |
+| de       | 131/193 |   67% |
+| el       | 164/193 |   84% |
+| es       | 190/193 |   98% |
+| fr       | 186/193 |   96% |
+| nl       | 193/193 |  100% |
+| pl       | 154/193 |   79% |
+| pt_BR    | 190/193 |   98% |
+| ru       | 190/193 |   98% |
+| tr       | 182/193 |   94% |
+| uk       | 150/193 |   77% |
+| zh_CN    | 160/193 |   82% |
