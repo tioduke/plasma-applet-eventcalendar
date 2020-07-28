@@ -1,5 +1,6 @@
 import QtQuick 2.0
 
+import "../Shared.js" as Shared
 import "../lib/Requests.js" as Requests
 import "../../code/DebugFixtures.js" as DebugFixtures
 
@@ -9,41 +10,11 @@ CalendarManager {
 	calendarManagerId: "debug"
 	property var debugCalendar: null
 
-	property bool showDebugEvents: false
-	property bool importGoogleSession: false
-
 	function fetchDebugEvents() {
 		plasmoid.configuration.debugging = true
 		debugCalendar = DebugFixtures.getCalendar()
 		var debugEventData = DebugFixtures.getEventData()
 		setCalendarData(debugCalendar.id, debugEventData)
-	}
-
-	function fetchDebugGoogleSession() {
-		if (plasmoid.configuration.access_token) {
-			return
-		}
-		// Steal access_token from our current user's config.
-		fetchCurrentUserConfig(function(err, metadata) {
-			plasmoid.configuration.refresh_token = metadata['refresh_token']
-			plasmoid.configuration.access_token = metadata['access_token']
-			plasmoid.configuration.access_token_type = metadata['access_token_type']
-			plasmoid.configuration.access_token_expires_at = metadata['access_token_expires_at']
-			plasmoid.configuration.calendar_id_list = metadata['calendar_id_list']
-			plasmoid.configuration.calendar_list = metadata['calendar_list']
-		})
-	}
-
-	function fetchCurrentUserConfig(callback) {
-		var url = 'file:///home/chris/.config/plasma-org.kde.plasma.desktop-appletsrc'
-		Requests.getFile(url, function(err, data) {
-			if (err) {
-				return callback(err)
-			}
-
-			var metadata = Requests.parseMetadata(data)
-			callback(null, metadata)
-		})
 	}
 
 	// Note: Not in use
@@ -63,6 +34,32 @@ CalendarManager {
 		})
 	}
 
+	function getCalendarList() {
+		if (debugCalendar) {
+			return [ debugCalendar ]
+		} else {
+			return []
+		}
+	}
+
+	function createEvent(calendarId, date, text) {
+		var summary = text
+		var start = {
+			date: Shared.dateString(date),
+			dateTime: date,
+		}
+		var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, 0, 0, 0)
+		var end = {
+			date: Shared.dateString(endDate),
+			dateTime: endDate,
+		}
+		var description = ''
+		var data = DebugFixtures.createEvent(summary, start, end, description)
+		parseSingleEvent(calendarId, data)
+		addEvent(calendarId, data)
+		eventCreated(calendarId, data)
+	}
+
 	function deleteEvent(calendarId, eventId) {
 		var data = getEvent(calendarId, eventId)
 		removeEvent(calendarId, eventId)
@@ -71,12 +68,7 @@ CalendarManager {
 
 
 	onFetchAllCalendars: {
-		if (showDebugEvents) {
-			fetchDebugEvents()
-		}
-		if (importGoogleSession) {
-			fetchDebugGoogleSession()
-		}
+		fetchDebugEvents()
 	}
 
 	onCalendarParsing: {
@@ -96,7 +88,7 @@ CalendarManager {
 	}
 
 	function setEventProperty(calendarId, eventId, key, value) {
-		console.log('debugCalendarManager.setEventProperty', calendarId, eventId, key, value)
+		logger.log('debugCalendarManager.setEventProperty', calendarId, eventId, key, value)
 		var event = getEvent(calendarId, eventId)
 		if (!event) {
 			logger.log('error, trying to update event that doesn\'t exist')
@@ -104,5 +96,15 @@ CalendarManager {
 		}
 		event[key] = value
 		eventUpdated(calendarId, eventId, event)
+	}
+
+	function setEventProperties(calendarId, eventId, args) {
+		logger.debugJSON('debugCalendarManager.setEventProperties', calendarId, eventId, args)
+		var keys = Object.keys(args)
+		for (var i = 0; i < keys.length; i++) {
+			var key = keys[i]
+			var value = args[key]
+			setEventProperty(calendarId, eventId, key, value)
+		}
 	}
 }

@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.kirigami 2.0 as Kirigami
 
 import ".."
 import "../lib"
@@ -9,49 +9,11 @@ import "../lib"
 ConfigPage {
 	id: page
 
-	property bool cfg_agendaWeatherOnRight: false
-	property alias cfg_agenda_weather_show_icon: agenda_weather_show_icon.checked
-	property alias cfg_agenda_weather_icon_height: agenda_weather_icon_height.value
-	property alias cfg_agenda_weather_show_text: agenda_weather_show_text.checked
-	property alias cfg_agendaShowEventDescription: agendaShowEventDescription.checked
-	property alias cfg_agendaShowEventHangoutLink: agendaShowEventHangoutLink.checked
-	property alias cfg_agendaCondensedAllDayEvent: agendaCondensedAllDayEvent.checked
-	property bool cfg_agenda_breakup_multiday_events: false
-	property alias cfg_agenda_newevent_remember_calendar: agenda_newevent_remember_calendar.checked
-	property alias cfg_show_outlines: show_outlines.checked
-
-	property int indentWidth: 24 * units.devicePixelRatio
+	property int indentWidth: 24 * Kirigami.Units.devicePixelRatio
 
 	ConfigCheckBox {
 		configKey: 'widget_show_agenda'
 		text: i18n("Show agenda")
-	}
-
-	ConfigSection {
-		ExclusiveGroup { id: layoutGroup }
-		RadioButton {
-			text: i18n("Agenda to the left (Two Columns)")
-			exclusiveGroup: layoutGroup
-			enabled: plasmoid.configuration.widget_show_agenda
-			checked: plasmoid.configuration.twoColumns
-			onClicked: plasmoid.configuration.twoColumns = true
-		}
-		RadioButton {
-			text: i18n("Agenda above the month (Single Column)")
-			exclusiveGroup: layoutGroup
-			enabled: plasmoid.configuration.widget_show_agenda
-			checked: !plasmoid.configuration.twoColumns
-			onClicked: plasmoid.configuration.twoColumns = false
-		}
-		RowLayout {
-			Text { width: indentWidth } // indent
-			ConfigSpinBox {
-				enabled: plasmoid.configuration.widget_show_agenda && !plasmoid.configuration.twoColumns
-				configKey: 'monthHeightSingleColumn'
-				before: i18n("Calendar Height:")
-				suffix: i18n("px")
-			}
-		}
 	}
 
 	ConfigSection {
@@ -65,134 +27,110 @@ ConfigPage {
 
 	ConfigSection {
 		RowLayout {
-			CheckBox {
-				id: agenda_weather_show_icon
+			ConfigCheckBox {
+				configKey: 'agenda_weather_show_icon'
 				checked: true
 				text: i18n("Weather Icon")
 			}
-			Slider {
-				id: agenda_weather_icon_height
+			ConfigSlider {
+				configKey: 'agenda_weather_icon_height'
 				minimumValue: 12
 				maximumValue: 48
 				stepSize: 1
-				value: 24
-			}
-			Label {
-				text: cfg_agenda_weather_icon_height + 'px'
+				after: '' + value + i18n("px")
+				Layout.fillWidth: false
 			}
 		}
 
 		RowLayout {
 			Text { width: indentWidth } // Indent
-			CheckBox {
-				id: show_outlines
+			ConfigCheckBox {
+				configKey: 'show_outlines'
 				text: i18n("Icon Outline")
 			}
 		}
 
-		CheckBox {
-			id: agenda_weather_show_text
+		ConfigCheckBox {
+			configKey: 'agenda_weather_show_text'
 			text: i18n("Weather Text")
 		}
 
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			configKey: 'agendaWeatherOnRight'
 			label: i18n("Position:")
-			ExclusiveGroup { id: agendaWeatherOnRightGroup }
-			RadioButton {
-				text: i18n("Left")
-				exclusiveGroup: agendaWeatherOnRightGroup
-				checked: !cfg_agendaWeatherOnRight
-				onClicked: cfg_agendaWeatherOnRight = false
-			}
-			RadioButton {
-				text: i18n("Right")
-				exclusiveGroup: agendaWeatherOnRightGroup
-				checked: cfg_agendaWeatherOnRight
-				onClicked: cfg_agendaWeatherOnRight = true
-			}
+			model: [
+				{ value: false, text: i18n("Left") },
+				{ value: true, text: i18n("Right") },
+			]
 		}
 
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			id: clickWeatherGroup
 			label: i18n("Click Weather:")
-			ExclusiveGroup { id: agenda_weather_clickGroup }
 			RadioButton {
 				text: i18n("Open City Forecast In Browser")
-				exclusiveGroup: agenda_weather_clickGroup
+				exclusiveGroup: clickWeatherGroup.exclusiveGroup
 				checked: true
 			}
 		}
 	}
 
 	ConfigSection {
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			id: clickDateGroup
 			label: i18n("Click Date:")
-			ExclusiveGroup { id: agenda_date_clickGroup }
 			RadioButton {
 				text: i18n("Open New Event In Browser")
-				exclusiveGroup: agenda_date_clickGroup
+				exclusiveGroup: clickDateGroup.exclusiveGroup
 				enabled: false
 			}
 			RadioButton {
 				text: i18n("Open New Event Form")
-				exclusiveGroup: agenda_date_clickGroup
+				exclusiveGroup: clickDateGroup.exclusiveGroup
 				checked: true
 			}
 		}
 	}
 
 	ConfigSection {
-		CheckBox {
-			id: agendaShowEventDescription
+		ConfigCheckBox {
+			configKey: 'agendaShowEventDescription'
 			text: i18n("Event description")
 		}
-		CheckBox {
-			id: agendaCondensedAllDayEvent
+		ConfigCheckBox {
+			configKey: 'agendaCondensedAllDayEvent'
 			text: i18n("Hide 'All Day' text")
 		}
-		CheckBox {
-			id: agendaShowEventHangoutLink
+		ConfigCheckBox {
+			configKey: 'agendaShowEventHangoutLink'
 			text: i18n("Google Hangouts link")
 		}
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			id: clickEventGroup
 			label: i18n("Click Event:")
-			ExclusiveGroup { id: agenda_event_clickGroup }
 			RadioButton {
 				text: i18n("Open Event In Browser")
+				exclusiveGroup: clickEventGroup.exclusiveGroup
 				checked: true
-				exclusiveGroup: agenda_event_clickGroup
 			}
 		}
 	}
 
 
 	ConfigSection {
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			configKey: 'agenda_breakup_multiday_events'
 			label: i18n("Show multi-day events:")
-			ExclusiveGroup {
-				id: agenda_breakup_multiday_eventsGroup
-			}
-			RadioButton {
-				text: i18n("On all days")
-				checked: cfg_agenda_breakup_multiday_events
-				exclusiveGroup: agenda_breakup_multiday_eventsGroup
-				onClicked: {
-					cfg_agenda_breakup_multiday_events = true
-				}
-			}
-			RadioButton {
-				text: i18n("Only on the first and current day")
-				checked: !cfg_agenda_breakup_multiday_events
-				exclusiveGroup: agenda_breakup_multiday_eventsGroup
-				onClicked: {
-					cfg_agenda_breakup_multiday_events = false
-				}
-			}
+			model: [
+				{ value: true, text: i18n("On all days") },
+				{ value: false, text: i18n("Only on the first and current day") },
+			]
 		}
 	}
 
 	ConfigSection {
-		CheckBox {
-			id: agenda_newevent_remember_calendar
+		ConfigCheckBox {
+			configKey: 'agenda_newevent_remember_calendar'
 			text: i18n("Remember selected calendar in New Event Form")
 		}
 	}

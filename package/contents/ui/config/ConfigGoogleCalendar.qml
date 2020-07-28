@@ -3,7 +3,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Controls 2.0 as QQC2
 import QtQuick.Layouts 1.1
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.kirigami 2.0 as Kirigami
 
 import ".."
 import "../lib"
@@ -37,19 +37,41 @@ ConfigPage {
 			for (var i = 0; i < sortedList.length; i++) {
 				var item = sortedList[i]
 				// console.log(JSON.stringify(item))
-				var isShowned = calendarIdList.indexOf(item.id) >= 0
+				var isPrimary = item.primary === true
+				var isShown = calendarIdList.indexOf(item.id) >= 0 || (isPrimary && calendarIdList.indexOf('primary') >= 0)
 				calendarsModel.append({
 					calendarId: item.id, 
 					name: item.summary,
 					description: item.description,
 					backgroundColor: item.backgroundColor,
 					foregroundColor: item.foregroundColor,
-					show: isShowned,
+					show: isShown,
 					isReadOnly: item.accessRole == "reader",
 				})
-				// console.log(item.summary, isShowned, item.id)
+				// console.log(item.summary, isShown, item.id)
 			}
 			calendarsModel.calendarsShownChanged()
+		}
+
+		onTasklistListChanged: {
+			tasklistsModel.clear()
+			var sortedList = sortArr(tasklistList, "title")
+			for (var i = 0; i < sortedList.length; i++) {
+				var item = sortedList[i]
+				// console.log(JSON.stringify(item))
+				var isShown = tasklistIdList.indexOf(item.id) >= 0
+				tasklistsModel.append({
+					tasklistId: item.id, 
+					name: item.title,
+					description: '',
+					backgroundColor: Kirigami.Theme.highlightColor.toString(),
+					foregroundColor: Kirigami.Theme.highlightedTextColor.toString(),
+					show: isShown,
+					isReadOnly: false,
+				})
+				// console.log(item.summary, isShown, item.id)
+			}
+			tasklistsModel.tasklistsShownChanged()
 		}
 
 		onError: messageWidget.err(err)
@@ -168,7 +190,7 @@ ConfigPage {
 		}
 	}
 	ColumnLayout {
-		spacing: units.smallSpacing * 2
+		spacing: Kirigami.Units.smallSpacing * 2
 		Layout.fillWidth: true
 
 		ListModel {
@@ -194,14 +216,14 @@ ConfigPage {
 			Repeater {
 				model: calendarsModel
 				delegate: CheckBox {
-					text: name
-					checked: show
+					text: model.name
+					checked: model.show
 					style: CheckBoxStyle {
 						label: RowLayout {
 							Rectangle {
 								Layout.fillHeight: true
 								Layout.preferredWidth: height
-								color: backgroundColor
+								color: model.backgroundColor
 							}
 							Label {
 								id: labelText
@@ -225,9 +247,91 @@ ConfigPage {
 		}
 	}
 
+	RowLayout {
+		Layout.fillWidth: true
+
+		HeaderText {
+			text: i18n("Tasks")
+
+			Image {
+				source: plasmoid.file("", "icons/google_tasks_96px.png")
+				smooth: true
+				anchors.leftMargin: parent.contentWidth + Kirigami.Units.smallSpacing
+				anchors.left: parent.left
+				anchors.verticalCenter: parent.verticalCenter
+				width: Kirigami.Units.iconSizes.smallMedium
+				height: Kirigami.Units.iconSizes.smallMedium
+			}
+		}
+
+		Button {
+			iconName: "view-refresh"
+			text: i18n("Refresh")
+			onClicked: session.updateTasklistList()
+		}
+	}
+	ColumnLayout {
+		spacing: Kirigami.Units.smallSpacing * 2
+		Layout.fillWidth: true
+
+		ListModel {
+			id: tasklistsModel
+
+			signal tasklistsShownChanged()
+
+			onTasklistsShownChanged: {
+				var tasklistIdList = []
+				for (var i = 0; i < tasklistsModel.count; i++) {
+					var item = tasklistsModel.get(i)
+					if (item.show) {
+						tasklistIdList.push(item.tasklistId)
+					}
+				}
+				session.tasklistIdList = tasklistIdList
+			}
+		}
+
+		ColumnLayout {
+			Layout.fillWidth: true
+
+			Repeater {
+				model: tasklistsModel
+				delegate: CheckBox {
+					text: model.name
+					checked: model.show
+					style: CheckBoxStyle {
+						label: RowLayout {
+							Rectangle {
+								Layout.fillHeight: true
+								Layout.preferredWidth: height
+								color: model.backgroundColor
+							}
+							Label {
+								id: labelText
+								text: control.text
+							}
+							LockIcon {
+								Layout.fillHeight: true
+								Layout.preferredWidth: height
+								visible: model.isReadOnly
+							}
+						}
+						
+					}
+
+					onClicked: {
+						tasklistsModel.setProperty(index, 'show', checked)
+						tasklistsModel.tasklistsShownChanged()
+					}
+				}
+			}
+		}
+	}
+
 	Component.onCompleted: {
 		if (session.accessToken) {
 			session.calendarListChanged()
+			session.tasklistListChanged()
 		}
 	}
 }

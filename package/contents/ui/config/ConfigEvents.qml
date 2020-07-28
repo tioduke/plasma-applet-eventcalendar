@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import org.kde.plasma.core 2.0 as PlasmaCore
 
 import org.kde.plasma.calendar 2.0 as PlasmaCalendar
 
@@ -81,7 +80,7 @@ ConfigPage {
 			notificationEnabledKey: 'eventStartingNotificationEnabled'
 			sfxEnabledKey: 'eventStartingSfxEnabled'
 			sfxPathKey: 'eventStartingSfxPath'
-			sfxPathDefaultValue: '/usr/share/sounds/KDE-Im-Nudge.ogg'
+			sfxPathDefaultValue: '/usr/share/sounds/Oxygen-Im-Nudge.ogg'
 		}
 	}
 

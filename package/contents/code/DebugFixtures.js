@@ -3,9 +3,39 @@
 function getCalendar() {
 	return {
 		"id": "debug",
+		"summary": "Debug",
 		"backgroundColor": "#9a9cff",
 		"accessRole": "owner",
 	}
+}
+
+function createEvent(summary, start, end, description) {
+	var event = {
+		"kind": "calendar#event",
+		"etag": "\"2561779720126000\"",
+		"id": "debug_" + start.dateTime.getTime() + "_" + end.dateTime.getTime(),
+		"status": "confirmed",
+		"htmlLink": "https://www.google.com/calendar/event?eid=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&ctz=Etc/UTC",
+		"created": "2008-03-24T22:34:26.000Z",
+		"updated": "2010-08-04T02:44:20.063Z",
+		"summary": summary,
+		"start": start,
+		"end": end,
+		// "recurringEventId": "a1a1a1a1a1a1a1a1a1a1a1a1a1",
+		"originalStartTime": {
+			"date": "2016-03-25"
+		},
+		"transparency": "transparent",
+		"iCalUID": "a1a1a1a1a1a1a1a1a1a1a1a1a1@google.com",
+		"sequence": 0,
+		"reminders": {
+			"useDefault": false
+		},
+	}
+	if (typeof description !== "undefined") {
+		event.description = description
+	}
+	return event
 }
 
 function getEventData() {
@@ -13,31 +43,7 @@ function getEventData() {
 		"items": []
 	}
 	function addEvent(summary, start, end, description) {
-		var newEvent = {
-			"kind": "calendar#event",
-			"etag": "\"2561779720126000\"",
-			"id": "debug_" + start.dateTime.getTime() + "_" + end.dateTime.getTime(),
-			"status": "confirmed",
-			"htmlLink": "https://www.google.com/calendar/event?eid=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&ctz=Etc/UTC",
-			"created": "2008-03-24T22:34:26.000Z",
-			"updated": "2010-08-04T02:44:20.063Z",
-			"summary": summary,
-			"start": start,
-			"end": end,
-			// "recurringEventId": "a1a1a1a1a1a1a1a1a1a1a1a1a1",
-			"originalStartTime": {
-				"date": "2016-03-25"
-			},
-			"transparency": "transparent",
-			"iCalUID": "a1a1a1a1a1a1a1a1a1a1a1a1a1@google.com",
-			"sequence": 0,
-			"reminders": {
-				"useDefault": false
-			},
-		}
-		if (typeof description !== "undefined") {
-			newEvent.description = description
-		}
+		var newEvent = createEvent(summary, start, end, description)
 		debugEventData.items.push(newEvent)
 		return newEvent
 	}
@@ -103,14 +109,41 @@ function getEventData() {
 
 	// Hangouts Link
 	var testHangoutLink = "https://hangouts.google.com/hangouts/_/calendar/abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnop38.abcdefghijklmnopqrstuvwx26"
-	
 	event = addAllDayTestEvent("Hangout Link Test", 5, 6)
 	event.hangoutLink = testHangoutLink
 
-	var event = addAllDayTestEvent("Description + Hangout Test", 5, 6)
+	// Hangouts + Description
+	event = addAllDayTestEvent("Description + Hangout Test", 5, 6)
 	event.description = "Short description."
 	event.hangoutLink = testHangoutLink
 
+	// Google Meet / Conference
+	var googleMeetId = "abc-efgh-ijk"
+	var googleMeetLabel = "meet.google.com/" + googleMeetId
+	var googleMeetUri = "https://" + googleMeetLabel
+	event = addAllDayTestEvent("Google Meet Test", 5, 6)
+	event.hangoutLink = googleMeetUri
+	event.conferenceData = {
+		entryPoints: [
+			{
+				entryPointType: "video",
+				uri: googleMeetUri,
+				label: googleMeetLabel,
+			},
+		],
+		conferenceSolution: {
+			key: {
+				type: "hangoutsMeet",
+			},
+			name: "Google Meet",
+			iconUri: "https://lh5.googleusercontent.com/proxy/abcdef...",
+		},
+		conferenceId: googleMeetId,
+		signature: "abcdef...",
+	}
+
+	// Add 30 days before and after today.
+	// Tests stripping events outside selected range.
 	for (var i = -30; i <= 30; i++) {
 		addAllDayTestEvent("Day " + i, i, i+1)
 	}

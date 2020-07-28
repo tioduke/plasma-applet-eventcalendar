@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-06-12 18:07-0400\n"
+"POT-Creation-Date: 2020-07-24 20:51-0400\n"
 "PO-Revision-Date: 2017-04-29 11:18+0100\n"
 "Last-Translator: Hans-Peter Jansen <hpj@urpla.net>\n"
 "Language-Team: de <hpj@urpla.net>\n"
@@ -19,9 +19,23 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+#: ../metadata.desktop ../contents/ui/AgendaView.qml
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Event Calendar"
+msgstr "Kalender des Ereignisses"
+
+#: ../metadata.desktop
+msgid ""
+"Plasmoid for a calendar+agenda with weather that syncs to Google Calendar."
+msgstr ""
+
 #: ../contents/config/config.qml
 msgid "General"
 msgstr "Allgemein"
+
+#: ../contents/config/config.qml
+msgid "Layout"
+msgstr ""
 
 #: ../contents/config/config.qml
 msgid "Timezones"
@@ -64,19 +78,19 @@ msgstr "ganztags"
 msgid "Hangout"
 msgstr ""
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Edit"
 msgstr ""
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Delete Event"
 msgstr "Ereignis löschen"
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Confirm Deletion"
 msgstr "Löschen bestätigen"
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Edit in browser"
 msgstr "Im Webbrowser bearbeiten"
 
@@ -90,26 +104,23 @@ msgctxt "agenda date format line 2"
 msgid "ddd"
 msgstr ""
 
-#: ../contents/ui/AgendaView.qml ../contents/ui/UpcomingEvents.qml
-msgid "Event Calendar"
-msgstr "Kalender des Ereignisses"
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+msgctxt "short month+date format"
+msgid "MMM d"
+msgstr ""
 
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
 msgid "(No title)"
 msgstr ""
 
+#: ../contents/ui/CalendarSelector.qml
+msgid "[No Calendars]"
+msgstr "[Keine Kalender]"
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr "Ereignisse anzeigen"
-
-#: ../contents/ui/config/ConfigAgenda.qml
-msgid "Agenda above the month (Single Column)"
-msgstr "Ereignisse über Monat (einzelne Spalte)"
-
-#: ../contents/ui/config/ConfigAgenda.qml
-msgid "Agenda to the left (Two Columns)"
-msgstr "Ereignisse links (zwei Spalten)"
 
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Font Size:"
@@ -117,6 +128,7 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigAgenda.qml
 #: ../contents/ui/config/ConfigGeneral.qml
+#: ../contents/ui/config/ConfigLayout.qml
 msgid "px"
 msgstr "px"
 
@@ -265,11 +277,14 @@ msgid "Show Week Numbers"
 msgstr "Wochennummern anzeigen"
 
 #: ../contents/ui/config/ConfigCalendar.qml
+msgid "Highlight Current Day / Week"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
 msgid "First day of week:"
 msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml
-#: ../contents/ui/config/ConfigGeneral.qml
 msgid "Default"
 msgstr "Standard"
 
@@ -355,11 +370,6 @@ msgid "Event Starting"
 msgstr ""
 
 #: ../contents/ui/config/ConfigGeneral.qml
-#: ../contents/ui/lib/ConfigNotification.qml
-msgid "Choose a sound effect"
-msgstr "Klang auswählen"
-
-#: ../contents/ui/config/ConfigGeneral.qml
 msgid "Widgets"
 msgstr "Oberflächenelemente"
 
@@ -380,12 +390,9 @@ msgid "Timer"
 msgstr "Timer"
 
 #: ../contents/ui/config/ConfigGeneral.qml
+#: ../contents/ui/lib/ConfigNotification.qml
 msgid "SFX:"
 msgstr "SFX:"
-
-#: ../contents/ui/config/ConfigGeneral.qml
-msgid "Choose"
-msgstr "Auswählen"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Clock"
@@ -394,6 +401,10 @@ msgstr "Uhr"
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Time Format"
 msgstr "Zeitformat"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Time Format Documentation"
+msgstr ""
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid ""
@@ -534,6 +545,10 @@ msgstr "Kalender"
 msgid "Refresh"
 msgstr "Auffrischen"
 
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Tasks"
+msgstr ""
+
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr ""
@@ -552,6 +567,14 @@ msgstr ""
 
 #: ../contents/ui/config/ConfigICal.qml
 msgid "iCalendar (*.ics)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigLayout.qml
+msgid "Calendar to the left of the Agenda (Two Columns)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigLayout.qml
+msgid "Agenda below the Calendar (Single Column)"
 msgstr ""
 
 #: ../contents/ui/config/ConfigTimezones.qml
@@ -700,10 +723,6 @@ msgstr ""
 msgid "Add location"
 msgstr ""
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/NewEventForm.qml
-msgid "[No Calendars]"
-msgstr "[Keine Kalender]"
-
 #: ../contents/ui/EditEventForm.qml
 msgid "Add description"
 msgstr ""
@@ -719,6 +738,23 @@ msgstr ""
 #: ../contents/ui/lib/AppletVersion.qml
 msgid "<b>Version:</b> %1"
 msgstr "<b>Version:</b> %1"
+
+#: ../contents/ui/lib/ConfigFontFamily.qml
+msgctxt "Use default font"
+msgid "Default"
+msgstr "Standard"
+
+#: ../contents/ui/lib/ConfigSound.qml
+msgid "Choose a sound effect"
+msgstr "Klang auswählen"
+
+#: ../contents/ui/lib/ConfigSound.qml
+msgid "Sound files (%1)"
+msgstr ""
+
+#: ../contents/ui/lib/ConfigSound.qml
+msgid "All files (%1)"
+msgstr ""
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"
@@ -741,11 +777,6 @@ msgid "h:mm AP"
 msgstr ""
 
 #: ../contents/ui/LocaleFuncs.js
-msgctxt "short month+date format"
-msgid "MMM d"
-msgstr ""
-
-#: ../contents/ui/LocaleFuncs.js
 msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr ""
@@ -753,6 +784,14 @@ msgstr ""
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid "Could not connect (HTTP Error 0), will try again soon."
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid "Weather API limit reached, will try again soon."
 msgstr ""
 
 #: ../contents/ui/main.qml
@@ -799,10 +838,6 @@ msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
-msgstr ""
-
-#: ../contents/ui/PopupView.qml
-msgid "Weather API limit reached, will try again soon."
 msgstr ""
 
 #: ../contents/ui/TimerInputView.qml
@@ -869,6 +904,15 @@ msgstr "Laufende Ereignisse"
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Upcoming Events"
 msgstr "Nächste Ereignisse"
+
+#~ msgid "Choose"
+#~ msgstr "Auswählen"
+
+#~ msgid "Agenda to the left (Two Columns)"
+#~ msgstr "Ereignisse links (zwei Spalten)"
+
+#~ msgid "Agenda above the month (Single Column)"
+#~ msgstr "Ereignisse über Monat (einzelne Spalte)"
 
 #~ msgid "Edit description"
 #~ msgstr "Beschreibung bearbeiten"

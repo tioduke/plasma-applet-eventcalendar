@@ -14,6 +14,7 @@ Item {
 	property bool showGridlines: true
 	property alias xAxisScale: graph.xAxisScale
 	property int xAxisLabelEvery: 1
+	property alias rainUnits: graph.rainUnits
 
 	property bool populated: false
 
@@ -307,6 +308,7 @@ Item {
 
 
 					// yAxis label: precipitation
+					var lastLabelText = ''
 					var lastLabelVisible = false
 					var lastLabelStaggered = false
 					for (var i = 1; i < graph.gridData.length; i++) {
@@ -316,30 +318,47 @@ Item {
 							(graph.rainUnits == 'mm' && item.precipitation > 0.3)
 							|| (graph.rainUnits == '%')
 						)) {
-							var p = graph.gridPoint(i, graph.yAxisMin)
-							var pY = graph.gridY + 6
+							var labelText = formatPrecipitation(item.precipitation)
+
+							if (labelText == lastLabelText) {
+								lastLabelText = labelText
+								lastLabelVisible = false
+								lastLabelStaggered = false
+								continue
+							}
 
 							context.fillStyle = appletConfig.meteogramPrecipitationTextColor
 							context.font = "12px sans-serif"
-							context.textAlign = 'end'
-							var labelText = formatPrecipitation(item.precipitation)
 							context.strokeStyle = appletConfig.meteogramPrecipitationTextOutlineColor
 							context.lineWidth = 3
 
+							var labelWidth = context.measureText(labelText).width
+							var p
+							// If there isn't enough room
+							if (gridDataAreaWidth < labelWidth) { // left align using previous point
+								p = graph.gridPoint(i-1, graph.yAxisMin)
+								context.textAlign = 'left'
+							} else { // otherwise right align
+								p = graph.gridPoint(i, graph.yAxisMin)
+								context.textAlign = 'end'
+							}
+
+							var pY = graph.gridY + 6
+
 							// Stagger the labels so they don't overlap.
-							var labelWidth = context.measureText(labelText).width + 20 // 12px for padding-left
-							if (gridDataAreaWidth < context.measureText(labelText).width && lastLabelVisible && !lastLabelStaggered) {
+							if (gridDataAreaWidth < labelWidth && lastLabelVisible && !lastLabelStaggered) {
 								pY += 12 // 12px
 								lastLabelStaggered = true
 							} else {
 								lastLabelStaggered = false
 							}
 							lastLabelVisible = true
-							
+							lastLabelText = labelText
 
 							context.strokeText(labelText, p.x, pY)
 							context.fillText(labelText, p.x, pY)
 						} else {
+							lastLabelText = ''
 							lastLabelVisible = false
 							lastLabelStaggered = false
 						}
@@ -499,7 +518,7 @@ Item {
 		if (graph.rainUnits == 'mm') {
 			return i18n("%1mm", valueText)
 		} else { // rainUnits == '%'
-			return i18n('%1%%', valueText)
+			return i18n('%1%', valueText) // Not translated as we use ''
 		}
 	}
 }

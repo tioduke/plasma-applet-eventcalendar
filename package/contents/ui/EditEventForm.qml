@@ -2,7 +2,6 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 Loader {
@@ -103,7 +102,7 @@ Loader {
 					Layout.fillWidth: true
 					Layout.columnSpan: 2
 					placeholderText: i18n("Event Title")
-					text: event.summary
+					text: event && event.summary || ""
 					onAccepted: {
 						logger.debug('editSummaryTextField.onAccepted', text)
 						editEventItem.submit()
@@ -121,7 +120,7 @@ Loader {
 					Layout.columnSpan: 2
 
 					startDateTime: {
-						if (event.startDateTime) {
+						if (event && event.startDateTime) {
 							if (event.start.date) {
 								var d = new Date(event.startDateTime)
 								// Set to 9-10am in case user unchecks All Day
@@ -136,7 +135,7 @@ Loader {
 						}
 					}
 					endDateTime: {
-						if (event.endDateTime) {
+						if (event && event.endDateTime) {
 							if (event.end.date) {
 								// Events end at "midnight" the next day.
 								// See parseEventsForDate() functions for more info.
@@ -186,7 +185,7 @@ Loader {
 					PlasmaComponents3.CheckBox {
 						id: isAllDayCheckBox
 						text: i18n("All Day")
-						checked: !!event.start.date
+						checked: event ? !!event.start.date : false
 						enabled: durationSelector.enabled
 					}
 				}
@@ -200,7 +199,7 @@ Loader {
 					id: editLocationTextField
 					Layout.fillWidth: true
 					placeholderText: i18n("Add location")
-					text: event.location || ""
+					text: event && event.location || ""
 					onAccepted: {
 						logger.debug('editLocationTextField.onAccepted', text)
 						editEventItem.submit()
@@ -212,15 +211,13 @@ Loader {
 				EventPropertyIcon {
 					source: "view-calendar-day"
 				}
-				PlasmaComponents.ComboBox {
+				CalendarSelector {
 					id: calendarSelector
 					Layout.fillWidth: true
-					model: [i18n("[No Calendars]")]
 					enabled: false
 					Component.onCompleted: {
-						// AgendaView.__
-						// logger.debug('populateCalendarSelector', calendarSelector, event.calendarId)
-						populateCalendarSelector(calendarSelector, event.calendarId)
+						var calendarList = eventModel.getCalendarList()
+						calendarSelector.populate(calendarList, event.calendarId)
 					}
 				}
 
@@ -232,7 +229,7 @@ Loader {
 				PlasmaComponents3.TextArea {
 					id: editDescriptionTextField
 					placeholderText: i18n("Add description")
-					text: event.description || ""
+					text: (event && event.description) || ""
 
 					Layout.fillWidth: true
 					Layout.preferredHeight: contentHeight + (20 * units.devicePixelRatio)
@@ -257,16 +254,16 @@ Loader {
 					Item {
 						Layout.fillWidth: true
 					}
-					PlasmaComponents.Button {
-						iconName: "document-save"
+					PlasmaComponents3.Button {
+						icon.name: "document-save"
 						text: i18n("&Save")
-						implicitWidth: minimumWidth
+						Layout.preferredWidth: Layout.minimumWidth
 						onClicked: editEventItem.submit()
 					}
-					PlasmaComponents.Button {
-						iconName: "dialog-cancel"
+					PlasmaComponents3.Button {
+						icon.name: "dialog-cancel"
 						text: i18n("&Cancel")
-						implicitWidth: minimumWidth
+						Layout.preferredWidth: Layout.minimumWidth
 						onClicked: editEventItem.cancel()
 					}
 				}

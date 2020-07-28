@@ -13,6 +13,7 @@ Item {
 	property bool clearingData: false
 	property int asyncRequests: 0
 	property int asyncRequestsDone: 0
+	signal refresh()
 	signal dataCleared()
 	signal fetchingData()
 	signal calendarFetched(string calendarId, var data)
@@ -35,6 +36,23 @@ Item {
 		}
 	}
 
+	//--- Calendar
+	function getCalendarList() {
+		return [] // Function is overloaded
+	}
+
+	function getCalendar(calendarId) {
+		var calendarList = getCalendarList()
+		for (var i = 0; i < calendarList.length; i++) {
+			var calendar = calendarList[i]
+			if (calendarId == calendar.id) {
+				return calendar
+			}
+		}
+		return null
+	}
+
+	//--- Calendar data
 	function setCalendarData(calendarId, data) {
 		calendarParsing(calendarId, data)
 		eventsByCalendar[calendarId] = data
@@ -51,6 +69,7 @@ Item {
 		dataCleared()
 	}
 
+	//--- Event
 	function getEvent(calendarId, eventId) {
 		var events = calendarManager.eventsByCalendar[calendarId].items
 		for (var i = 0; i < events.length; i++) {
@@ -81,6 +100,7 @@ Item {
 		logger.log(calendarManager, 'removeEvent', 'event didn\'t exist')
 	}
 
+	//---
 	function fetchAll(dateMin, dateMax) {
 		logger.debug(calendarManager, 'fetchAllEvents', dateMin, dateMax)
 		fetchingData()
@@ -107,6 +127,7 @@ Item {
 		})
 	}
 	onEventParsing: {
+		event.calendarManagerId = calendarManagerId
 		event.calendarId = calendarId
 
 		event._summary = event.summary
@@ -129,6 +150,23 @@ Item {
 		calendarParsing(calendarId, {
 			items: [event],
 		})
+	}
+
+	//---
+	function createEvent(calendarId, date, text) {
+		logger.log(calendarManager, 'createEvent(', date, text, ') is not implemented')
+	}
+
+	function deleteEvent(calendarId, eventId) {
+		logger.log(calendarManager, 'deleteEvent(', calendarId, eventId, ') is not implemented')
+	}
+
+	function setEventProperty(calendarId, eventId, key, value) {
+		logger.log(calendarManager, 'setEventProperty(', calendarId, eventId, key, value, ') is not implemented')
+	}
+
+	function setEventProperties(calendarId, eventId, args) {
+		logger.log(calendarManager, 'setEventProperties(', calendarId, eventId, args, ') is not implemented')
 	}
 
 }

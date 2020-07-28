@@ -2,20 +2,23 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 import "LocaleFuncs.js" as LocaleFuncs
+import "Shared.js" as Shared
 
 LinkRect {
 	id: agendaEventItem
 	readonly property int eventItemIndex: index
-	width: undefined
 	Layout.fillWidth: true
-	Layout.preferredHeight: eventColumn.height
-	// height: eventColumn.height
+
 	property bool eventItemInProgress: false
 	function checkIfInProgress() {
-		eventItemInProgress = model.startDateTime && timeModel.currentTime && model.endDateTime ? model.startDateTime <= timeModel.currentTime && timeModel.currentTime <= model.endDateTime : false
+		if (model.startDateTime && timeModel.currentTime && model.endDateTime) {
+			eventItemInProgress = model.startDateTime <= timeModel.currentTime && timeModel.currentTime <= model.endDateTime
+		} else {
+			eventItemInProgress = false
+		}
 		// console.log('checkIfInProgress()', model.start, timeModel.currentTime, model.end)
 	}
 	Connections {
@@ -40,13 +43,17 @@ LinkRect {
 	readonly property bool isAllDay: eventTimestamp == i18n("All Day") // TODO: Remove string comparison.
 	readonly property bool isCondensed: plasmoid.configuration.agendaCondensedAllDayEvent && isAllDay
 
+
+	//---
 	RowLayout {
-		width: parent.width
+		id: contents
+		anchors.left: parent.left
+		anchors.right: parent.right
 		spacing: 4 * units.devicePixelRatio
 
 		Rectangle {
-			Layout.preferredWidth: appletConfig.eventIndicatorWidth
-			Layout.preferredHeight: eventColumn.height
+			implicitWidth: appletConfig.eventIndicatorWidth
+			Layout.fillHeight: true
 			color: model.backgroundColor || theme.textColor
 		}
 
@@ -55,7 +62,7 @@ LinkRect {
 			Layout.fillWidth: true
 			spacing: 0
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: eventSummary
 				text: {
 					if (isCondensed && model.location) {
@@ -68,7 +75,6 @@ LinkRect {
 				font.pointSize: -1
 				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: eventItemInProgress ? inProgressFontWeight : Font.Normal
-				height: paintedHeight
 				visible: !editEventForm.visible
 				Layout.fillWidth: true
 
@@ -78,7 +84,7 @@ LinkRect {
 				wrapMode: Text.Wrap
 			}
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: eventDateTime
 				text: {
 					if (model.location) {
@@ -92,29 +98,27 @@ LinkRect {
 				font.pointSize: -1
 				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: eventItemInProgress ? inProgressFontWeight : Font.Normal
-				height: paintedHeight
 				visible: !editEventForm.visible && !isCondensed
 			}
 
 			Item {
 				id: eventDescriptionSpacing
 				visible: eventDescription.visible
-				Layout.preferredHeight: 4 * units.devicePixelRatio
+				implicitHeight: 4 * units.devicePixelRatio
 			}
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: eventDescription
 				readonly property bool showProperty: plasmoid.configuration.agendaShowEventDescription && text
 				visible: showProperty && !editEventForm.visible
-				text: renderText(model.description)
+				text: Shared.renderText(model.description)
 				color: PlasmaCore.ColorScope.textColor
 				opacity: 0.75
 				font.pointSize: -1
 				font.pixelSize: appletConfig.agendaFontSize
-				height: paintedHeight
 				Layout.fillWidth: true
 				wrapMode: Text.Wrap // See warning at eventSummary.wrapMode
-				
+
 				linkColor: PlasmaCore.ColorScope.highlightColor
 				onLinkActivated: Qt.openUrlExternally(link)
 				MouseArea {
@@ -122,51 +126,12 @@ LinkRect {
 					acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
 					cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
 				}
-
-				function renderText(text) {
-					// console.log('renderText')
-					if (typeof text === 'undefined') {
-						return ''
-					}
-					var out = text
-					// text && console.log('renderText', text)
-					
-					// Render links
-					// Google doesn't auto-convert links to anchor tags when you paste a link in the description.
-					// However, we should treat it as a link. This simple regex replacement works when we're not
-					// dealing with HTML. So if we see an HTML anchor tag, skip it and assume the link has been
-					// formatted.
-					if (out.indexOf('<a href') == -1) {
-						var rUrl = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi
-						out = out.replace(rUrl, function(m) {
-							// Google replaces ampersands with HTML the entity in the url text.
-							var encodedUrl = m.replace(/\&/g, '&amp;')
-
-							// console.log('        m', m)
-							// console.log('      enc', encodedUrl)
-
-							// Add extra space at the end to prevent styling entire text as a link when ending with a link.
-							return '<a href="' + m + '">' + encodedUrl + '</a>' + '&nbsp;'
-						})
-					}
-					// text && console.log('    Links', out)
-
-					// Render new lines
-					// out = out.replace(/\n/g, '<br>')
-					// text && console.log('    Newlines', out)
-
-					// Remove leading new line, as Google sometimes adds them.
-					out = out.replace(/^(\<br\>)+/, '')
-					// text && console.log('    LeadingBR', out)
-
-					return out
-				}
 			}
 
 			Item {
 				id: eventEditorSpacing
 				visible: editEventForm.visible
-				Layout.preferredHeight: 4 * units.devicePixelRatio
+				implicitHeight: 4 * units.devicePixelRatio
 			}
 
 			EditEventForm {
@@ -177,14 +142,24 @@ LinkRect {
 			Item {
 				id: eventEditorSpacingBelow
 				visible: editEventForm.visible
-				Layout.preferredHeight: 4 * units.devicePixelRatio
+				implicitHeight: 4 * units.devicePixelRatio
 			}
 
-			PlasmaComponents.ToolButton {
+			PlasmaComponents3.ToolButton {
 				id: eventHangoutLink
-				visible: plasmoid.configuration.agendaShowEventHangoutLink && !!model.hangoutLink
-				text: i18n("Hangout")
-				iconSource: plasmoid.file("", "icons/hangouts.svg")
+				readonly property bool showProperty: plasmoid.configuration.agendaShowEventHangoutLink && !!model.hangoutLink
+				visible: showProperty && !editEventForm.visible
+				text: {
+					if (!!model.conferenceData
+						&& !!model.conferenceData.conferenceSolution
+						&& !!model.conferenceData.conferenceSolution.name
+					) {
+						return model.conferenceData.conferenceSolution.name
+					} else {
+						return i18n("Hangout")
+					}
+				}
+				icon.source: plasmoid.file("", "icons/hangouts.svg")
 				onClicked: Qt.openUrlExternally(model.hangoutLink)
 			}
 
@@ -192,22 +167,22 @@ LinkRect {
 	}
 	
 	onLeftClicked: {
-		// console.log('agendaItem.event.leftClicked', model.startDateTime, mouse)
+		// logger.log('agendaItem.event.leftClicked', model.startDateTime, mouse)
 		if (false) {
-			var event = events.get(index)
-			console.log("event", JSON.stringify(event, null, '\t'))
+			var event = events.get(eventItemIndex)
+			logger.logJSON("event", event)
 			var calendar = eventModel.getCalendar(event.calendarId)
-			console.log("calendar", JSON.stringify(calendar, null, '\t'))
+			logger.logJSON("calendar", calendar)
 			upcomingEvents.sendEventStartingNotification(model)
 		} else {
-			// cfg_agenda_event_clicked == "browser_viewevent"
-			Qt.openUrlExternally(htmlLink)
+			// agenda_event_clicked == "browser_viewevent"
+			Qt.openUrlExternally(model.htmlLink)
 		}
 	}
 
 	onLoadContextMenu: {
 		var menuItem
-		var event = events.get(index)
+		var event = events.get(eventItemIndex)
 
 		menuItem = contextMenu.newMenuItem()
 		menuItem.text = i18n("Edit")
@@ -227,8 +202,8 @@ LinkRect {
 		menuItem.icon = "delete"
 		menuItem.enabled = event.canEdit
 		menuItem.clicked.connect(function() {
-			logger.debug('eventModel.deleteEvent', model.calendarId, model.id)
-			eventModel.deleteEvent(model.calendarId, model.id)
+			logger.debug('eventModel.deleteEvent', event.calendarId, event.id)
+			eventModel.deleteEvent(event.calendarId, event.id)
 		})
 		deleteMenuItem.enabled = event.canEdit
 		deleteMenuItem.subMenu.addMenuItem(menuItem)
@@ -239,7 +214,7 @@ LinkRect {
 		menuItem.icon = "internet-web-browser"
 		menuItem.enabled = !!event.htmlLink
 		menuItem.clicked.connect(function() {
-			Qt.openUrlExternally(model.htmlLink)
+			Qt.openUrlExternally(event.htmlLink)
 		})
 		contextMenu.addMenuItem(menuItem)
 	}

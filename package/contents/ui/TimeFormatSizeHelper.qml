@@ -1,8 +1,8 @@
 import QtQuick 2.4
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 Item {
-	id: timeFromatSizeHelper
+	id: timeFormatSizeHelper
 	visible: false
 
 	property Text timeLabel
@@ -59,7 +59,7 @@ Item {
 		// console.log('\t', 'timePm', timePm, advanceWidthPm)
 	}
 
-	PlasmaComponents.Label {
+	PlasmaComponents3.Label {
 		id: formattedSizeHelper
 
 		font.pointSize: -1
@@ -73,16 +73,16 @@ Item {
 
 	Connections {
 		target: clock
-		onWidthChanged: timeFromatSizeHelper.updateMinWidth()
-		onHeightChanged: timeFromatSizeHelper.updateMinWidth()
+		onWidthChanged: timeFormatSizeHelper.updateMinWidth()
+		onHeightChanged: timeFormatSizeHelper.updateMinWidth()
 	}
 	Connections {
 		target: timeLabel
-		onHeightChanged: timeFromatSizeHelper.updateMinWidth()
-		onTimeFormatChanged: timeFromatSizeHelper.updateMinWidth()
+		onHeightChanged: timeFormatSizeHelper.updateMinWidth()
+		onTimeFormatChanged: timeFormatSizeHelper.updateMinWidth()
 	}
 	Connections {
 		target: timeModel
-		onDateChanged: timeFromatSizeHelper.updateMinWidth()
+		onDateChanged: timeFormatSizeHelper.updateMinWidth()
 	}
 }

@@ -1,3 +1,28 @@
+## v69 - July 27 2020
+
+* Add copy to clipboard in contextual actions by @navarroaxel (Pull Request #142) (Issue #28). Widget now requires Plasma 5.13.
+* Swap Agenda and Calendar positions like Digital Clock will in Plasma 5.20. The Calendar appears above the Agenda when in single column mode.
+* The Calendar height in single column mode has been shrunk to 300px from 400px by default so there's more room for events. The 300px is configurable in the config if you dislike the rectangular cells in the Calendar.
+* The padding is now the size of the pin button when in 2 column mode when the meteogram + timer is hidden. The padding has been removed from single column mode except for the top to make room for the pin button.
+* Meteogram is no longer taller when in single column mode.
+* Enabled the WeatherCanada weather source.
+* Refactor weather code to pass the config instead of using a global variable.
+* Move event fetching logic in PopupView to main context so that it doesn't need to load when we open the popup (Issue #40 and #127)
+* If precipitation label is same as last data point, then don't bother drawing it. This makes WeatherCanada graphs readable.
+* Now highlights current day + current week number. Can be turned off in the config.
+* New Layout tab for switching between two column and single column mode. Includes ability to resize the Calendar, Agenda, Meteogram and Timer in two column mode.
+* Fix timer complete sfx in Ubuntu. I didn't realize `canberra-gtk-play` wasn't installed by default. The `notification.py` now hooks into `libcanberra.so` via directly with Python to play sound effects. (Issue #128)
+* Fix centering weather temp + text in Agenda.
+* Various controls in the config no longer require pressing Apply.
+* When an event has a Google Meet link, it used to show "Hangout", now it'll show "Google Meet".
+* Integrrated Google Tasks. You cannot yet edit Tasks from Plasma, but you can create, delete, and toggle them complete. Unfortunately, there's a 50,000 requests API limit unlike Google Calendar with has a 1MM daily limit so it might hit the rate limit. You may need to logout and log back in in the widget's config to update your permissions to accept Google Tasks. (Issue #57)
+* Refactored Google Calendar code to support another adding/deleting events for another "Calendar" plugin  (Google Tasks).
+* Refactor to use PlasmaComponents3/QtQuickControls2, and Kirigami Units/Colors in the config.
+* Don't consider weather updated if we didn't connect (Issue #144)
+* Typos fixed by @navarroaxel (Pull Request #146)
+* Updated Japanese translations by @ymadd (Pull Request #140 and #149)
+* Updated Dutch translations by @Vistaus (Pull Request #148)
+
 ## v68 - June 26 2020
 
 * Added Japanese translations by @ymadd (Pull Request #139)

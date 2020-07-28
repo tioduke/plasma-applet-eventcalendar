@@ -1,16 +1,24 @@
 import QtQuick 2.0
 
-import "./lib/Requests.js" as Requests
-import "Shared.js" as Shared
 import "./calendars"
-import "../code/ColorIdMap.js" as ColorIdMap
 
 CalendarManager {
 	id: eventModel
 
+	property var calendarManagerList: []
 	property var calendarPluginMap: ({}) // Empty Map
 	property var eventsData: { "items": [] }
 
+	Component.onCompleted: {
+		bindSignals(googleCalendarManager)
+		bindSignals(googleTasksManager)
+		bindSignals(plasmaCalendarManager)
+		// bindSignals(icalManager)
+		// bindSignals(debugCalendarManager)
+		// bindSignals(debugGoogleCalendarManager)
+	}
+
+	//---
 	function fetchingDataListener() { eventModel.asyncRequests += 1 }
 	function allDataFetchedListener() { eventModel.asyncRequestsDone += 1 }
 	function calendarFetchedListener(calendarId, data) {
@@ -50,36 +58,41 @@ CalendarManager {
 		calendarManager.eventRemoved.connect(eventRemovedListener)
 		calendarManager.eventDeleted.connect(eventDeletedListener)
 		calendarManager.eventUpdated.connect(eventUpdatedListener)
+		calendarManager.refresh.connect(deferredUpdate.restart)
+
+		calendarManagerList.push(calendarManager)
 	}
 
 	function getCalendarManager(calendarId) {
 		return eventModel.calendarPluginMap[calendarId]
 	}
 
+	//---
 	ICalManager {
 		id: icalManager
 		calendarList: appletConfig.icalCalendarList.value
 	}
 
-	DebugCalendarManager {
-		id: debugCalendarManager
-	}
+	DebugCalendarManager { id: debugCalendarManager }
+	DebugGoogleCalendarManager { id: debugGoogleCalendarManager }
 
+	GoogleApiSession {
+		id: googleApiSession
+	}
 	GoogleCalendarManager {
 		id: googleCalendarManager
+		session: googleApiSession
+	}
+	GoogleTasksManager {
+		id: googleTasksManager
+		session: googleApiSession
 	}
 
 	PlasmaCalendarManager {
 		id: plasmaCalendarManager
 	}
 
-	Component.onCompleted: {
-		bindSignals(icalManager)
-		bindSignals(debugCalendarManager)
-		bindSignals(googleCalendarManager)
-		bindSignals(plasmaCalendarManager)
-	}
-
+	//---
 	property var deferredUpdate: Timer {
 		id: deferredUpdate
 		interval: 200
@@ -90,12 +103,10 @@ CalendarManager {
 	}
 
 	onFetchAllCalendars: {
-		googleCalendarManager.fetchAll(dateMin, dateMax)
-		plasmaCalendarManager.fetchAll(dateMin, dateMax)
-		// icalManager.fetchAll(dateMin, dateMax)
-		// debugCalendarManager.showDebugEvents = true
-		// debugCalendarManager.importGoogleSession = true
-		// debugCalendarManager.fetchAll(dateMin, dateMax)
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			calendarManager.fetchAll(dateMin, dateMax)
+		}
 	}
 
 	onAllDataFetched: mergeEvents()
@@ -109,58 +120,58 @@ CalendarManager {
 		}
 	}
 
+	//--- CalendarManager: Event
 	function createEvent(calendarId, date, text) {
 		if (plasmoid.configuration.agenda_newevent_remember_calendar) {
 			plasmoid.configuration.agenda_newevent_last_calendar_id = calendarId
 		}
 
-		if (calendarId == "debug") {
-
-		} else if (true) { // Google Calendar
-			if (googleCalendarManager.accessToken) {
-				googleCalendarManager.createGoogleCalendarEvent(calendarId, date, text)
-			} else {
-				logger.log('attempting to create an event without an access token set')
-			}
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager) {
+			calendarManager.createEvent(calendarId, date, text)
 		} else {
-			logger.log('cannot create a new event for the calendar', calendarId)
+			logger.log('Could not createEvent. Could not find calendarManager for calendarId = ', calendarId)
 		}
 	}
 
 	function deleteEvent(calendarId, eventId) {
-		if (calendarId == "debug") {
-			debugCalendarManager.deleteEvent(calendarId, eventId)
-		} else if (true) { // Google Calendar
-			googleCalendarManager.deleteEvent(calendarId, eventId)
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager) {
+			calendarManager.deleteEvent(calendarId, eventId)
 		} else {
-			logger.log('cannot delete an event for the calendar', calendarId, eventId)
+			logger.log('Could not deleteEvent. Could not find calendarManager for calendarId = ', calendarId)
 		}
 	}
 
 	function setEventProperty(calendarId, eventId, key, value) {
 		logger.debug('eventModel.setEventProperty', calendarId, eventId, key, value)
-		if (calendarId == "debug") {
-			debugCalendarManager.setEventProperty(calendarId, eventId, key, value)
-		} else if (true) { // Google Calendar
-			googleCalendarManager.setEventProperty(calendarId, eventId, key, value)
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager) {
+			calendarManager.setEventProperty(calendarId, eventId, key, value)
 		} else {
-			logger.log('cannot edit the event property for the calendar', calendarId, eventId)
+			logger.log('Could not setEventProperty. Could not find calendarManager for calendarId = ', calendarId)
 		}
 	}
 
 	function setEventProperties(calendarId, eventId, args) {
 		logger.debugJSON('eventModel.setEventProperties', calendarId, eventId, args)
-		if (calendarId == "debug") {
-			var keys = Object.keys(args)
-			for (var i = 0; i < keys.length; i++) {
-				var key = keys[i]
-				var value = args[key]
-				debugCalendarManager.setEventProperty(calendarId, eventId, key, value)
-			}
-		} else if (true) { // Google Calendar
-			googleCalendarManager.updateGoogleCalendarEvent(calendarId, eventId, args)
+		var calendarManager = getCalendarManager(calendarId)
+		if (calendarManager) {
+			calendarManager.setEventProperties(calendarId, eventId, args)
 		} else {
-			logger.log('cannot edit the event property for the calendar', calendarId, eventId)
+			logger.log('Could not setEventProperties. Could not find calendarManager for calendarId = ', calendarId)
 		}
+	}
+
+	//--- CalendarManager: Calendar
+	function getCalendarList() {
+		var calendarList = []
+		for (var i = 0; i < calendarManagerList.length; i++) {
+			var calendarManager = calendarManagerList[i]
+			var list = calendarManager.getCalendarList()
+			// logger.debugJSON(calendarManager.toString(), list)
+			calendarList = calendarList.concat(list)
+		}
+		return calendarList
 	}
 }

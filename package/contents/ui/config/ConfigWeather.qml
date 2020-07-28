@@ -9,52 +9,39 @@ import "../lib"
 ConfigPage {
 	id: page
 
-	property alias cfg_weather_service: cfg_weather_serviceComboBox.value
-	property alias cfg_weather_app_id: weather_app_id.text // OpenWeatherMap
-	property alias cfg_weather_city_id: weather_city_id.text // OpenWeatherMap
-	property alias cfg_weather_canada_city_id: weather_canada_city_id.text // WeatherCanada
-	
-	property string cfg_weather_units: 'metric'
-	property alias cfg_events_pollinterval: weather_pollinterval.value // TODO
-	property alias cfg_meteogram_hours: meteogram_hours.value
-
-
 	HeaderText {
 		text: i18n("Data")
 	}
 
-	ComboBoxProperty {
-		id: cfg_weather_serviceComboBox
-		enabled: false
+	ConfigComboBox {
+		id: weatherService
+		configKey: 'weather_service'
+
 		model: [
-			'OpenWeatherMap',
-			'WeatherCanada',
+			{ value: 'OpenWeatherMap', text: 'OpenWeatherMap' },
+			{ value: 'WeatherCanada', text: 'WeatherCanada' },
 		]
-		value: 'OpenWeatherMap'
 	}
 
 	ConfigSection {
 		RowLayout {
-			visible: plasmoid.configuration.debugging && page.cfg_weather_service === 'OpenWeatherMap'
-			Layout.fillWidth: true
+			visible: plasmoid.configuration.debugging && weatherService.value === 'OpenWeatherMap'
 			Label {
 				text: i18n("API App Id:")
 			}
-			TextField {
-				id: weather_app_id
-				Layout.fillWidth: true
+			ConfigString {
+				configKey: 'weather_app_id'
 			}
 		}
 
 		RowLayout {
-			visible: page.cfg_weather_service === 'OpenWeatherMap'
-			Layout.fillWidth: true
+			visible: weatherService.value === 'OpenWeatherMap'
 			Label {
 				text: i18n("City Id:")
 			}
-			TextField {
-				id: weather_city_id
-				Layout.fillWidth: true
+			ConfigString {
+				id: weatherCityId
+				configKey: 'weather_city_id'
 				placeholderText: i18n("Eg: 5983720")
 			}
 			Button {
@@ -65,20 +52,19 @@ ConfigPage {
 			OpenWeatherMapCityDialog {
 				id: openWeatherMapCityDialog
 				onAccepted: {
-					page.cfg_weather_city_id = selectedCityId
+					weatherCityId.value = selectedCityId
 				}
 			}
 		}
 
 		RowLayout {
-			visible: page.cfg_weather_service === 'WeatherCanada'
-			Layout.fillWidth: true
+			visible: weatherService.value === 'WeatherCanada'
 			Label {
 				text: i18n("City Id:")
 			}
-			TextField {
-				id: weather_canada_city_id
-				Layout.fillWidth: true
+			ConfigString {
+				id: weatherCanadaCityId
+				configKey: 'weather_canada_city_id'
 				placeholderText: i18n("Eg: on-14")
 			}
 			Button {
@@ -89,7 +75,7 @@ ConfigPage {
 			WeatherCanadaCityDialog {
 				id: weatherCanadaCityDialog
 				onAccepted: {
-					page.cfg_weather_canada_city_id = selectedCityId
+					weatherCanadaCityId.value = selectedCityId
 				}
 			}
 		}
@@ -100,19 +86,14 @@ ConfigPage {
 	}
 
 	ConfigSection {
-		RowLayout {
-			Label {
-				text: i18n("Update forecast every: ")
-			}
-			
-			SpinBox {
-				id: weather_pollinterval
-				enabled: false
-				
-				suffix: i18ncp("Polling interval in minutes", "min", "min", value)
-				minimumValue: 60
-				maximumValue: 90
-			}
+		ConfigSpinBox {
+			// configKey: 'weatherPollinterval'
+			before: i18n("Update forecast every: ")
+			enabled: false
+			value: 60
+			suffix: i18ncp("Polling interval in minutes", "min", "min", value)
+			minimumValue: 60
+			maximumValue: 90
 		}
 	}
 
@@ -121,55 +102,26 @@ ConfigPage {
 	}
 
 	ConfigSection {
-		RowLayout {
-			Label {
-				text: i18n("Show next ")
-			}
-			
-			SpinBox {
-				id: meteogram_hours
-				enabled: true
-				
-				suffix: i18np(" hours", " hours", value)
-				minimumValue: 9
-				maximumValue: 48
-				stepSize: 3
-			}
-
-			Label {
-				text: i18n(" in the meteogram.")
-			}
+		ConfigSpinBox {
+			configKey: 'meteogram_hours'
+			before: i18n("Show next ")
+			suffix: i18np(" hours", " hours", value)
+			after: i18n(" in the meteogram.")
+			minimumValue: 9
+			maximumValue: 48
+			stepSize: 3
 		}
 	}
 
 	ConfigSection {
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			configKey: 'weather_units'
 			label: i18n("Units:")
-			ExclusiveGroup { id: weather_unitsGroup }
-			RadioButton {
-				text: i18n("Celsius")
-				checked: cfg_weather_units == 'metric'
-				exclusiveGroup: weather_unitsGroup
-				onClicked: {
-					cfg_weather_units = 'metric'
-				}
-			}
-			RadioButton {
-				text: i18n("Fahrenheit")
-				checked: cfg_weather_units == 'imperial'
-				exclusiveGroup: weather_unitsGroup
-				onClicked: {
-					cfg_weather_units = 'imperial'
-				}
-			}
-			RadioButton {
-				text: i18n("Kelvin")
-				checked: cfg_weather_units == 'kelvin'
-				exclusiveGroup: weather_unitsGroup
-				onClicked: {
-					cfg_weather_units = 'kelvin'
-				}
-			}
+			model: [
+				{ value: 'metric', text: i18n("Celsius") },
+				{ value: 'imperial', text: i18n("Fahrenheit") },
+				{ value: 'kelvin', text: i18n("Kelvin") },
+			]
 		}
 	}
 

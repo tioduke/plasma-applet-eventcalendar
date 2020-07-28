@@ -19,11 +19,12 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.0 as QQC2
 
+import org.kde.kirigami 2.0 as Kirigami
 import org.kde.plasma.calendar 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import "./badges"
@@ -85,10 +86,10 @@ Item {
 		}
 	}
 
-	Stack.onStatusChanged: {
-		if (Stack.status === Stack.Inactive) {
+	QQC2.StackView.onStatusChanged: {
+		if (QQC2.StackView.status === QQC2.StackView.Inactive) {
 			daysCalendar.transformScale = 1
-			opacity = 1
+			daysCalendar.opacity = 1
 		}
 	}
 
@@ -149,29 +150,40 @@ Item {
 			}
 		}
 
-		PlasmaComponents.ToolButton {
+		PlasmaComponents3.ToolButton {
 			id: previousButton
-			iconName: "go-previous"
+			icon.name: "go-previous"
 			onClicked: daysCalendar.previous()
+			property string tooltip: ''
+			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+			QQC2.ToolTip.text: tooltip
+			QQC2.ToolTip.visible: hovered
 			Accessible.name: tooltip
 			//SEE QTBUG-58307
 			Layout.preferredHeight: implicitHeight + implicitHeight%2
 		}
 
-		PlasmaComponents.ToolButton {
-			iconName: "go-jump-today"
+		PlasmaComponents3.ToolButton {
+			icon.name: "go-jump-today"
 			onClicked: root.resetToToday()
-			tooltip: i18ndc("libplasma5", "Reset calendar to today", "Today")
+			property string tooltip: i18ndc("libplasma5", "Reset calendar to today", "Today")
+			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+			QQC2.ToolTip.text: tooltip
+			QQC2.ToolTip.visible: hovered
 			Accessible.name: tooltip
 			Accessible.description: i18nd("libplasma5", "Reset calendar to today")
 			//SEE QTBUG-58307
 			Layout.preferredHeight: implicitHeight + implicitHeight%2
 		}
 
-		PlasmaComponents.ToolButton {
+		PlasmaComponents3.ToolButton {
 			id: nextButton
-			iconName: "go-next"
+			icon.name: "go-next"
 			onClicked: daysCalendar.next()
+			property string tooltip: ''
+			QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+			QQC2.ToolTip.text: tooltip
+			QQC2.ToolTip.visible: hovered
 			Accessible.name: tooltip
 			//SEE QTBUG-58307
 			Layout.preferredHeight: implicitHeight + implicitHeight%2
@@ -199,7 +211,7 @@ Item {
 			ctx.reset()
 			ctx.save()
 			ctx.clearRect(0, 0, canvas.width, canvas.height)
-			ctx.strokeStyle = theme.textColor
+			ctx.strokeStyle = PlasmaCore.ColorScope.textColor
 			ctx.lineWidth = root.borderWidth
 			ctx.globalAlpha = 1.0
 
@@ -309,16 +321,16 @@ Item {
 		Repeater {
 			model: showWeekNumbers ? calendarBackend.weeksModel : []
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				height: daysCalendar.cellHeight
 				width: daysCalendar.cellWidth
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
 				font.pointSize: -1 // Ignore pixelSize warning
 				font.pixelSize: Math.max(theme.smallestFont.pixelSize, Math.min(daysCalendar.cellHeight / 3, daysCalendar.cellWidth * 5/8))
-				readonly property bool isCurrentWeek: modelData == calendarBackend.currentWeek()
-				readonly property bool showHighlight: isCurrentWeek && highlightCurrentDayWeek
-				color: showHighlight ? theme.highlightColor : theme.textColor
+				readonly property bool isCurrentWeek: root.currentMonthContainsToday && modelData == calendarBackend.currentWeek()
+				readonly property bool showHighlight: isCurrentWeek && root.highlightCurrentDayWeek
+				color: showHighlight ? PlasmaCore.ColorScope.highlightColor : PlasmaCore.ColorScope.textColor
 				opacity: showHighlight ? 0.75 : 0.4
 				text: modelData
 			}
@@ -354,7 +366,7 @@ Item {
 		Repeater {
 			id: days
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				width: daysCalendar.cellWidth
 				height: daysCalendar.cellHeight
 				font.pointSize: -1 // Ignore pixelSize warning
@@ -364,9 +376,9 @@ Item {
 				elide: Text.ElideRight
 				fontSizeMode: Text.HorizontalFit
 				readonly property int currentDayIndex: (calendarBackend.firstDayOfWeek + index) % 7
-				readonly property bool isCurrentDay: root.today && root.today.getDay() == currentDayIndex
-				readonly property bool showHighlight: isCurrentDay && highlightCurrentDayWeek
-				color: showHighlight ? theme.highlightColor : theme.textColor
+				readonly property bool isCurrentDay: root.currentMonthContainsToday && root.today && root.today.getDay() == currentDayIndex
+				readonly property bool showHighlight: isCurrentDay && root.highlightCurrentDayWeek
+				color: showHighlight ? PlasmaCore.ColorScope.highlightColor : PlasmaCore.ColorScope.textColor
 				opacity: showHighlight ? 0.75 : 0.4
 				text: Qt.locale().dayName(currentDayIndex, Locale.ShortFormat)
 			}

@@ -2,29 +2,30 @@ import QtQuick 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 import "LocaleFuncs.js" as LocaleFuncs
+import "./calendars"
 
-EventModel {
+CalendarManager {
 	id: upcomingEvents
 
-	dateMin: timeModel.currentTime || new Date()
-	dateMax: {
-		var d = new Date(timeModel)
-		d.setMinutes(d.getMinutes() + 90)
-		return d
-	}
+	property int upcomingEventRange: 90 // minutes
+
 	onFetchingData: {
-		logger.log('upcomingEvents.onFetchingData')
+		logger.debug('upcomingEvents.onFetchingData')
 
 	}
 	onAllDataFetched: {
-		logger.log('upcomingEvents.onAllDataFetched')
+		logger.debug('upcomingEvents.onAllDataFetched',
+			upcomingEvents.dateMin.toISOString(),
+			timeModel.currentTime.toISOString(),
+			upcomingEvents.dateMax.toISOString()
+		)
 		// sendEventListNotification()
 	}
 
 	function isUpcomingEvent(eventItem) {
-		console.log(eventItem.startDateTime, timeModel.currentTime, eventItem.startDateTime - timeModel.currentTime, eventItem.summary)
+		// console.log(eventItem.startDateTime, timeModel.currentTime, eventItem.startDateTime - timeModel.currentTime, eventItem.summary)
 		var dt = eventItem.startDateTime - timeModel.currentTime
-		return -30 * 1000 <= dt && dt <= 90 * 60 * 1000 // starting within 90 minutes
+		return -30 * 1000 <= dt && dt <= upcomingEventRange * 60 * 1000 // starting within 90 minutes
 	}
 
 	function isSameMinute(a, b) {
@@ -190,10 +191,6 @@ EventModel {
 
 	Connections {
 		target: timeModel
-		// onMinuteChanged: upcomingEvents.update()
 		onMinuteChanged: upcomingEvents.tick()
 	}
-
-	// Component.onCompleted: upcomingEvents.update()
-	// Component.onCompleted: deferredUpdate.restart()
 }

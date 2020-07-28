@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 import "Shared.js" as Shared
 import "LocaleFuncs.js" as LocaleFuncs
@@ -13,7 +14,10 @@ Item {
 	property color inProgressColor: appletConfig.agendaInProgressColor
 	property int inProgressFontWeight: Font.Bold
 
-	signal newEventFormOpened(var agendaItem, var newEventCalendarId)
+	property color isOverdueColor: PlasmaCore.ColorScope.negativeTextColor
+	property int isOverdueFontWeight: Font.Bold
+
+	signal newEventFormOpened(var agendaItem, var calendarSelector)
 	signal submitNewEventForm(string calendarId, var date, string text)
 
 	Connections {
@@ -70,7 +74,7 @@ Item {
 				model: root.agendaModel
 				delegate: AgendaListItem {
 					// visible: agendaRepeater.populated
-					width: agendaRepeater.width
+					width: parent.width
 					// onHeightChanged: {
 					// 	if (scrollToIndexTimer.running) {
 					// 		scrollToIndexTimer.updatePosition()
@@ -152,6 +156,14 @@ Item {
 		function positionViewAtEvent(agendaItemIndex, eventIndex) {
 			var offsetY = getItemOffsetY(agendaItemIndex)
 			var agendaListItem = agendaRepeater.itemAt(agendaItemIndex)
+			offsetY += agendaListItem.getEventOffset(eventIndex)
+			scrollToY(offsetY)
+		}
+
+		function positionViewAtTask(agendaItemIndex, taskIndex) {
+			var offsetY = getItemOffsetY(agendaItemIndex)
+			var agendaListItem = agendaRepeater.itemAt(agendaItemIndex)
+			var eventIndex = agendaListItem.agendaItemEvents.count + taskIndex
 			offsetY += agendaListItem.getEventOffset(eventIndex)
 			scrollToY(offsetY)
 		}

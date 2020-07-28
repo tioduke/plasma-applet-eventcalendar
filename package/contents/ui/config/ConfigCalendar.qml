@@ -1,44 +1,37 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import org.kde.plasma.core 2.0 as PlasmaCore
 
 import "../lib"
 
 ConfigPage {
 	id: page
 
-	property alias cfg_month_show_border: month_show_border.checked
-	property alias cfg_month_show_weeknumbers: month_show_weeknumbers.checked
-	property alias cfg_monthHighlightCurrentDayWeek: monthHighlightCurrentDayWeek.checked
-	property string cfg_month_eventbadge_type: 'bottomBar'
-	property string cfg_month_today_style: 'theme'
-
 	ConfigCheckBox {
-		configKey: 'cfg_widget_show_calendar'
+		configKey: 'widget_show_calendar'
 		text: i18n("Show calendar")
 	}
 
 	ConfigSection {
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			id: clickDateGroup
 			label: i18n("Click Date:")
-			ExclusiveGroup { id: month_date_clickGroup }
 			RadioButton {
 				text: i18n("Scroll to event in Agenda")
+				exclusiveGroup: clickDateGroup.exclusiveGroup
 				checked: true
-				exclusiveGroup: month_date_clickGroup
 			}
 		}
 	}
 
 	ConfigSection {
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			id: doubleClickDateGroup
 			label: i18n("DoubleClick Date:")
-			ExclusiveGroup { id: month_date_doubleclickGroup }
 			RadioButton {
 				text: i18n("Open New Event In Browser")
+				exclusiveGroup: doubleClickDateGroup.exclusiveGroup
 				checked: true
-				exclusiveGroup: month_date_doubleclickGroup
 			}
 		}
 	}
@@ -47,16 +40,16 @@ ConfigPage {
 		text: i18n("Style")
 	}
 	ConfigSection {
-		CheckBox {
-			id: month_show_border
+		ConfigCheckBox {
+			configKey: 'month_show_border'
 			text: i18n("Show Borders")
 		}
-		CheckBox {
-			id: month_show_weeknumbers
+		ConfigCheckBox {
+			configKey: 'month_show_weeknumbers'
 			text: i18n("Show Week Numbers")
 		}
-		CheckBox {
-			id: monthHighlightCurrentDayWeek
+		ConfigCheckBox {
+			configKey: 'monthHighlightCurrentDayWeek'
 			text: i18n("Highlight Current Day / Week")
 		}
 		RowLayout {
@@ -88,49 +81,16 @@ ConfigPage {
 				}
 			}
 		}
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			configKey: 'month_eventbadge_type'
 			label: i18n("Event Badge:")
-			ExclusiveGroup { id: month_eventbadge_styleGroup }
-			RadioButton {
-				text: i18n("Theme")
-				exclusiveGroup: month_eventbadge_styleGroup
-				checked: cfg_month_eventbadge_type == 'theme'
-				onClicked: {
-					cfg_month_eventbadge_type = 'theme'
-				}
-			}
-			RadioButton {
-				text: i18n("Dots (3 Maximum)")
-				exclusiveGroup: month_eventbadge_styleGroup
-				checked: cfg_month_eventbadge_type == 'dots'
-				onClicked: {
-					cfg_month_eventbadge_type = 'dots'
-				}
-			}
-			RadioButton {
-				text: i18n("Bottom Bar (Event Color)")
-				exclusiveGroup: month_eventbadge_styleGroup
-				checked: cfg_month_eventbadge_type == 'bottomBar'
-				onClicked: {
-					cfg_month_eventbadge_type = 'bottomBar'
-				}
-			}
-			RadioButton {
-				text: i18n("Bottom Bar (Highlight)")
-				exclusiveGroup: month_eventbadge_styleGroup
-				checked: cfg_month_eventbadge_type == 'bottomBarHighlight'
-				onClicked: {
-					cfg_month_eventbadge_type = 'bottomBarHighlight'
-				}
-			}
-			RadioButton {
-				text: i18n("Count")
-				exclusiveGroup: month_eventbadge_styleGroup
-				checked: cfg_month_eventbadge_type == 'count'
-				onClicked: {
-					cfg_month_eventbadge_type = 'count'
-				}
-			}
+			model: [
+				{ value: 'theme', text: i18n("Theme") },
+				{ value: 'dots', text: i18n("Dots (3 Maximum)") },
+				{ value: 'bottomBar', text: i18n("Bottom Bar (Event Color)") },
+				{ value: 'bottomBarHighlight', text: i18n("Bottom Bar (Highlight)") },
+				{ value: 'count', text: i18n("Count") },
+			]
 		}
 
 		ConfigSlider {
@@ -139,45 +99,26 @@ ConfigPage {
 			maximumValue: 1
 			before: i18n("Radius:")
 			after: "" + Math.round(value*100) + "%"
+			Layout.fillWidth: false
 		}
 
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			id: selectedStyleGroup
 			label: i18n("Selected:")
-			ExclusiveGroup { id: month_selected_styleGroup }
-			RadioButton {
-				visible: false
-				enabled: false
-				text: i18n("Theme")
-				exclusiveGroup: month_selected_styleGroup
-			}
 			RadioButton {
 				text: i18n("Solid Color (Highlight)")
+				exclusiveGroup: selectedStyleGroup.exclusiveGroup
 				checked: true
-				exclusiveGroup: month_selected_styleGroup
 			}
 		}
 
-		LabeledRowLayout {
+		ConfigRadioButtonGroup {
+			configKey: 'month_today_style'
 			label: i18n("Today:")
-			ExclusiveGroup { id: month_today_styleGroup }
-			RadioButton {
-				visible: false
-				enabled: false
-				text: i18n("Theme")
-				exclusiveGroup: month_today_styleGroup
-			}
-			RadioButton {
-				text: i18n("Solid Color (Inverted)")
-				exclusiveGroup: month_today_styleGroup
-				checked: cfg_month_today_style == 'theme'
-				onClicked: cfg_month_today_style = 'theme'
-			}
-			RadioButton {
-				text: i18n("Big Number")
-				exclusiveGroup: month_today_styleGroup
-				checked: cfg_month_today_style == 'bigNumber'
-				onClicked: cfg_month_today_style = 'bigNumber'
-			}
+			model: [
+				{ value: 'theme', text: i18n("Solid Color (Inverted)") },
+				{ value: 'bigNumber', text: i18n("Big Number") },
+			]
 		}
 	}
 

@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 import "Shared.js" as Shared
 import "../code/WeatherApi.js" as WeatherApi
@@ -12,6 +12,7 @@ GridLayout {
 	readonly property int agendaItemIndex: index
 	columnSpacing: 0
 	property var agendaItemEvents: model.events
+	property var agendaItemTasks: model.tasks
 	property date agendaItemDate: model.date
 	property bool agendaItemIsToday: false
 	function checkIfToday() {
@@ -26,6 +27,7 @@ GridLayout {
 	}
 	property bool agendaItemInProgress: agendaItemIsToday
 	property bool weatherOnRight: plasmoid.configuration.agendaWeatherOnRight
+	property alias tasksRepeater: tasksRepeater
 	property alias eventsRepeater: eventsRepeater
 
 	Connections {
@@ -77,24 +79,28 @@ GridLayout {
 				Layout.fillWidth: true
 			}
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: itemWeatherText
 				visible: showWeather && plasmoid.configuration.agenda_weather_show_text
 				text: weatherText
 				color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
 				opacity: agendaItemIsToday ? 1 : 0.75
+				font.pointSize: -1
+				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				horizontalAlignment: Text.AlignHCenter
+				Layout.alignment: Qt.AlignHCenter
 			}
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: itemWeatherTemps
 				visible: showWeather
 				text: tempHigh + '° | ' + tempLow + '°'
 				color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
 				opacity: agendaItemIsToday ? 1 : 0.75
+				font.pointSize: -1
+				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				horizontalAlignment: Text.AlignHCenter
+				Layout.alignment: Qt.AlignHCenter
 			}
 		}
 
@@ -104,8 +110,8 @@ GridLayout {
 		onLeftClicked: {
 			// console.log('agendaItem.date.clicked', date)
 			if (true) {
-				// cfg_agenda_weather_clicked == "browser_viewcityforecast"
-				WeatherApi.openCityUrl()
+				// agenda_weather_clicked == "browser_viewcityforecast"
+				WeatherApi.openCityUrl(plasmoid.configuration)
 			}
 		}
 	}
@@ -126,7 +132,7 @@ GridLayout {
 			anchors.rightMargin: appletConfig.agendaColumnSpacing
 			spacing: 0
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: itemDate
 				text: Qt.formatDateTime(date, i18nc("agenda date format line 1", "MMM d"))
 				color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
@@ -134,19 +140,11 @@ GridLayout {
 				font.pointSize: -1
 				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				height: paintedHeight
 				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignRight
-
-				// MouseArea {
-				// 	anchors.fill: itemDateColumn
-				// 	onClicked: {
-				// 		newEventInput.forceActiveFocus()
-				// 	}
-				// }
 			}
 
-			PlasmaComponents.Label {
+			PlasmaComponents3.Label {
 				id: itemDay
 				text: Qt.formatDateTime(date, i18nc("agenda date format line 2", "ddd"))
 				color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
@@ -154,7 +152,6 @@ GridLayout {
 				font.pointSize: -1
 				font.pixelSize: appletConfig.agendaFontSize
 				font.weight: agendaItemIsToday ? inProgressFontWeight : Font.Normal
-				height: paintedHeight
 				Layout.fillWidth: true
 				horizontalAlignment: Text.AlignRight
 			}
@@ -163,10 +160,10 @@ GridLayout {
 		onLeftClicked: {
 			// console.log('agendaItem.date.leftClicked', date)
 			if (false) {
-				// cfg_agenda_date_clicked == "browser_newevent"
+				// agenda_date_clicked == "browser_newevent"
 				Shared.openGoogleCalendarNewEventUrl(date)
 			} else if (true) {
-				// cfg_agenda_date_clicked == "agenda_newevent"
+				// agenda_date_clicked == "agenda_newevent"
 				newEventForm.active = !newEventForm.active
 			}
 		}
@@ -193,6 +190,17 @@ GridLayout {
 
 				delegate: AgendaEventItem {
 					id: agendaEventItem
+					width: parent.width
+				}
+			}
+
+			Repeater {
+				id: tasksRepeater
+				model: agendaItemTasks
+
+				delegate: AgendaTaskItem {
+					id: agendaTaskItem
+					width: parent.width
 				}
 			}
 		}
@@ -200,10 +208,16 @@ GridLayout {
 	}
 
 	function indexOfEvent(eventId) {
-		for (var i = 0; i < eventsRepeater.model; i++) {
+		for (var i = 0; i < eventsRepeater.model.length; i++) {
 			var event = eventsRepeater.model[i]
 			if (event.id == eventId) {
 				return i
+			}
+		}
+		for (var i = 0; i < tasksRepeater.model.length; i++) {
+			var task = tasksRepeater.model[i]
+			if (task.id == eventId) {
+				return eventsRepeater.model.length + i
 			}
 		}
 		return -1
@@ -214,6 +228,17 @@ GridLayout {
 		for (var i = 0; i < index && i < eventsRepeater.count; i++) {
 			var item = eventsRepeater.itemAt(i)
 			if (i > 0) {
+				yOffset += eventsLayout.spacing
+			}
+			yOffset += item.height
+		}
+		for (var i = 0; i < tasksRepeater.count; i++) {
+			var item = tasksRepeater.itemAt(i)
+			var eventIndex = eventsRepeater.count + i
+			if (eventIndex >= index) {
+				break
+			}
+			if (i > 0 || eventsRepeater.count > 0) {
 				yOffset += eventsLayout.spacing
 			}
 			yOffset += item.height

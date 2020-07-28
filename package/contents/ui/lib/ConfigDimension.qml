@@ -1,8 +1,9 @@
-// Version 1
+// Version 2
 
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+import org.kde.kirigami 2.0 as Kirigami
 
 GridLayout {
 	id: configDimension
@@ -11,7 +12,7 @@ GridLayout {
 
 	property int orientation: Qt.Horizontal
 	property color lineColor: "#000"
-	property int lineThickness: 2 * units.devicePixelRatio
+	property int lineThickness: 2 * Kirigami.Units.devicePixelRatio
 
 	property alias configKey: configSpinBox.configKey
 	property alias configValue: configSpinBox.configValue
@@ -38,15 +39,17 @@ GridLayout {
 				implicitWidth: configDimension.lineThickness
 				Layout.fillHeight: true
 			}
-			PropertyChanges { target: centerArea
+			PropertyChanges { target: lineSpanA
 				Layout.fillWidth: true
+				Layout.alignment: Qt.AlignVCenter
+				implicitHeight: configDimension.lineThickness
 			}
-			AnchorChanges { target: lineSpan
-				anchors.left: parent.left
-				anchors.right: parent.right
-				anchors.verticalCenter: parent.verticalCenter
+			PropertyChanges { target: configSpinBox
+				Layout.alignment: Qt.AlignVCenter
 			}
-			PropertyChanges { target: lineSpan
+			PropertyChanges { target: lineSpanB
+				Layout.fillWidth: true
+				Layout.alignment: Qt.AlignVCenter
 				implicitHeight: configDimension.lineThickness
 			}
 			PropertyChanges { target: lineB
@@ -66,15 +69,17 @@ GridLayout {
 				implicitHeight: configDimension.lineThickness
 				implicitWidth: configSpinBox.implicitHeight
 			}
-			PropertyChanges { target: centerArea
+			PropertyChanges { target: lineSpanA
 				Layout.fillHeight: true
+				Layout.alignment: Qt.AlignHCenter
+				implicitWidth: configDimension.lineThickness
 			}
-			AnchorChanges { target: lineSpan
-				anchors.top: parent.top
-				anchors.bottom: parent.bottom
-				anchors.horizontalCenter: parent.horizontalCenter
+			PropertyChanges { target: configSpinBox
+				Layout.alignment: Qt.AlignHCenter
 			}
-			PropertyChanges { target: lineSpan
+			PropertyChanges { target: lineSpanB
+				Layout.fillHeight: true
+				Layout.alignment: Qt.AlignHCenter
 				implicitWidth: configDimension.lineThickness
 			}
 			PropertyChanges { target: lineB
@@ -89,20 +94,16 @@ GridLayout {
 		id: lineA
 		color: configDimension.lineColor
 	}
-	Item {
-		id: centerArea
-		implicitWidth: configSpinBox.implicitWidth
-		implicitHeight: configSpinBox.implicitHeight
-
-		Rectangle {
-			id: lineSpan
-			color: configDimension.lineColor
-		}
-
-		ConfigSpinBox {
-			id: configSpinBox
-			anchors.centerIn: parent
-		}
+	Rectangle {
+		id: lineSpanA
+		color: configDimension.lineColor
+	}
+	ConfigSpinBox {
+		id: configSpinBox
+	}
+	Rectangle {
+		id: lineSpanB
+		color: configDimension.lineColor
 	}
 	Rectangle {
 		id: lineB

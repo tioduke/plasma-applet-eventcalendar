@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.1
 
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
-
+import org.kde.plasma.components 3.0 as PlasmaComponents3
+import org.kde.plasma.private.digitalclock 1.0 as DigitalClock
 import org.kde.kquickcontrolsaddons 2.0 // KCMShell
 
 import "./lib"
@@ -34,9 +34,17 @@ Item {
 		timeModel: timeModel
 		Component.onCompleted: logger.debug('AgendaModel.onCompleted')
 	}
+	Logic { id: logic }
 
 	FontLoader {
 		source: "../fonts/weathericons-regular-webfont.ttf"
+	}
+
+	Connections {
+		target: plasmoid
+		function onContextualActionsAboutToShow() {
+			DigitalClock.ClipboardMenu.currentDate = timeModel.currentTime
+		}
 	}
 
 	Plasmoid.toolTipItem: Loader {
@@ -123,7 +131,7 @@ Item {
 			logger.debug('isExpanded', isExpanded)
 			if (isExpanded) {
 				updateToday()
-				updateWeather()
+				logic.updateWeather()
 			}
 		}
 
@@ -142,30 +150,6 @@ Item {
 		}
 
 		Connections {
-			target: plasmoid.configuration
-			onAgenda_breakup_multiday_eventsChanged: { updateUI() }
-			onCalendar_id_listChanged: { updateEvents() }
-			onEnabledCalendarPluginsChanged: { updateEvents() }
-			onAccess_tokenChanged: { updateEvents() }
-			onWeather_app_idChanged: { updateWeather(true) }
-			onWeather_city_idChanged: { updateWeather(true) }
-			onWeather_canada_city_idChanged: { updateWeather(true) }
-			onWeather_serviceChanged: { updateWeather(true) }
-			onWeather_unitsChanged: { updateWeather(true) }
-			onMeteogram_hoursChanged: { updateWeather() }
-			onWidget_show_meteogramChanged: {
-				if (plasmoid.configuration.widget_show_meteogram) {
-					updateHourlyWeather()
-				}
-			}
-		}
-
-		Connections {
-			target: appletConfig
-			onClock24hChanged: { updateUI() }
-		}
-
-		Connections {
 			target: timeModel
 			onDateChanged: {
 				popup.updateToday()
@@ -180,14 +164,14 @@ Item {
 		}
 
 		// Allows the user to keep the calendar open for reference
-		PlasmaComponents.ToolButton {
+		PlasmaComponents3.ToolButton {
 			id: pinButton
 			visible: isPinVisible
 			anchors.right: parent.right
 			width: Math.round(units.gridUnit * 1.25)
 			height: width
 			checkable: true
-			iconSource: "window-pin"
+			icon.name: "window-pin"
 			checked: plasmoid.configuration.pin
 			onCheckedChanged: plasmoid.configuration.pin = checked
 		}
@@ -214,6 +198,9 @@ Item {
 	}
 
 	Component.onCompleted: {
+		plasmoid.setAction("clipboard", i18nd("plasma_applet_org.kde.plasma.digitalclock", "Copy to Clipboard"), "edit-copy")
+		DigitalClock.ClipboardMenu.setupMenu(plasmoid.action("clipboard"))
+
 		if (KCMShell.authorize("clock.desktop").length > 0) {
 			plasmoid.setAction("KCMClock", i18nd("plasma_applet_org.kde.plasma.digitalclock", "Adjust Date and Time..."), "preferences-system-time")
 		}

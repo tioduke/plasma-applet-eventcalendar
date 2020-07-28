@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-06-12 18:07-0400\n"
+"POT-Creation-Date: 2020-07-24 20:51-0400\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -18,9 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
 
+#: ../metadata.desktop ../contents/ui/AgendaView.qml
+#: ../contents/ui/UpcomingEvents.qml
+msgid "Event Calendar"
+msgstr "Ημερολόγιο Συμβάντων"
+
+#: ../metadata.desktop
+msgid ""
+"Plasmoid for a calendar+agenda with weather that syncs to Google Calendar."
+msgstr ""
+
 #: ../contents/config/config.qml
 msgid "General"
 msgstr "Γενικά"
+
+#: ../contents/config/config.qml
+msgid "Layout"
+msgstr ""
 
 #: ../contents/config/config.qml
 msgid "Timezones"
@@ -63,19 +77,19 @@ msgstr "Όλη την Ημέρα"
 msgid "Hangout"
 msgstr ""
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Edit"
 msgstr ""
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Delete Event"
 msgstr "Διαγραφή Συμβάντος"
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Confirm Deletion"
 msgstr "Επιβεβαίωση Διαγραφής"
 
-#: ../contents/ui/AgendaEventItem.qml
+#: ../contents/ui/AgendaEventItem.qml ../contents/ui/AgendaTaskItem.qml
 msgid "Edit in browser"
 msgstr "Επεξεργασία στον φυλλομετρητή"
 
@@ -89,26 +103,23 @@ msgctxt "agenda date format line 2"
 msgid "ddd"
 msgstr "ddd"
 
-#: ../contents/ui/AgendaView.qml ../contents/ui/UpcomingEvents.qml
-msgid "Event Calendar"
-msgstr "Ημερολόγιο Συμβάντων"
+#: ../contents/ui/AgendaTaskItem.qml ../contents/ui/LocaleFuncs.js
+msgctxt "short month+date format"
+msgid "MMM d"
+msgstr ""
 
 #: ../contents/ui/calendars/CalendarManager.qml
 msgctxt "event with no summary"
 msgid "(No title)"
 msgstr "(Χωρίς Τίτλο)"
 
+#: ../contents/ui/CalendarSelector.qml
+msgid "[No Calendars]"
+msgstr "[Χωρίς Ημερολόγια]"
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr "Εμφάνιση Ατζέντας"
-
-#: ../contents/ui/config/ConfigAgenda.qml
-msgid "Agenda above the month (Single Column)"
-msgstr "Ατζέντα πάνω από τον μήνα (Μία Στήλη)"
-
-#: ../contents/ui/config/ConfigAgenda.qml
-msgid "Agenda to the left (Two Columns)"
-msgstr "Ατζέντα στα αριστερά (Δύο Στήλες)"
 
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Font Size:"
@@ -116,6 +127,7 @@ msgstr "Μέγεθος γραμματοσειράς:"
 
 #: ../contents/ui/config/ConfigAgenda.qml
 #: ../contents/ui/config/ConfigGeneral.qml
+#: ../contents/ui/config/ConfigLayout.qml
 msgid "px"
 msgstr "πίξελ"
 
@@ -265,11 +277,14 @@ msgid "Show Week Numbers"
 msgstr "Εμφάνιση Αριθμών Εβδομάδων στο Ημερολόγιο"
 
 #: ../contents/ui/config/ConfigCalendar.qml
+msgid "Highlight Current Day / Week"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
 msgid "First day of week:"
 msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml
-#: ../contents/ui/config/ConfigGeneral.qml
 msgid "Default"
 msgstr "Προεπιλογή"
 
@@ -355,11 +370,6 @@ msgid "Event Starting"
 msgstr "Έναρξη Συμβάντος"
 
 #: ../contents/ui/config/ConfigGeneral.qml
-#: ../contents/ui/lib/ConfigNotification.qml
-msgid "Choose a sound effect"
-msgstr "Επιλογή ηχητικού εφέ"
-
-#: ../contents/ui/config/ConfigGeneral.qml
 msgid "Widgets"
 msgstr "Μικροεφαρμογές"
 
@@ -380,12 +390,9 @@ msgid "Timer"
 msgstr "Χρονομετρητής"
 
 #: ../contents/ui/config/ConfigGeneral.qml
+#: ../contents/ui/lib/ConfigNotification.qml
 msgid "SFX:"
 msgstr "Ηχητικά Εφέ:"
-
-#: ../contents/ui/config/ConfigGeneral.qml
-msgid "Choose"
-msgstr "Επιλογή"
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Clock"
@@ -394,6 +401,10 @@ msgstr "Ρολόϊ"
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid "Time Format"
 msgstr "Μορφή Ώρας"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Time Format Documentation"
+msgstr ""
 
 #: ../contents/ui/config/ConfigGeneral.qml
 msgid ""
@@ -535,6 +546,10 @@ msgstr "Ημερολόγια"
 msgid "Refresh"
 msgstr "Ανανέωση"
 
+#: ../contents/ui/config/ConfigGoogleCalendar.qml
+msgid "Tasks"
+msgstr ""
+
 #: ../contents/ui/config/ConfigICal.qml
 msgid "Add Calendar"
 msgstr "Προσθήκη Ημερολογίου"
@@ -554,6 +569,14 @@ msgstr "Πλοήγηση"
 #: ../contents/ui/config/ConfigICal.qml
 msgid "iCalendar (*.ics)"
 msgstr "iCalendar (*.ics)"
+
+#: ../contents/ui/config/ConfigLayout.qml
+msgid "Calendar to the left of the Agenda (Two Columns)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigLayout.qml
+msgid "Agenda below the Calendar (Single Column)"
+msgstr ""
 
 #: ../contents/ui/config/ConfigTimezones.qml
 msgid "Tooltip"
@@ -703,10 +726,6 @@ msgstr ""
 msgid "Add location"
 msgstr ""
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/NewEventForm.qml
-msgid "[No Calendars]"
-msgstr "[Χωρίς Ημερολόγια]"
-
 #: ../contents/ui/EditEventForm.qml
 msgid "Add description"
 msgstr ""
@@ -722,6 +741,23 @@ msgstr ""
 #: ../contents/ui/lib/AppletVersion.qml
 msgid "<b>Version:</b> %1"
 msgstr "<b>Έκδοση:</b> %1"
+
+#: ../contents/ui/lib/ConfigFontFamily.qml
+msgctxt "Use default font"
+msgid "Default"
+msgstr "Προεπιλογή"
+
+#: ../contents/ui/lib/ConfigSound.qml
+msgid "Choose a sound effect"
+msgstr "Επιλογή ηχητικού εφέ"
+
+#: ../contents/ui/lib/ConfigSound.qml
+msgid "Sound files (%1)"
+msgstr ""
+
+#: ../contents/ui/lib/ConfigSound.qml
+msgid "All files (%1)"
+msgstr ""
 
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "event time on the hour (24 hour clock)"
@@ -744,11 +780,6 @@ msgid "h:mm AP"
 msgstr ""
 
 #: ../contents/ui/LocaleFuncs.js
-msgctxt "short month+date format"
-msgid "MMM d"
-msgstr ""
-
-#: ../contents/ui/LocaleFuncs.js
 msgctxt "date (%1) with time (%2)"
 msgid "%1, %2"
 msgstr ""
@@ -756,6 +787,14 @@ msgstr ""
 #: ../contents/ui/LocaleFuncs.js
 msgctxt "from date/time %1 until date/time %2"
 msgid "%1 - %2"
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid "Could not connect (HTTP Error 0), will try again soon."
+msgstr ""
+
+#: ../contents/ui/Logic.qml
+msgid "Weather API limit reached, will try again soon."
 msgstr ""
 
 #: ../contents/ui/main.qml
@@ -804,10 +843,6 @@ msgstr ""
 
 #: ../contents/ui/PopupView.qml
 msgid "Error fetching weather."
-msgstr ""
-
-#: ../contents/ui/PopupView.qml
-msgid "Weather API limit reached, will try again soon."
 msgstr ""
 
 #: ../contents/ui/TimerInputView.qml
@@ -874,6 +909,15 @@ msgstr "Συμβάντα Σε Εξέλιξη"
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Upcoming Events"
 msgstr "Επόμενα Συμβάντα"
+
+#~ msgid "Choose"
+#~ msgstr "Επιλογή"
+
+#~ msgid "Agenda to the left (Two Columns)"
+#~ msgstr "Ατζέντα στα αριστερά (Δύο Στήλες)"
+
+#~ msgid "Agenda above the month (Single Column)"
+#~ msgstr "Ατζέντα πάνω από τον μήνα (Μία Στήλη)"
 
 #~ msgid "Edit description"
 #~ msgstr "Επεξεργασία περιγραφής"

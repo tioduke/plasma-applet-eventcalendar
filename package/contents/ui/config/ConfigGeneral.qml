@@ -3,7 +3,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Dialogs 1.0
 import QtQuick.Layouts 1.0
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.kirigami 2.0 as Kirigami
 
 import ".."
 import "../lib"
@@ -13,62 +13,22 @@ ConfigPage {
 	id: page
 	showAppletVersion: true
 
-	property alias cfg_widget_show_meteogram: widget_show_meteogram.checked
-	property alias cfg_widget_show_timer: widget_show_timer.checked
-	property alias cfg_timer_sfx_enabled: timer_sfx_enabled.checked
-	property alias cfg_timer_sfx_filepath: timer_sfx_filepath.text
-	property string cfg_clock_fontfamily: ""
-	property alias cfg_clock_timeformat: clock_timeformat.text
-	property alias cfg_clock_timeformat_2: clock_timeformat_2.text
-	property string cfg_clock_mousewheel: "runcommand"
-	property alias cfg_clock_mousewheel_up: clock_mousewheel_up.text
-	property alias cfg_clock_mousewheel_down: clock_mousewheel_down.text
-	property alias cfg_showBackground: showBackground.checked
-
 	readonly property string localeTimeFormat: Qt.locale().timeFormat(Locale.ShortFormat)
 	readonly property string localeDateFormat: Qt.locale().dateFormat(Locale.ShortFormat)
-	readonly property string line1TimeFormat: cfg_clock_timeformat || localeTimeFormat
-	readonly property string line2TimeFormat: cfg_clock_timeformat_2 || localeDateFormat
+	readonly property string line1TimeFormat: clockTimeFormat.value || localeTimeFormat
+	readonly property string line2TimeFormat: clockTimeFormat2.value || localeDateFormat
 
 	property string timeFormat24hour: 'hh:mm'
 	property string timeFormat12hour: 'h:mm AP'
 
 	property bool showDebug: plasmoid.configuration.debugging
-	property int indentWidth: 24 * units.devicePixelRatio
-
-	// populate
-	onCfg_clock_fontfamilyChanged: {
-		// org.kde.plasma.digitalclock
-		// HACK by the time we populate our model and/or the ComboBox is finished the value is still undefined
-		if (cfg_clock_fontfamily) {
-			for (var i = 0, j = clock_fontfamilyComboBox.model.length; i < j; ++i) {
-				if (clock_fontfamilyComboBox.model[i].value == cfg_clock_fontfamily) {
-					clock_fontfamilyComboBox.currentIndex = i
-					break
-				}
-			}
-		}
-	}
+	property int indentWidth: 24 * Kirigami.Units.devicePixelRatio
 
 	function setMouseWheelCommands(up, down) {
-		cfg_clock_mousewheel = 'run_commands'
-		clock_mousewheelGroup_runcommands.checked = true
-		cfg_clock_mousewheel_up = up
-		cfg_clock_mousewheel_down = down
-	}
-
-	FileDialog {
-		id: timer_sfx_filepathDialog
-		title: i18n("Choose a sound effect")
-		folder: '/usr/share/sounds'
-		nameFilters: [ "Sound files (*.wav *.mp3 *.oga *.ogg)", "All files (*)" ]
-		onAccepted: {
-			console.log("You chose: " + fileUrls)
-			cfg_timer_sfx_filepath = fileUrl
-		}
-		onRejected: {
-			console.log("Canceled")
-		}
+		plasmoid.configuration.clock_mousewheel == 'run_commands'
+		clockMousewheelGroupRunCommands.checked = true
+		plasmoid.configuration.clock_mousewheel_up = up
+		plasmoid.configuration.clock_mousewheel_down = down
 	}
 
 
@@ -90,34 +50,24 @@ ConfigPage {
 	}
 
 	ConfigSection {
-		CheckBox {
-			Layout.fillWidth: true
-			id: widget_show_meteogram
+		ConfigCheckBox {
+			configKey: 'widget_show_meteogram'
 			text: i18n("Meteogram")
 		}
 	}
 
 	ConfigSection {
-		CheckBox {
-			id: widget_show_timer
+		ConfigCheckBox {
+			configKey: 'widget_show_timer'
 			text: i18n("Timer")
 		}
 		RowLayout {
 			Text { width: indentWidth } // indent
-			CheckBox {
-				id: timer_sfx_enabled
-				text: i18n("SFX:")
-			}
-			Button {
-				text: i18n("Choose")
-				onClicked: timer_sfx_filepathDialog.visible = true
-				enabled: cfg_timer_sfx_enabled
-			}
-			TextField {
-				id: timer_sfx_filepath
-				Layout.fillWidth: true
-				enabled: cfg_timer_sfx_enabled
-				placeholderText: "/usr/share/sounds/freedesktop/stereo/complete.oga"
+			ConfigSound {
+				label: i18n("SFX:")
+				sfxEnabledKey: 'timer_sfx_enabled'
+				sfxPathKey: 'timer_sfx_filepath'
+				sfxPathDefaultValue: '/usr/share/sounds/freedesktop/stereo/complete.oga'
 			}
 		}
 	}
@@ -132,7 +82,7 @@ ConfigPage {
 		}
 
 		LinkText {
-			text: '<a href="https://doc.qt.io/qt-5/qml-qtqml-qt.html#formatDateTime-method">Time Format Documentation</a>'
+			text: '<a href="https://doc.qt.io/qt-5/qml-qtqml-qt.html#formatDateTime-method">' + i18n("Time Format Documentation") + '</a>'
 		}
 
 		Label {
@@ -148,36 +98,10 @@ ConfigPage {
 		}
 
 		ConfigSection {
-			RowLayout {
-				Label {
-					text: i18n("Font:")
-				}
-				ComboBox {
-					// org.kde.plasma.digitalclock
-					// Layout.fillWidth: true
-					id: clock_fontfamilyComboBox
-					textRole: "text" // doesn't autodeduce from model because we manually populate it
-
-					Component.onCompleted: {
-						// org.kde.plasma.digitalclock
-						var arr = [] // use temp array to avoid constant binding stuff
-						arr.push({text: i18n("Default"), value: ""})
-
-						var fonts = Qt.fontFamilies()
-						var foundIndex = 0
-						for (var i = 0, j = fonts.length; i < j; ++i) {
-							arr.push({text: fonts[i], value: fonts[i]})
-						}
-						model = arr
-					}
-
-					onCurrentIndexChanged: {
-						var current = model[currentIndex]
-						if (current) {
-							page.cfg_clock_fontfamily = current.value
-						}
-					}
-				}
+			ConfigFontFamily {
+				id: clockFontFamily
+				configKey: 'clock_fontfamily'
+				before: i18n("Font:")
 			}
 
 			RowLayout {
@@ -205,9 +129,9 @@ ConfigPage {
 					text: i18n("Line 1:")
 					onCheckedChanged: checked = true
 				}
-				TextField {
-					Layout.fillWidth: true
-					id: clock_timeformat
+				ConfigString {
+					id: clockTimeFormat
+					configKey: 'clock_timeformat'
 					placeholderText: localeTimeFormat
 				}
 				Label {
@@ -223,21 +147,21 @@ ConfigPage {
 				}
 				Button {
 					text: Qt.formatDateTime(new Date(), timeFormat12hour)
-					onClicked: cfg_clock_timeformat = timeFormat12hour
+					onClicked: clockTimeFormat.value = timeFormat12hour
 				}
 				Button {
 					text: Qt.formatDateTime(new Date(), timeFormat24hour)
-					onClicked: cfg_clock_timeformat = timeFormat24hour
+					onClicked: clockTimeFormat.value = timeFormat24hour
 				}
 				Button {
 					property string dateFormat: Qt.locale().timeFormat(Locale.ShortFormat).replace('mm', 'mm:ss')
 					text: Qt.formatDateTime(new Date(), dateFormat)
-					onClicked: cfg_clock_timeformat = dateFormat
+					onClicked: clockTimeFormat.value = dateFormat
 				}
 				Button {
 					property string dateFormat: 'MMM d, ' + Qt.locale().timeFormat(Locale.ShortFormat)
 					text: Qt.formatDateTime(new Date(), dateFormat)
-					onClicked: cfg_clock_timeformat = dateFormat
+					onClicked: clockTimeFormat.value = dateFormat
 				}
 			}
 
@@ -251,13 +175,13 @@ ConfigPage {
 				Button {
 					property string dateFormat: '\'<font color="#3daee9">\'MMM d\'</font>\' ' + Qt.locale().timeFormat(Locale.ShortFormat)
 					text: Qt.formatDateTime(new Date(), dateFormat.replace())
-					onClicked: cfg_clock_timeformat = dateFormat
+					onClicked: clockTimeFormat.value = dateFormat
 					style: ButtonStyle {}
 				}
 				Button {
 					property string dateFormat: '\'<font color="#888">\'ddd<>d\'</font>\' h:mm\'<font color="#888">\'AP\'</font>\''
 					text: Qt.formatDateTime(new Date(), dateFormat.replace())
-					onClicked: cfg_clock_timeformat = dateFormat
+					onClicked: clockTimeFormat.value = dateFormat
 					style: ButtonStyle {}
 				}
 			}
@@ -279,9 +203,9 @@ ConfigPage {
 					configKey: 'clock_line_2'
 					text: i18n("Line 2:")
 				}
-				TextField {
-					Layout.fillWidth: true
-					id: clock_timeformat_2
+				ConfigString {
+					id: clockTimeFormat2
+					configKey: 'clock_timeformat_2'
 					placeholderText: localeDateFormat
 				}
 				Label {
@@ -307,21 +231,21 @@ ConfigPage {
 						return format
 					}
 					text: Qt.formatDate(new Date(), dateFormat)
-					onClicked: cfg_clock_timeformat_2 = dateFormat
+					onClicked: clockTimeFormat2.value = dateFormat
 				}
 				Button {
 					property string dateFormat: Qt.locale().dateFormat(Locale.ShortFormat)
 					text: Qt.formatDate(new Date(), dateFormat)
-					onClicked: cfg_clock_timeformat_2 = dateFormat
+					onClicked: clockTimeFormat2.value = dateFormat
 				}
 				Button {
 					property string dateFormat: 'MMM d'
 					text: Qt.formatDateTime(new Date(), dateFormat)
-					onClicked: cfg_clock_timeformat_2 = dateFormat
+					onClicked: clockTimeFormat2.value = dateFormat
 				}
 				Button {
 					text: "Sans Serif"
-					onClicked: cfg_clock_fontfamily = "Sans Serif"
+					onClicked: clockFontFamily.selectValue("Sans Serif")
 				}
 			}
 
@@ -355,16 +279,14 @@ ConfigPage {
 			level: 3
 		}
 		ConfigSection {
-			ExclusiveGroup { id: clock_mousewheelGroup }
+			ExclusiveGroup { id: clockMousewheelGroup }
 
 			RadioButton {
-				id: clock_mousewheelGroup_runcommands
-				exclusiveGroup: clock_mousewheelGroup
-				checked: cfg_clock_mousewheel == 'run_commands'
+				id: clockMousewheelGroupRunCommands
 				text: i18n("Run Commands")
-				onClicked: {
-					cfg_clock_mousewheel = 'run_commands'
-				}
+				exclusiveGroup: clockMousewheelGroup
+				checked: plasmoid.configuration.clock_mousewheel == 'run_commands'
+				onClicked: plasmoid.configuration.clock_mousewheel = 'run_commands'
 			}
 			RowLayout {
 				Layout.fillWidth: true
@@ -372,9 +294,9 @@ ConfigPage {
 				Label {
 					text: i18n("Scroll Up:")
 				}
-				TextField {
-					Layout.fillWidth: true
-					id: clock_mousewheel_up
+				ConfigString {
+					id: clockMouseWheelUp
+					configKey: 'clock_mousewheel_up'
 				}
 			}
 			RowLayout {
@@ -383,30 +305,28 @@ ConfigPage {
 				Label {
 					text: i18n("Scroll Down:")
 				}
-				TextField {
-					Layout.fillWidth: true
-					id: clock_mousewheel_down
+				ConfigString {
+					id: clockMouseWheelDown
+					configKey: 'clock_mousewheel_down'
 				}
 			}
 
 			RadioButton {
-				exclusiveGroup: clock_mousewheelGroup
+				exclusiveGroup: clockMousewheelGroup
 				checked: false
 				text: i18n("Volume (No UI) (amixer)")
-				onClicked: {
-					setMouseWheelCommands('amixer -q sset Master 10%+', 'amixer -q sset Master 10%-')
-				}
+				property string upCommand:   'amixer -q sset Master 10%+'
+				property string downCommand: 'amixer -q sset Master 10%-'
+				onClicked: setMouseWheelCommands(upCommand, downCommand)
 			}
 			
 			RadioButton {
-				exclusiveGroup: clock_mousewheelGroup
+				exclusiveGroup: clockMousewheelGroup
 				checked: false
 				text: i18n("Volume (UI) (qdbus)")
 				property string upCommand:   'qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "increase_volume"'
 				property string downCommand: 'qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume"'
-				onClicked: {
-					setMouseWheelCommands(upCommand, downCommand)
-				}
+				onClicked: setMouseWheelCommands(upCommand, downCommand)
 			}
 		}
 
@@ -416,8 +336,8 @@ ConfigPage {
 		text: i18n("Misc")
 	}
 	ConfigSection {
-		CheckBox {
-			id: showBackground
+		ConfigCheckBox {
+			configKey: 'showBackground'
 			Layout.fillWidth: true
 			text: i18n("Desktop Widget: Show background")
 		}
@@ -427,14 +347,9 @@ ConfigPage {
 		text: i18n("Debugging")
 	}
 	ConfigSection {
-		CheckBox {
-			id: debugging
-			Layout.fillWidth: true
+		ConfigCheckBox {
+			configKey: 'debugging'
 			text: i18n("Enable Debugging\nThis will log sensitive information to ~/.xsession-errors")
-			checked: plasmoid.configuration.debugging
-			onClicked: {
-				plasmoid.configuration.debugging = !plasmoid.configuration.debugging
-			}
 		}
 	}
 }
