@@ -420,6 +420,7 @@ MouseArea {
 
 		agendaModel.parseGCalEvents(eventModel.eventsData)
 		agendaModel.parseWeatherForecast(logic.dailyWeatherData)
+                agendaModel.clipPastEvents = true
 		monthView.parseGCalEvents(eventModel.eventsData)
 		scrollToSelection()
 	}

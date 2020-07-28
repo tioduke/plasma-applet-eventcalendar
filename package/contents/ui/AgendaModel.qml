@@ -16,7 +16,7 @@ ListModel {
 
 	property int showNextNumDays: 14
 	property bool showAllDaysInMonth: true
-	property bool clipPastEvents: true
+	property bool clipPastEvents: false
 	property bool clipPastEventsToday: false
 	property bool clipEventsOutsideLimits: true
 	property bool clipEventsFromOtherMonths: true
