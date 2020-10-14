@@ -29,8 +29,23 @@ function isDateAfter(a, b) {
 	var c = new Date(b.getFullYear(), b.getMonth(), b.getDate() + 1) // midnight of next day after b
 	return a >= c
 }
+function dateTimeString(d) {
+	return d.toISOString()
+}
 function dateString(d) {
 	return d.toISOString().substr(0, 10)
+}
+function localeDateString(d) {
+	return Qt.formatDateTime(d, 'yyyy-MM-dd')
+}
+function isValidDate(d) {
+	if (d === null) {
+		return false
+	} else if (isNaN(d)) {
+		return false
+	} else {
+		return true
+	}
 }
 
 function renderText(text) {
@@ -78,5 +93,16 @@ function merge(objA, objB) {
 	for (var i = 0; i < keys.length; i++) {
 		var key = keys[i]
 		objA[key] = objB[key]
+	}
+}
+
+// Remove keys from objA that are missing in objB
+function removeMissingKeys(objA, objB) {
+	var keys = Object.keys(objA)
+	for (var i = 0; i < keys.length; i++) {
+		var key = keys[i]
+		if (typeof objB[key] === 'undefined') {
+			delete objA[key]
+		}
 	}
 }

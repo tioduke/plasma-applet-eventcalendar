@@ -6,34 +6,6 @@ import "./lib"
 QtObject {
 	id: notificationManager
 
-	property var dataSource: PlasmaCore.DataSource {
-		id: dataSource
-		engine: "notifications"
-		connectedSources: "org.freedesktop.Notifications"
-	}
-
-	function createNotification(args) {
-		// https://github.com/KDE/plasma-workspace/blob/master/dataengines/notifications/notifications.operations
-		var service = dataSource.serviceForSource("notification")
-		var operation = service.operationDescription("createNotification")
-
-		operation.appName = args.appName || "plasmashell"
-		operation.appIcon = args.appIcon || ""
-		operation.summary = args.summary || ""
-		operation.body = args.body || ""
-		if (typeof args.expireTimeout !== "undefined") {
-			operation.expireTimeout = args.expireTimeout
-		}
-
-		service.startOperationCall(operation)
-		if (sfx && args.soundFile) {
-			sfx.source = args.soundFile
-			sfx.play()
-		}
-	}
-
-	property var sfx: Qt.createQmlObject("import QtMultimedia 5.4; Audio {}", notificationManager)
-
 	property var executable: ExecUtil { id: executable }
 
 	function notify(args, callback) {
@@ -63,11 +35,15 @@ QtObject {
 			}
 		}
 		cmd.push('--metadata', '' + Date.now())
-		cmd.push(args.summary)
-		cmd.push(args.body)
+		var sanitizedSummary = executable.sanitizeString(args.summary)
+		var sanitizedBody = executable.sanitizeString(args.body)
+		cmd.push(sanitizedSummary)
+		cmd.push(sanitizedBody)
 		executable.exec(cmd, function(cmd, exitCode, exitStatus, stdout, stderr) {
 			var actionId = stdout.replace('\n', ' ').trim()
-			callback(actionId)
+			if (typeof callback === 'function') {
+				callback(actionId)
+			}
 		})
 	}
 }

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-07-24 20:51-0400\n"
-"PO-Revision-Date: 2020-07-25 13:15+0200\n"
+"POT-Creation-Date: 2020-10-12 08:58-0400\n"
+"PO-Revision-Date: 2020-10-12 16:57+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: ../metadata.desktop ../contents/ui/AgendaView.qml
 #: ../contents/ui/UpcomingEvents.qml
@@ -490,12 +490,12 @@ msgid "Debugging"
 msgstr "Foutopsporing"
 
 #: ../contents/ui/config/ConfigGeneral.qml
-msgid ""
-"Enable Debugging\n"
-"This will log sensitive information to ~/.xsession-errors"
-msgstr ""
-"Foutopsporing inschakelen\n"
-"Hiermee leg je gevoelige informatie vast in ~/.xsession-errors"
+msgid "Debugging will log sensitive information to:"
+msgstr "Hiermee leg je gevoelige informatie vast in:"
+
+#: ../contents/ui/config/ConfigGeneral.qml
+msgid "Enable Debugging"
+msgstr "Foutopsporing inschakelen"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Login"
@@ -718,7 +718,7 @@ msgstr "d MMM yyyy"
 msgid "to"
 msgstr "tot"
 
-#: ../contents/ui/EditEventForm.qml
+#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
 msgid "Event Title"
 msgstr "Titel"
 
@@ -726,17 +726,22 @@ msgstr "Titel"
 msgid "Add location"
 msgstr "Locatie toevoegen"
 
-#: ../contents/ui/EditEventForm.qml
+#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
 msgid "Add description"
 msgstr "Omschrijving toevoegen"
 
-#: ../contents/ui/EditEventForm.qml
+#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
 msgid "&Save"
 msgstr "Op&slaan"
 
-#: ../contents/ui/EditEventForm.qml ../contents/ui/TimerInputView.qml
+#: ../contents/ui/EditEventForm.qml ../contents/ui/EditTaskForm.qml
+#: ../contents/ui/TimerInputView.qml
 msgid "&Cancel"
 msgstr "&Annuleren"
+
+#: ../contents/ui/EditTaskForm.qml
+msgid "Add due date"
+msgstr "Einddatum toevoegen"
 
 #: ../contents/ui/lib/AppletVersion.qml
 msgid "<b>Version:</b> %1"
@@ -908,6 +913,13 @@ msgstr "Lopende afspraken"
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Upcoming Events"
 msgstr "Ingeplande afspraken"
+
+#~ msgid ""
+#~ "Enable Debugging\n"
+#~ "This will log sensitive information to ~/.xsession-errors"
+#~ msgstr ""
+#~ "Foutopsporing inschakelen\n"
+#~ "Hiermee leg je gevoelige informatie vast in ~/.xsession-errors"
 
 #~ msgid "Choose"
 #~ msgstr "Kiezen"
