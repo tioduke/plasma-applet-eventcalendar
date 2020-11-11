@@ -215,10 +215,10 @@
 
 	<group name="Google Calendar">
 		<entry name="client_id" type="string">
-			<default>391436299960-o4hchof1u5vq49rdn2nlnlbs295qeqhj.apps.googleusercontent.com</default>
+			<default>502195733412-vd5iuslr17149kisr0mh5rqq012pleeo.apps.googleusercontent.com</default>
 		</entry>
 		<entry name="client_secret" type="string">
-			<default>f1gCLratkuT6Af2w86Avcqw1</default>
+			<default>yJiuhQCmq8riPQbcIQdzjUh3</default>
 		</entry>
 		<entry name="device_code" type="string">
 			<default></default>
