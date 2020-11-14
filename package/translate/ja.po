@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the eventcalendar package.
 # yamato kobayashi <Kb_yamato@protonmail.com>, 2020.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-10-12 08:58-0400\n"
+"POT-Creation-Date: 2020-11-12 11:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: yamato kobayashi <Kb_yamato@protonmail.com>\n"
 "Language-Team: \n"
@@ -114,6 +113,26 @@ msgstr "(無題)"
 msgid "[No Calendars]"
 msgstr "[カレンダーはありません]"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "HTTP Error %1: %2"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Could not connect"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Will try again soon."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/PopupView.qml
+msgid "Widget has been updated. Please logout and login to Google Calendar again."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Too many web requests. Will try again soon."
+msgstr ""
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr "予定を表示"
@@ -166,7 +185,7 @@ msgstr "天気予報をブラウザーで開く"
 msgid "Click Date:"
 msgstr "日付をクリック"
 
-#: ../contents/ui/config/ConfigAgenda.qml ../contents/ui/config/ConfigCalendar.qml
+#: ../contents/ui/config/ConfigAgenda.qml
 msgid "Open New Event In Browser"
 msgstr "新しいイベントをブラウザーで開く"
 
@@ -251,12 +270,29 @@ msgid "Scroll to event in Agenda"
 msgstr "イベントのある予定までスクロール"
 
 #: ../contents/ui/config/ConfigCalendar.qml
-msgid "DoubleClick Date:"
+msgid "Double-click on Date:"
 msgstr "日付をダブルクリック："
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "New Google Calendar Event (Web Browser)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Do Nothing"
+msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "スタイル"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Current Month Title:"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/MonthView.qml
+msgctxt "calendar title format for current month"
+msgid "MMMM d, yyyy"
+msgstr "M月 d日 yyyy"
 
 #: ../contents/ui/config/ConfigCalendar.qml
 msgid "Show Borders"
@@ -345,9 +381,7 @@ msgstr "すべてのイベントを更新"
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigWeather.qml
 msgctxt "Polling interval in minutes"
 msgid "min"
-msgid_plural "min"
-msgstr[0] "分"
-msgstr[1] "分"
+msgstr "分"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notifications"
@@ -371,7 +405,7 @@ msgstr ""
 msgid "Meteogram"
 msgstr "天気予報マップ"
 
-#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerModel.qml
 msgid "Timer"
 msgstr "タイマー"
 
@@ -488,7 +522,7 @@ msgid "To sync with Google Calendar"
 msgstr "Google Calendarと同期します"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to acess your calendar, it will give you a code to paste below."
+msgid "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to access your calendar, it will give you a code to paste below."
 msgstr " <a href=\"%1\">%2</a> (ウェブブラウザーで開く)。 カレンダーへのアクセスを許可してください、 以下に貼り付けるコードが表示されます。"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -592,7 +626,7 @@ msgid "Show next "
 msgstr "天気予報を"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
+msgid " hour"
 msgid_plural " hours"
 msgstr[0] "時間"
 msgstr[1] "時間"
@@ -754,12 +788,8 @@ msgid "%1 - %2"
 msgstr ""
 
 #: ../contents/ui/Logic.qml
-msgid "Could not connect (HTTP Error 0), will try again soon."
-msgstr "接続できません (HTTP Error 0)、まもなく再接続されます。"
-
-#: ../contents/ui/Logic.qml
-msgid "Weather API limit reached, will try again soon."
-msgstr "Weather API がタイムアウトしました、時間を置いてもう一度実行してください"
+msgid "Weather API limit reached"
+msgstr ""
 
 #: ../contents/ui/main.qml
 msgid "Set Language..."
@@ -773,11 +803,6 @@ msgstr "地域を選択"
 #, c-format
 msgid "%1mm"
 msgstr ""
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "M月 d日 yyyy"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for other months of current year"
@@ -807,26 +832,42 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "エラー天気を取得できませんでした。"
 
+#: ../contents/ui/PopupView.qml
+msgid "Logged out of Google. Please login again."
+msgstr ""
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "＆スタート"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 msgctxt "short form for %1 hours"
 msgid "%1h"
 msgstr ""
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 minutes"
 msgid "%1m"
 msgstr ""
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 seconds"
 msgid "%1s"
 msgstr ""
+
+#: ../contents/ui/TimerModel.qml
+msgid "Timer finished"
+msgstr "タイマーが終了"
+
+#: ../contents/ui/TimerModel.qml
+msgid "%1 has passed"
+msgstr ""
+
+#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
+msgid "Repeat"
+msgstr "リピート"
 
 #: ../contents/ui/TimerView.qml
 msgid "Pause Timer"
@@ -841,20 +882,8 @@ msgid "Scroll to add to duration"
 msgstr "スクロール期間を追加"
 
 #: ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "リピート"
-
-#: ../contents/ui/TimerView.qml
 msgid "Sound"
 msgstr "音"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer finished"
-msgstr "タイマーが終了"
-
-#: ../contents/ui/TimerView.qml
-msgid "%1 has passed"
-msgstr ""
 
 #: ../contents/ui/TimerView.qml
 msgid "Set Timer"
@@ -871,6 +900,12 @@ msgstr "イベントは実行中"
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Upcoming Events"
 msgstr "今後のイベント"
+
+#~ msgid "Could not connect (HTTP Error 0), will try again soon."
+#~ msgstr "接続できません (HTTP Error 0)、まもなく再接続されます。"
+
+#~ msgid "Weather API limit reached, will try again soon."
+#~ msgstr "Weather API がタイムアウトしました、時間を置いてもう一度実行してください"
 
 #~ msgid ""
 #~ "Enable Debugging\n"

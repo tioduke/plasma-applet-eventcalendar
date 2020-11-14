@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 
+import "lib"
 import "Shared.js" as Shared
 import "../code/WeatherApi.js" as WeatherApi
 
@@ -70,10 +71,10 @@ MouseArea {
 	property var eventModel
 	property var agendaModel
 
-	property bool showMeteogram: plasmoid.configuration.widget_show_meteogram
-	property bool showTimer: plasmoid.configuration.widget_show_timer
-	property bool showAgenda: plasmoid.configuration.widget_show_agenda
-	property bool showCalendar: plasmoid.configuration.widget_show_calendar
+	property bool showMeteogram: plasmoid.configuration.widgetShowMeteogram
+	property bool showTimer: plasmoid.configuration.widgetShowTimer
+	property bool showAgenda: plasmoid.configuration.widgetShowAgenda
+	property bool showCalendar: plasmoid.configuration.widgetShowCalendar
 	property bool agendaScrollOnSelect: true
 	property bool agendaScrollOnMonthChange: false
 
@@ -247,8 +248,8 @@ MouseArea {
 			Layout.fillWidth: true
 			Layout.minimumHeight: popup.topRowHeight
 			Layout.preferredHeight: parent.height / 5
-			visibleDuration: plasmoid.configuration.meteogram_hours
-			showIconOutline: plasmoid.configuration.show_outlines
+			visibleDuration: plasmoid.configuration.meteogramHours
+			showIconOutline: plasmoid.configuration.showOutlines
 			xAxisScale: 1 / hoursPerDataPoint
 			xAxisLabelEvery: Math.ceil(3 / hoursPerDataPoint)
 			property int hoursPerDataPoint: WeatherApi.getDataPointDuration(plasmoid.configuration)
@@ -296,8 +297,8 @@ MouseArea {
 		MonthView {
 			id: monthView
 			visible: showCalendar
-			borderOpacity: plasmoid.configuration.month_show_border ? 0.25 : 0
-			showWeekNumbers: plasmoid.configuration.month_show_weeknumbers
+			borderOpacity: plasmoid.configuration.monthShowBorder ? 0.25 : 0
+			showWeekNumbers: plasmoid.configuration.monthShowWeekNumbers
 			highlightCurrentDayWeek: plasmoid.configuration.monthHighlightCurrentDayWeek
 
 			Layout.preferredWidth: parent.width/2
@@ -350,9 +351,14 @@ MouseArea {
 			onDayDoubleClicked: {
 				var date = new Date(dayData.yearNumber, dayData.monthNumber-1, dayData.dayNumber)
 				// logger.debug('Popup.monthView.onDoubleClicked', date)
-				if (true) {
-					// month_day_doubleclick == "browser_newevent"
-					Shared.openGoogleCalendarNewEventUrl(date)
+				var doubleClickOption = plasmoid.configuration.monthDayDoubleClick
+
+				switch (doubleClickOption) {
+					case 'GoogleCalWeb':
+						Shared.openGoogleCalendarNewEventUrl(date)
+						return
+					default:
+						return
 				}
 			}
 		} // MonthView
@@ -368,8 +374,8 @@ MouseArea {
 			onNewEventFormOpened: {
 				// logger.debug('onNewEventFormOpened')
 				var selectedCalendarId = ""
-				if (plasmoid.configuration.agenda_newevent_remember_calendar) {
-					selectedCalendarId = plasmoid.configuration.agenda_newevent_last_calendar_id
+				if (plasmoid.configuration.agendaNewEventRememberCalendar) {
+					selectedCalendarId = plasmoid.configuration.agendaNewEventLastCalendarId
 				}
 				var calendarList = eventModel.getCalendarList()
 				calendarSelector.populate(calendarList, selectedCalendarId)
@@ -378,7 +384,33 @@ MouseArea {
 				logger.debug('onSubmitNewEventForm', calendarId)
 				eventModel.createEvent(calendarId, date, text)
 			}
+
+			MessageWidget {
+				id: errorMessageWidget
+				anchors.left: parent.left
+				anchors.bottom: parent.bottom
+				anchors.right: refreshButton.left
+				anchors.margins: PlasmaCore.Units.smallSpacing
+				text: {
+					if (plasmoid.configuration.accessToken && plasmoid.configuration.latestClientId != plasmoid.configuration.sessionClientId) {
+						return i18n("Widget has been updated. Please logout and login to Google Calendar again.")
+					} else if (!plasmoid.configuration.accessToken && plasmoid.configuration.access_token) {
+						return i18n("Logged out of Google. Please login again.")
+					} else {
+						return ""
+					}
+				}
+
+				Connections {
+					target: eventModel
+					onError: {
+						errorMessageWidget.warn(msg)
+					}
+				}
+			}
+
 			PlasmaComponents3.Button {
+				id: refreshButton
 				icon.name: 'view-refresh'
 				anchors.bottom: parent.bottom
 				anchors.right: parent.right

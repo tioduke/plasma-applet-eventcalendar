@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-10-12 08:58-0400\n"
+"POT-Creation-Date: 2020-11-12 11:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,6 +114,26 @@ msgstr ""
 msgid "[No Calendars]"
 msgstr ""
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "HTTP Error %1: %2"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Could not connect"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Will try again soon."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/PopupView.qml
+msgid "Widget has been updated. Please logout and login to Google Calendar again."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Too many web requests. Will try again soon."
+msgstr ""
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr ""
@@ -166,7 +186,7 @@ msgstr ""
 msgid "Click Date:"
 msgstr ""
 
-#: ../contents/ui/config/ConfigAgenda.qml ../contents/ui/config/ConfigCalendar.qml
+#: ../contents/ui/config/ConfigAgenda.qml
 msgid "Open New Event In Browser"
 msgstr ""
 
@@ -251,11 +271,28 @@ msgid "Scroll to event in Agenda"
 msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml
-msgid "DoubleClick Date:"
+msgid "Double-click on Date:"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "New Google Calendar Event (Web Browser)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Do Nothing"
 msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Current Month Title:"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/MonthView.qml
+msgctxt "calendar title format for current month"
+msgid "MMMM d, yyyy"
 msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml
@@ -345,9 +382,7 @@ msgstr ""
 #: ../contents/ui/config/ConfigEvents.qml ../contents/ui/config/ConfigWeather.qml
 msgctxt "Polling interval in minutes"
 msgid "min"
-msgid_plural "min"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notifications"
@@ -369,7 +404,7 @@ msgstr ""
 msgid "Meteogram"
 msgstr ""
 
-#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerModel.qml
 msgid "Timer"
 msgstr ""
 
@@ -486,7 +521,7 @@ msgid "To sync with Google Calendar"
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
-msgid "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to acess your calendar, it will give you a code to paste below."
+msgid "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to access your calendar, it will give you a code to paste below."
 msgstr ""
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
@@ -590,7 +625,7 @@ msgid "Show next "
 msgstr ""
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
+msgid " hour"
 msgid_plural " hours"
 msgstr[0] ""
 msgstr[1] ""
@@ -752,11 +787,7 @@ msgid "%1 - %2"
 msgstr ""
 
 #: ../contents/ui/Logic.qml
-msgid "Could not connect (HTTP Error 0), will try again soon."
-msgstr ""
-
-#: ../contents/ui/Logic.qml
-msgid "Weather API limit reached, will try again soon."
+msgid "Weather API limit reached"
 msgstr ""
 
 #: ../contents/ui/main.qml
@@ -770,11 +801,6 @@ msgstr ""
 #: ../contents/ui/MeteogramView.qml
 #, c-format
 msgid "%1mm"
-msgstr ""
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
 msgstr ""
 
 #: ../contents/ui/MonthView.qml
@@ -802,25 +828,41 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr ""
 
+#: ../contents/ui/PopupView.qml
+msgid "Logged out of Google. Please login again."
+msgstr ""
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr ""
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 msgctxt "short form for %1 hours"
 msgid "%1h"
 msgstr ""
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 minutes"
 msgid "%1m"
 msgstr ""
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 seconds"
 msgid "%1s"
+msgstr ""
+
+#: ../contents/ui/TimerModel.qml
+msgid "Timer finished"
+msgstr ""
+
+#: ../contents/ui/TimerModel.qml
+msgid "%1 has passed"
+msgstr ""
+
+#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
+msgid "Repeat"
 msgstr ""
 
 #: ../contents/ui/TimerView.qml
@@ -836,19 +878,7 @@ msgid "Scroll to add to duration"
 msgstr ""
 
 #: ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr ""
-
-#: ../contents/ui/TimerView.qml
 msgid "Sound"
-msgstr ""
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer finished"
-msgstr ""
-
-#: ../contents/ui/TimerView.qml
-msgid "%1 has passed"
 msgstr ""
 
 #: ../contents/ui/TimerView.qml

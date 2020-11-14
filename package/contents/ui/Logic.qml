@@ -25,7 +25,7 @@ Item {
 		
 		repeat: true
 		triggeredOnStart: true
-		interval: plasmoid.configuration.events_pollinterval * 60000
+		interval: plasmoid.configuration.eventsPollInterval * 60000
 		onTriggered: logic.update()
 	}
 
@@ -111,10 +111,16 @@ Item {
 	function handleWeatherError(funcName, err, data, xhr) {
 		logger.log(funcName + '.err', err, xhr && xhr.status, data)
 		if (xhr && xhr.status === 0) { // Error making connection
-			logic.lastForecastErr = i18n("Could not connect (HTTP Error 0), will try again soon.")
+			var msg = i18n("Could not connect")
+			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
+			errorMessage += '\n' + i18n("Will try again soon.")
+			logic.lastForecastErr = errorMessage
 		} else if (xhr && xhr.status == 429) {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
-			logic.lastForecastErr = i18n("Weather API limit reached, will try again soon.")
+			var msg = i18n("Weather API limit reached")
+			var errorMessage = i18n("HTTP Error %1: %2", xhr.status, msg)
+			errorMessage += '\n' + i18n("Will try again soon.")
+			logic.lastForecastErr = errorMessage
 		} else {
 			lastForecastAt = Date.now() // If there's an error, don't bother the API for another hour.
 			logic.lastForecastErr = err
@@ -153,26 +159,26 @@ Item {
 		target: plasmoid.configuration
 
 		//--- Events
-		onAccess_tokenChanged: logic.updateEvents()
-		onCalendar_id_listChanged: logic.updateEvents()
+		onAccessTokenChanged: logic.updateEvents()
+		onCalendarIdListChanged: logic.updateEvents()
 		onEnabledCalendarPluginsChanged: logic.updateEvents()
 		onTasklistIdListChanged: logic.updateEvents()
 
 		//--- Weather
-		onWeather_serviceChanged: logic.resetWeatherAndUpdate()
-		onWeather_app_idChanged: logic.resetWeatherAndUpdate()
-		onWeather_city_idChanged: logic.resetWeatherAndUpdate()
-		onWeather_canada_city_idChanged: logic.resetWeatherAndUpdate()
-		onWeather_unitsChanged: logic.updateWeather(true)
-		onWidget_show_meteogramChanged: {
-			if (plasmoid.configuration.widget_show_meteogram) {
+		onWeatherServiceChanged: logic.resetWeatherAndUpdate()
+		onOpenWeatherMapAppIdChanged: logic.resetWeatherAndUpdate()
+		onOpenWeatherMapCityIdChanged: logic.resetWeatherAndUpdate()
+		onWeatherCanadaCityIdChanged: logic.resetWeatherAndUpdate()
+		onWeatherUnitsChanged: logic.updateWeather(true)
+		onWidgetShowMeteogramChanged: {
+			if (plasmoid.configuration.widgetShowMeteogram) {
 				logic.updateHourlyWeather()
 			}
 		}
 
 		//--- UI
-		onAgenda_breakup_multiday_eventsChanged: popup.updateUI()
-		onMeteogram_hoursChanged: popup.updateMeteogram()
+		onAgendaBreakupMultiDayEventsChanged: popup.updateUI()
+		onMeteogramHoursChanged: popup.updateMeteogram()
 	}
 
 	//---

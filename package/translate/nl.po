@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-10-12 08:58-0400\n"
-"PO-Revision-Date: 2020-10-12 16:57+0200\n"
+"POT-Creation-Date: 2020-11-12 11:42-0500\n"
+"PO-Revision-Date: 2020-11-13 21:30+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <kde-i18n-doc@kde.org>\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../metadata.desktop ../contents/ui/AgendaView.qml
 #: ../contents/ui/UpcomingEvents.qml
@@ -119,6 +119,28 @@ msgstr "(naamloos)"
 msgid "[No Calendars]"
 msgstr "[Geen agenda's]"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "HTTP Error %1: %2"
+msgstr "HTTP-fout %1: %2"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Could not connect"
+msgstr "Kan niet verbinden"
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Will try again soon."
+msgstr "Het wordt spoedig opnieuw geprobeerd."
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/PopupView.qml
+msgid ""
+"Widget has been updated. Please logout and login to Google Calendar again."
+msgstr "De widget is bijgewerkt. Log uit en weer in op Google Agenda."
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Too many web requests. Will try again soon."
+msgstr "Te veel verzoeken - het wordt spoedig opnieuw geprobeerd."
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr "Agenda tonen"
@@ -175,7 +197,6 @@ msgid "Click Date:"
 msgstr "Bij klikken op datum:"
 
 #: ../contents/ui/config/ConfigAgenda.qml
-#: ../contents/ui/config/ConfigCalendar.qml
 msgid "Open New Event In Browser"
 msgstr "Nieuwe afspraak openen in webbrowser"
 
@@ -261,13 +282,30 @@ msgid "Scroll to event in Agenda"
 msgstr "Scrollen naar afspraak in agenda"
 
 #: ../contents/ui/config/ConfigCalendar.qml
-msgid "DoubleClick Date:"
+msgid "Double-click on Date:"
 msgstr "Bij dubbelklikken op datum:"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "New Google Calendar Event (Web Browser)"
+msgstr "Nieuwe Google Agenda-afspraak (webbrowser)"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Do Nothing"
+msgstr "Niets doen"
 
 #: ../contents/ui/config/ConfigCalendar.qml
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Stijl"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Current Month Title:"
+msgstr "Naam van huidige maand:"
+
+#: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/MonthView.qml
+msgctxt "calendar title format for current month"
+msgid "MMMM d, yyyy"
+msgstr "d MMMM yyyy"
 
 #: ../contents/ui/config/ConfigCalendar.qml
 msgid "Show Borders"
@@ -358,9 +396,7 @@ msgstr "Ververs afspraken elke: "
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "Polling interval in minutes"
 msgid "min"
-msgid_plural "min"
-msgstr[0] "min"
-msgstr[1] "min"
+msgstr "min"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notifications"
@@ -386,7 +422,7 @@ msgstr ""
 msgid "Meteogram"
 msgstr "Weergrafiek"
 
-#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerModel.qml
 msgid "Timer"
 msgstr "Timer"
 
@@ -516,7 +552,7 @@ msgstr "Synchroniseren met Google Agenda"
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and "
-"give permission to acess your calendar, it will give you a code to paste "
+"give permission to access your calendar, it will give you a code to paste "
 "below."
 msgstr ""
 "Ga naar <a href=\"%1\">%2</a> (de link opent in je browser), log in en "
@@ -537,7 +573,7 @@ msgstr "Versturen"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid "Invalid Google Authorization Code"
-msgstr "Ongeldige autorisatiecode"
+msgstr "Ongeldige verificatiecode"
 
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 #: ../contents/ui/config/ConfigICal.qml
@@ -625,7 +661,7 @@ msgid "Show next "
 msgstr "Toon de komende "
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
+msgid " hour"
 msgid_plural " hours"
 msgstr[0] " uur"
 msgstr[1] " uur"
@@ -795,13 +831,8 @@ msgid "%1 - %2"
 msgstr "%1 - %2"
 
 #: ../contents/ui/Logic.qml
-msgid "Could not connect (HTTP Error 0), will try again soon."
-msgstr ""
-"Kan niet verbinden (http-fout 0). Het wordt spoedig opnieuw geprobeerd."
-
-#: ../contents/ui/Logic.qml
-msgid "Weather API limit reached, will try again soon."
-msgstr "Het API-limiet is bereikt. Probeer het later opnieuw."
+msgid "Weather API limit reached"
+msgstr "API-limiet van weerdienst bereikt"
 
 #: ../contents/ui/main.qml
 msgid "Set Language..."
@@ -815,11 +846,6 @@ msgstr "Regionale instellingen..."
 #, c-format
 msgid "%1mm"
 msgstr "%1mm"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "d MMMM yyyy"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for other months of current year"
@@ -849,58 +875,62 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr "De weerinformatie kan niet worden opgevraagd."
 
+#: ../contents/ui/PopupView.qml
+msgid "Logged out of Google. Please login again."
+msgstr "Je bent uitgelogd - log opnieuw in."
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Starten"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 msgctxt "short form for %1 hours"
 msgid "%1h"
 msgstr "%1u"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 minutes"
 msgid "%1m"
 msgstr "%1m"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 seconds"
 msgid "%1s"
 msgstr "%1s"
 
+#: ../contents/ui/TimerModel.qml
+msgid "Timer finished"
+msgstr "Tijdklok verstreken"
+
+#: ../contents/ui/TimerModel.qml
+msgid "%1 has passed"
+msgstr "%1 is verstreken"
+
+#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
+msgid "Repeat"
+msgstr "Herhalen"
+
 #: ../contents/ui/TimerView.qml
 msgid "Pause Timer"
-msgstr "Timer onderbreken"
+msgstr "Tijdklok onderbreken"
 
 #: ../contents/ui/TimerView.qml
 msgid "Start Timer"
-msgstr "Timer starten"
+msgstr "Tijdklok starten"
 
 #: ../contents/ui/TimerView.qml
 msgid "Scroll to add to duration"
 msgstr "Scroll om de duur te verlengen"
 
 #: ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Herhalen"
-
-#: ../contents/ui/TimerView.qml
 msgid "Sound"
 msgstr "Geluid"
 
 #: ../contents/ui/TimerView.qml
-msgid "Timer finished"
-msgstr "Timer verlopen"
-
-#: ../contents/ui/TimerView.qml
-msgid "%1 has passed"
-msgstr "%1 is verlopen"
-
-#: ../contents/ui/TimerView.qml
 msgid "Set Timer"
-msgstr "Timer instellen"
+msgstr "Tijdklok instellen"
 
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Events Starting"
@@ -913,6 +943,13 @@ msgstr "Lopende afspraken"
 #: ../contents/ui/UpcomingEvents.qml
 msgid "Upcoming Events"
 msgstr "Ingeplande afspraken"
+
+#~ msgid "Could not connect (HTTP Error 0), will try again soon."
+#~ msgstr ""
+#~ "Kan niet verbinden (http-fout 0). Het wordt spoedig opnieuw geprobeerd."
+
+#~ msgid "Weather API limit reached, will try again soon."
+#~ msgstr "Het API-limiet is bereikt. Probeer het later opnieuw."
 
 #~ msgid ""
 #~ "Enable Debugging\n"

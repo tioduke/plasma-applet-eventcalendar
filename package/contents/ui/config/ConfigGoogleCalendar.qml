@@ -12,6 +12,12 @@ import "../lib/Requests.js" as Requests
 ConfigPage {
 	id: page
 
+	function alphaColor(c, a) {
+		return Qt.rgba(c.r, c.g, c.b, a)
+	}
+	readonly property color readablePositiveTextColor: Qt.tint(Kirigami.Theme.textColor, alphaColor(Kirigami.Theme.positiveTextColor, 0.5))
+	readonly property color readableNegativeTextColor: Qt.tint(Kirigami.Theme.textColor, alphaColor(Kirigami.Theme.negativeTextColor, 0.5))
+
 	function sortByKey(key, a, b){
 		if (typeof a[key] === "string") {
 			return a[key].toLowerCase().localeCompare(b[key].toLowerCase())
@@ -28,8 +34,8 @@ ConfigPage {
 		return arr.concat().sort(predicate)
 	}
 
-	GoogleCalendarSession {
-		id: session
+	GoogleLoginManager {
+		id: googleLoginManager
 
 		onCalendarListChanged: {
 			calendarsModel.clear()
@@ -85,38 +91,42 @@ ConfigPage {
 		id: messageWidget
 	}
 	ColumnLayout {
-		visible: session.accessToken
+		visible: googleLoginManager.isLoggedIn
 		Label {
 			Layout.fillWidth: true
 			text: i18n("Currently Synched.")
-			color: "#3c763d"
+			color: readablePositiveTextColor
 			wrapMode: Text.Wrap
 		}
 		Button {
 			text: i18n("Logout")
 			onClicked: {
-				session.reset()
+				googleLoginManager.logout()
 				calendarsModel.clear()
 			}
 		}
+		MessageWidget {
+			visible: googleLoginManager.needsRelog
+			text: i18n("Widget has been updated. Please logout and login to Google Calendar again.")
+		}
 	}
 	ColumnLayout {
-		visible: !session.accessToken
+		visible: !googleLoginManager.isLoggedIn
 		Label {
 			Layout.fillWidth: true
 			text: i18n("To sync with Google Calendar")
-			color: "#8a6d3b"
+			color: readableNegativeTextColor
 			wrapMode: Text.Wrap
 		}
 		LinkText {
 			Layout.fillWidth: true
-			text: i18n("Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to acess your calendar, it will give you a code to paste below.", session.authorizationCodeUrl, 'https://accounts.google.com/...')
-			color: "#8a6d3b"
+			text: i18n("Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and give permission to access your calendar, it will give you a code to paste below.", googleLoginManager.authorizationCodeUrl, 'https://accounts.google.com/...')
+			color: readableNegativeTextColor
 			wrapMode: Text.Wrap
 
 			// Tooltip
 			// QQC2.ToolTip.visible: !!hoveredLink
-			// QQC2.ToolTip.text: session.authorizationCodeUrl
+			// QQC2.ToolTip.text: googleLoginManager.authorizationCodeUrl
 
 			// ContextMenu
 			MouseArea {
@@ -137,7 +147,7 @@ ConfigPage {
 					id: contextMenu
 					QQC2.MenuItem {
 						text: i18n("Copy Link")
-						onTriggered: clipboardHelper.copyText(session.authorizationCodeUrl)
+						onTriggered: clipboardHelper.copyText(googleLoginManager.authorizationCodeUrl)
 					}
 				}
 
@@ -164,7 +174,7 @@ ConfigPage {
 				text: i18n("Submit")
 				onClicked: {
 					if (authorizationCodeInput.text) {
-						session.fetchAccessToken({
+						googleLoginManager.fetchAccessToken({
 							authorizationCode: authorizationCodeInput.text,
 						})
 					} else {
@@ -186,7 +196,7 @@ ConfigPage {
 		Button {
 			iconName: "view-refresh"
 			text: i18n("Refresh")
-			onClicked: session.updateCalendarList()
+			onClicked: googleLoginManager.updateCalendarList()
 		}
 	}
 	ColumnLayout {
@@ -206,7 +216,7 @@ ConfigPage {
 						calendarIdList.push(item.calendarId)
 					}
 				}
-				session.calendarIdList = calendarIdList
+				googleLoginManager.calendarIdList = calendarIdList
 			}
 		}
 
@@ -267,7 +277,7 @@ ConfigPage {
 		Button {
 			iconName: "view-refresh"
 			text: i18n("Refresh")
-			onClicked: session.updateTasklistList()
+			onClicked: googleLoginManager.updateTasklistList()
 		}
 	}
 	ColumnLayout {
@@ -287,7 +297,7 @@ ConfigPage {
 						tasklistIdList.push(item.tasklistId)
 					}
 				}
-				session.tasklistIdList = tasklistIdList
+				googleLoginManager.tasklistIdList = tasklistIdList
 			}
 		}
 
@@ -329,9 +339,9 @@ ConfigPage {
 	}
 
 	Component.onCompleted: {
-		if (session.accessToken) {
-			session.calendarListChanged()
-			session.tasklistListChanged()
+		if (googleLoginManager.isLoggedIn) {
+			googleLoginManager.calendarListChanged()
+			googleLoginManager.tasklistListChanged()
 		}
 	}
 }

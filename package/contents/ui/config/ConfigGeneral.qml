@@ -25,10 +25,10 @@ ConfigPage {
 	property int indentWidth: 24 * Kirigami.Units.devicePixelRatio
 
 	function setMouseWheelCommands(up, down) {
-		plasmoid.configuration.clock_mousewheel == 'run_commands'
+		plasmoid.configuration.clockMouseWheel == 'RunCommands'
 		clockMousewheelGroupRunCommands.checked = true
-		plasmoid.configuration.clock_mousewheel_up = up
-		plasmoid.configuration.clock_mousewheel_down = down
+		plasmoid.configuration.clockMouseWheelUp = up
+		plasmoid.configuration.clockMouseWheelDown = down
 	}
 
 
@@ -51,23 +51,25 @@ ConfigPage {
 
 	ConfigSection {
 		ConfigCheckBox {
-			configKey: 'widget_show_meteogram'
+			configKey: 'widgetShowMeteogram'
 			text: i18n("Meteogram")
 		}
 	}
 
 	ConfigSection {
 		ConfigCheckBox {
-			configKey: 'widget_show_timer'
+			id: widgetShowTimer
+			configKey: 'widgetShowTimer'
 			text: i18n("Timer")
 		}
 		RowLayout {
 			Text { width: indentWidth } // indent
 			ConfigSound {
 				label: i18n("SFX:")
-				sfxEnabledKey: 'timer_sfx_enabled'
-				sfxPathKey: 'timer_sfx_filepath'
+				sfxEnabledKey: 'timerSfxEnabled'
+				sfxPathKey: 'timerSfxFilepath'
 				sfxPathDefaultValue: '/usr/share/sounds/freedesktop/stereo/complete.oga'
+				enabled: widgetShowTimer.checked
 			}
 		}
 	}
@@ -100,7 +102,7 @@ ConfigPage {
 		ConfigSection {
 			ConfigFontFamily {
 				id: clockFontFamily
-				configKey: 'clock_fontfamily'
+				configKey: 'clockFontFamily'
 				before: i18n("Font:")
 			}
 
@@ -110,7 +112,7 @@ ConfigPage {
 				}
 				
 				ConfigSpinBox {
-					configKey: 'clock_maxheight'
+					configKey: 'clockMaxHeight'
 					suffix: i18n("px")
 					minimumValue: 0
 				}
@@ -131,7 +133,7 @@ ConfigPage {
 				}
 				ConfigString {
 					id: clockTimeFormat
-					configKey: 'clock_timeformat'
+					configKey: 'clockTimeFormat1'
 					placeholderText: localeTimeFormat
 				}
 				Label {
@@ -172,17 +174,15 @@ ConfigPage {
 					text: i18n("Preset:")
 					color: "transparent"
 				}
-				Button {
+				ColorTextButton {
 					property string dateFormat: '\'<font color="#3daee9">\'MMM d\'</font>\' ' + Qt.locale().timeFormat(Locale.ShortFormat)
-					text: Qt.formatDateTime(new Date(), dateFormat.replace())
+					label: Qt.formatDateTime(new Date(), dateFormat.replace())
 					onClicked: clockTimeFormat.value = dateFormat
-					style: ButtonStyle {}
 				}
-				Button {
+				ColorTextButton {
 					property string dateFormat: '\'<font color="#888">\'ddd<>d\'</font>\' h:mm\'<font color="#888">\'AP\'</font>\''
-					text: Qt.formatDateTime(new Date(), dateFormat.replace())
+					label: Qt.formatDateTime(new Date(), dateFormat.replace())
 					onClicked: clockTimeFormat.value = dateFormat
-					style: ButtonStyle {}
 				}
 			}
 
@@ -190,7 +190,7 @@ ConfigPage {
 				Layout.fillWidth: true
 				Text { width: indentWidth } // indent
 				ConfigCheckBox {
-					configKey: 'clock_line_1_bold'
+					configKey: 'clockLineBold1'
 					text: i18n("Bold")
 				}
 			}
@@ -200,12 +200,12 @@ ConfigPage {
 			RowLayout {
 				Layout.fillWidth: true
 				ConfigCheckBox {
-					configKey: 'clock_line_2'
+					configKey: 'clockShowLine2'
 					text: i18n("Line 2:")
 				}
 				ConfigString {
 					id: clockTimeFormat2
-					configKey: 'clock_timeformat_2'
+					configKey: 'clockTimeFormat2'
 					placeholderText: localeDateFormat
 				}
 				Label {
@@ -253,7 +253,7 @@ ConfigPage {
 				Layout.fillWidth: true
 				Text { width: indentWidth } // indent
 				ConfigCheckBox {
-					configKey: 'clock_line_2_bold'
+					configKey: 'clockLineBold2'
 					text: i18n("Bold")
 				}
 			}
@@ -262,7 +262,7 @@ ConfigPage {
 				Layout.fillWidth: true
 				Text { width: indentWidth } // indent
 				ConfigSlider {
-					configKey: 'clock_line_2_height_ratio'
+					configKey: 'clockLine2HeightRatio'
 					before: i18n("Height:")
 					after: Math.floor(value * 100) + '%'
 					minimumValue: 0.3
@@ -285,8 +285,8 @@ ConfigPage {
 				id: clockMousewheelGroupRunCommands
 				text: i18n("Run Commands")
 				exclusiveGroup: clockMousewheelGroup
-				checked: plasmoid.configuration.clock_mousewheel == 'run_commands'
-				onClicked: plasmoid.configuration.clock_mousewheel = 'run_commands'
+				checked: plasmoid.configuration.clockMouseWheel == 'RunCommands'
+				onClicked: plasmoid.configuration.clockMouseWheel = 'RunCommands'
 			}
 			RowLayout {
 				Layout.fillWidth: true
@@ -296,7 +296,7 @@ ConfigPage {
 				}
 				ConfigString {
 					id: clockMouseWheelUp
-					configKey: 'clock_mousewheel_up'
+					configKey: 'clockMouseWheelUp'
 				}
 			}
 			RowLayout {
@@ -307,7 +307,7 @@ ConfigPage {
 				}
 				ConfigString {
 					id: clockMouseWheelDown
-					configKey: 'clock_mousewheel_down'
+					configKey: 'clockMouseWheelDown'
 				}
 			}
 

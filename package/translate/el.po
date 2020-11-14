@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-10-12 08:58-0400\n"
+"POT-Creation-Date: 2020-11-12 11:42-0500\n"
 "PO-Revision-Date: 2018-06-07 01:37+0300\n"
 "Last-Translator: Chris P <skylin@protonmail.com>\n"
 "Language-Team: Chris P <skylin@protonmail.com>\n"
@@ -117,6 +117,28 @@ msgstr "(Χωρίς Τίτλο)"
 msgid "[No Calendars]"
 msgstr "[Χωρίς Ημερολόγια]"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "HTTP Error %1: %2"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Could not connect"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Will try again soon."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/PopupView.qml
+msgid ""
+"Widget has been updated. Please logout and login to Google Calendar again."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Too many web requests. Will try again soon."
+msgstr ""
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr "Εμφάνιση Ατζέντας"
@@ -173,7 +195,6 @@ msgid "Click Date:"
 msgstr "Κλικ στην Ημέρα:"
 
 #: ../contents/ui/config/ConfigAgenda.qml
-#: ../contents/ui/config/ConfigCalendar.qml
 msgid "Open New Event In Browser"
 msgstr "Άνοιγμα Νέου Συμβάντος στον Φυλλομετρητή"
 
@@ -260,13 +281,30 @@ msgid "Scroll to event in Agenda"
 msgstr "Μετάβαση σε συμβάν στην Ατζέντα"
 
 #: ../contents/ui/config/ConfigCalendar.qml
-msgid "DoubleClick Date:"
+msgid "Double-click on Date:"
 msgstr "Διπλό κλικ στην Ημερομηνία:"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "New Google Calendar Event (Web Browser)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Do Nothing"
+msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Στιλ"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Current Month Title:"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/MonthView.qml
+msgctxt "calendar title format for current month"
+msgid "MMMM d, yyyy"
+msgstr "d MMMM, yyyy"
 
 #: ../contents/ui/config/ConfigCalendar.qml
 msgid "Show Borders"
@@ -357,9 +395,7 @@ msgstr "Ανανέωση συμβάντων κάθε: "
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "Polling interval in minutes"
 msgid "min"
-msgid_plural "min"
-msgstr[0] "λεπτό"
-msgstr[1] "λεπτά"
+msgstr "λεπτό"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notifications"
@@ -385,7 +421,7 @@ msgstr ""
 msgid "Meteogram"
 msgstr "Μετεωρογράφημα"
 
-#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerModel.qml
 msgid "Timer"
 msgstr "Χρονομετρητής"
 
@@ -517,7 +553,7 @@ msgstr "Για συγχρονισμό με το Ημερολόγιο Google"
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and "
-"give permission to acess your calendar, it will give you a code to paste "
+"give permission to access your calendar, it will give you a code to paste "
 "below."
 msgstr ""
 
@@ -625,7 +661,7 @@ msgid "Show next "
 msgstr "Εμφάνιση των επόμενων "
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
+msgid " hour"
 msgid_plural " hours"
 msgstr[0] " ωρών"
 msgstr[1] " ωρών"
@@ -795,11 +831,7 @@ msgid "%1 - %2"
 msgstr ""
 
 #: ../contents/ui/Logic.qml
-msgid "Could not connect (HTTP Error 0), will try again soon."
-msgstr ""
-
-#: ../contents/ui/Logic.qml
-msgid "Weather API limit reached, will try again soon."
+msgid "Weather API limit reached"
 msgstr ""
 
 #: ../contents/ui/main.qml
@@ -814,11 +846,6 @@ msgstr "Ρύθμιση Τοπικότητας..."
 #, c-format
 msgid "%1mm"
 msgstr "%1mm"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "d MMMM, yyyy"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for other months of current year"
@@ -850,26 +877,42 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr ""
 
+#: ../contents/ui/PopupView.qml
+msgid "Logged out of Google. Please login again."
+msgstr ""
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr ""
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 msgctxt "short form for %1 hours"
 msgid "%1h"
 msgstr "%1ώ"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 minutes"
 msgid "%1m"
 msgstr "%1λ"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 seconds"
 msgid "%1s"
 msgstr "%1δ"
+
+#: ../contents/ui/TimerModel.qml
+msgid "Timer finished"
+msgstr "Ο χρονομετρητής τελείωσε"
+
+#: ../contents/ui/TimerModel.qml
+msgid "%1 has passed"
+msgstr "%1 έχει παρέλθει"
+
+#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
+msgid "Repeat"
+msgstr "Επανάληψη"
 
 #: ../contents/ui/TimerView.qml
 msgid "Pause Timer"
@@ -884,20 +927,8 @@ msgid "Scroll to add to duration"
 msgstr "Κύλιση ροδέλας για προσθήκη/αφαίρεση στη διάρκεια"
 
 #: ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Επανάληψη"
-
-#: ../contents/ui/TimerView.qml
 msgid "Sound"
 msgstr "Ήχος"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer finished"
-msgstr "Ο χρονομετρητής τελείωσε"
-
-#: ../contents/ui/TimerView.qml
-msgid "%1 has passed"
-msgstr "%1 έχει παρέλθει"
 
 #: ../contents/ui/TimerView.qml
 msgid "Set Timer"

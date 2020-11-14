@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eventcalendar\n"
 "Report-Msgid-Bugs-To: https://github.com/Zren/plasma-applet-eventcalendar\n"
-"POT-Creation-Date: 2020-10-12 08:58-0400\n"
+"POT-Creation-Date: 2020-11-12 11:42-0500\n"
 "PO-Revision-Date: 2019-05-04 00:48-0400\n"
 "Last-Translator: Chris Darnell <chris@cedeel.com>\n"
 "Language-Team: Chris Darnell <chris@cedeel.com>\n"
@@ -117,6 +117,28 @@ msgstr "(Ikke navngivet)"
 msgid "[No Calendars]"
 msgstr "[Ingen kalendere]"
 
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "HTTP Error %1: %2"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Could not connect"
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml ../contents/ui/Logic.qml
+msgid "Will try again soon."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+#: ../contents/ui/config/ConfigGoogleCalendar.qml ../contents/ui/PopupView.qml
+msgid ""
+"Widget has been updated. Please logout and login to Google Calendar again."
+msgstr ""
+
+#: ../contents/ui/calendars/GoogleCalendarManager.qml
+msgid "Too many web requests. Will try again soon."
+msgstr ""
+
 #: ../contents/ui/config/ConfigAgenda.qml
 msgid "Show agenda"
 msgstr "Vis agenda"
@@ -173,7 +195,6 @@ msgid "Click Date:"
 msgstr "Klik på datoen:"
 
 #: ../contents/ui/config/ConfigAgenda.qml
-#: ../contents/ui/config/ConfigCalendar.qml
 msgid "Open New Event In Browser"
 msgstr "Åbn ny begivenhed i din webbrowser"
 
@@ -261,13 +282,30 @@ msgid "Scroll to event in Agenda"
 msgstr "Rul til begivenhed i agenda"
 
 #: ../contents/ui/config/ConfigCalendar.qml
-msgid "DoubleClick Date:"
+msgid "Double-click on Date:"
 msgstr "Dobbeltklik på dato:"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "New Google Calendar Event (Web Browser)"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Do Nothing"
+msgstr ""
 
 #: ../contents/ui/config/ConfigCalendar.qml
 #: ../contents/ui/config/ConfigWeather.qml
 msgid "Style"
 msgstr "Stil"
+
+#: ../contents/ui/config/ConfigCalendar.qml
+msgid "Current Month Title:"
+msgstr ""
+
+#: ../contents/ui/config/ConfigCalendar.qml ../contents/ui/MonthView.qml
+msgctxt "calendar title format for current month"
+msgid "MMMM d, yyyy"
+msgstr "d. MMMM yyyy"
 
 #: ../contents/ui/config/ConfigCalendar.qml
 msgid "Show Borders"
@@ -358,9 +396,7 @@ msgstr "Opfrisk begivenheder hver: "
 #: ../contents/ui/config/ConfigWeather.qml
 msgctxt "Polling interval in minutes"
 msgid "min"
-msgid_plural "min"
-msgstr[0] "min"
-msgstr[1] "min"
+msgstr "min"
 
 #: ../contents/ui/config/ConfigEvents.qml
 msgid "Notifications"
@@ -386,7 +422,7 @@ msgstr ""
 msgid "Meteogram"
 msgstr "Vejrgrafik"
 
-#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerView.qml
+#: ../contents/ui/config/ConfigGeneral.qml ../contents/ui/TimerModel.qml
 msgid "Timer"
 msgstr "Timer"
 
@@ -516,7 +552,7 @@ msgstr "Synkroniser med Google Kalender"
 #: ../contents/ui/config/ConfigGoogleCalendar.qml
 msgid ""
 "Visit <a href=\"%1\">%2</a> (opens in your web browser). After you login and "
-"give permission to acess your calendar, it will give you a code to paste "
+"give permission to access your calendar, it will give you a code to paste "
 "below."
 msgstr ""
 "Besøg <a href=\"%1\">%2</a> (åbner i din  webbrowser). Når du er logget ind "
@@ -625,7 +661,7 @@ msgid "Show next "
 msgstr "Næste"
 
 #: ../contents/ui/config/ConfigWeather.qml
-msgid " hours"
+msgid " hour"
 msgid_plural " hours"
 msgstr[0] " timer"
 msgstr[1] " timer"
@@ -795,11 +831,7 @@ msgid "%1 - %2"
 msgstr "%1 - %2"
 
 #: ../contents/ui/Logic.qml
-msgid "Could not connect (HTTP Error 0), will try again soon."
-msgstr ""
-
-#: ../contents/ui/Logic.qml
-msgid "Weather API limit reached, will try again soon."
+msgid "Weather API limit reached"
 msgstr ""
 
 #: ../contents/ui/main.qml
@@ -814,11 +846,6 @@ msgstr "Regionale indstillinger..."
 #, c-format
 msgid "%1mm"
 msgstr "%1mm"
-
-#: ../contents/ui/MonthView.qml
-msgctxt "calendar title format for current month"
-msgid "MMMM d, yyyy"
-msgstr "d. MMMM yyyy"
 
 #: ../contents/ui/MonthView.qml
 msgctxt "calendar title format for other months of current year"
@@ -848,26 +875,42 @@ msgstr ""
 msgid "Error fetching weather."
 msgstr ""
 
+#: ../contents/ui/PopupView.qml
+msgid "Logged out of Google. Please login again."
+msgstr ""
+
 #: ../contents/ui/TimerInputView.qml
 msgid "&Start"
 msgstr "&Start"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 msgctxt "short form for %1 hours"
 msgid "%1h"
 msgstr "%1t"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 minutes"
 msgid "%1m"
 msgstr "%1m"
 
-#: ../contents/ui/TimerView.qml
+#: ../contents/ui/TimerModel.qml
 #, c-format
 msgctxt "short form for %1 seconds"
 msgid "%1s"
 msgstr "%1s"
+
+#: ../contents/ui/TimerModel.qml
+msgid "Timer finished"
+msgstr "Timer udløbet"
+
+#: ../contents/ui/TimerModel.qml
+msgid "%1 has passed"
+msgstr "%1 er udløbet"
+
+#: ../contents/ui/TimerModel.qml ../contents/ui/TimerView.qml
+msgid "Repeat"
+msgstr "Gentag"
 
 #: ../contents/ui/TimerView.qml
 msgid "Pause Timer"
@@ -882,20 +925,8 @@ msgid "Scroll to add to duration"
 msgstr "Rul for at forøge varigheden"
 
 #: ../contents/ui/TimerView.qml
-msgid "Repeat"
-msgstr "Gentag"
-
-#: ../contents/ui/TimerView.qml
 msgid "Sound"
 msgstr "Lyd"
-
-#: ../contents/ui/TimerView.qml
-msgid "Timer finished"
-msgstr "Timer udløbet"
-
-#: ../contents/ui/TimerView.qml
-msgid "%1 has passed"
-msgstr "%1 er udløbet"
 
 #: ../contents/ui/TimerView.qml
 msgid "Set Timer"

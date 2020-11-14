@@ -13,7 +13,7 @@ CalendarManager {
 	calendarManagerId: "GoogleCalendar"
 
 	property var session
-	readonly property var calendarIdList: plasmoid.configuration.calendar_id_list ? plasmoid.configuration.calendar_id_list.split(',') : []
+	readonly property var calendarIdList: plasmoid.configuration.calendarIdList ? plasmoid.configuration.calendarIdList.split(',') : []
 
 	onFetchAllCalendars: {
 		fetchGoogleAccountData()
@@ -29,11 +29,38 @@ CalendarManager {
 	// Events
 
 	//--- Errors
+	function showNetworkError(httpCode, msg, suggestion) {
+		var errorMessage = i18n("HTTP Error %1: %2", httpCode, msg)
+		if (suggestion) {
+			errorMessage += '\n' + suggestion
+		}
+		googleCalendarManager.error(errorMessage)
+	}
 	function handleError(err, data, xhr) {
+		var httpCode = xhr.status
+		if (httpCode === 0) {
+			var msg = i18n("Could not connect")
+			var suggestion = i18n("Will try again soon.")
+			showNetworkError(httpCode, msg, suggestion)
+			return
+		}
+
 		// https://developers.google.com/calendar/v3/errors
 		if (err.error && err.error.errors && err.error.errors.length >= 1) {
+			httpCode = err.error.code
 			var err0 = err.error.errors[0]
-			
+
+			if (httpCode === 401 && err0.reason == 'authError') {
+				var suggestion = i18n("Widget has been updated. Please logout and login to Google Calendar again.")
+				showNetworkError(httpCode, err0.message, suggestion)
+			} else if (httpCode === 403 && err0.domain == 'usageLimits') {
+				var suggestion = i18n("Too many web requests. Will try again soon.")
+				showNetworkError(httpCode, err0.message, suggestion)
+			} else {
+				var suggestion = i18n("Will try again soon.")
+				showNetworkError(httpCode, err0.message, suggestion)
+			}
+			return
 		}
 	}
 
@@ -97,7 +124,7 @@ CalendarManager {
 			calendarId: calendarId,
 			start: googleCalendarManager.dateMin.toISOString(),
 			end: googleCalendarManager.dateMax.toISOString(),
-			access_token: session.accessToken,
+			accessToken: session.accessToken,
 		}, function(err, data, xhr) {
 			if (err) {
 				logger.logJSON('onErrorFetchingEvents: ', err)
@@ -119,6 +146,7 @@ CalendarManager {
 	function fetchGCalEvents(args, callback) {
 		logger.debug('fetchGCalEvents', args.calendarId)
 
+		// return GoogleCalendarTests.testCouldNotConnect(callback)
 		// return GoogleCalendarTests.testInvalidCredentials(callback)
 		// return GoogleCalendarTests.testDailyLimitExceeded(callback)
 		// return GoogleCalendarTests.testBackendError(callback)
@@ -167,7 +195,7 @@ CalendarManager {
 		Requests.getJSON({
 			url: url,
 			headers: {
-				"Authorization": "Bearer " + args.access_token,
+				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
 			logger.debug('fetchGCalEventsPage.response', args.calendarId, err, data, xhr.status)
@@ -192,7 +220,7 @@ CalendarManager {
 	function fetchGoogleCalendarEvent_run(calendarId, eventId, callback) {
 		logger.debugJSON('fetchGoogleCalendarEvent_run', calendarId, eventId)
 		fetchGCalEvent({
-			access_token: session.accessToken,
+			accessToken: session.accessToken,
 			calendarId: calendarId,
 			eventId: eventId,
 		}, callback)
@@ -209,7 +237,7 @@ CalendarManager {
 		Requests.getJSON({
 			url: url,
 			headers: {
-				"Authorization": "Bearer " + args.access_token,
+				"Authorization": "Bearer " + args.accessToken,
 			}
 		}, function(err, data, xhr) {
 			logger.debug('fetchGCalEvent.response', args.calendarId, args.eventId, err, data, xhr.status)
@@ -291,7 +319,7 @@ CalendarManager {
 	function createEvent_run(calendarId, eventText, callback) {
 		logger.debugJSON(calendarManagerId, 'createEvent_run', calendarId, eventText)
 		createGCalEvent({
-			access_token: session.accessToken,
+			accessToken: session.accessToken,
 			calendarId: calendarId,
 			text: eventText,
 		}, callback)
@@ -319,7 +347,7 @@ CalendarManager {
 		Requests.postJSON({
 			url: url,
 			headers: {
-				"Authorization": "Bearer " + args.access_token,
+				"Authorization": "Bearer " + args.accessToken,
 			},
 			data: "",
 		}, function(err, data, xhr) {
@@ -540,8 +568,8 @@ CalendarManager {
 
 	//--- CalendarManager
 	function getCalendarList() {
-		if (session.accessToken && plasmoid.configuration.calendar_list) {
-			var calendarList = JSON.parse(Qt.atob(plasmoid.configuration.calendar_list))
+		if (session.accessToken && plasmoid.configuration.calendarList) {
+			var calendarList = JSON.parse(Qt.atob(plasmoid.configuration.calendarList))
 			for (var i = 0; i < calendarList.length; i++) {
 				var calendar = calendarList[i]
 				calendar.isTasklist = false
