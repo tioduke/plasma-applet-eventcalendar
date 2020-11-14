@@ -170,7 +170,7 @@
 			<default>true</default>
 		</entry>
 	</group>
-
+	
 	<group name="Calendar">
 		<entry name="monthCurrentCustomTitleFormat" type="string">
 			<default></default>
@@ -322,10 +322,10 @@
 
 
 	<group name="Google Calendar">
-		<entry name="client_id" type="string">
+		<entry name="latestClientId" type="string">
 			<default>502195733412-vd5iuslr17149kisr0mh5rqq012pleeo.apps.googleusercontent.com</default>
 		</entry>
-		<entry name="client_secret" type="string">
+		<entry name="latestClientSecret" type="string">
 			<default>yJiuhQCmq8riPQbcIQdzjUh3</default>
 		</entry>
 		<entry name="sessionClientId" type="string">
