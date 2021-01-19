@@ -23,7 +23,7 @@ Item {
 	//--- Update
 	Timer {
 		id: pollTimer
-		
+
 		repeat: true
 		triggeredOnStart: true
 		interval: plasmoid.configuration.eventsPollInterval * 60000
@@ -79,7 +79,7 @@ Item {
 			} else {
 				shouldUpdate = true
 			}
-			
+
 			if (force || shouldUpdate) {
 				updateWeatherTimer.restart()
 			}
@@ -235,19 +235,6 @@ Item {
 		onEventDeleted: {
 			logger.logJSON('onEventDeleted', calendarId, eventId, data)
 			if (popup) popup.deferredUpdateUI()
-		}
-	}
-
-	//---
-	Connections {
-		target: networkMonitor
-		onIsConnectedChanged: {
-			if (networkMonitor.isConnected) {
-				if (logic.currentErrorType == ErrorType.NetworkError) {
-					logic.clearError()
-				}
-				logic.update()
-			}
 		}
 	}
 }
