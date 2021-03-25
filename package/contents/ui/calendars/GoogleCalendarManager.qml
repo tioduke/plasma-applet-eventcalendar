@@ -4,7 +4,7 @@ import "../ErrorType.js" as ErrorType
 import "../Shared.js" as Shared
 import "../lib/Async.js" as Async
 import "../lib/Requests.js" as Requests
-import "../../code/ColorIdMap.js" as ColorIdMap
+import "../code/ColorIdMap.js" as ColorIdMap
 
 // import "./GoogleCalendarTests.js" as GoogleCalendarTests
 
@@ -585,7 +585,7 @@ CalendarManager {
 		var calendarList = getCalendarList()
 		for (var i = 0; i < calendarList.length; i++) {
 			var calendar = calendarList[i]
-			if (calendarId == calendar.id || (calendarId == 'primary' && calendar.primary)) {
+			if (calendarId === calendar.id || (calendarId === 'primary' && calendar.primary)) {
 				return calendar
 			}
 		}

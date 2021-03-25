@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.0 as QQC2
 import QtQuick.Layouts 1.1
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents3
@@ -41,8 +42,59 @@ LinkRect {
 		relativeDate: agendaItemDate,
 		clock24h: appletConfig.clock24h,
 	})
-	readonly property bool isAllDay: eventTimestamp == i18n("All Day") // TODO: Remove string comparison.
+	readonly property bool isAllDay: eventTimestamp === i18n("All Day") // TODO: Remove string comparison.
 	readonly property bool isCondensed: plasmoid.configuration.agendaCondensedAllDayEvent && isAllDay
+
+
+	//---
+
+
+	QQC2.ToolTip {
+		id: eventToolTip
+		x: 0
+		y: agendaEventItem.height + PlasmaCore.Units.smallSpacing
+		width: agendaEventItem.width
+		delay: 1000
+
+		contentItem: Loader {
+			active: eventToolTip.visible
+			sourceComponent: GridLayout {
+				columns: 2
+
+				EventPropertyIcon {
+					source: "view-calendar-day"
+				}
+				Text {
+					text: {
+						var event = events.get(eventItemIndex)
+						var calendar = eventModel.getCalendar(event.calendarId)
+						return calendar.summary
+					}
+					color: eventToolTip.palette.text
+					font: eventToolTip.font
+					wrapMode: Text.Wrap
+					Layout.fillWidth: true
+				}
+
+				EventPropertyIcon {
+					visible: toolTipDescriptionLabel.showProperty
+					source: "x-shape-text"
+					Layout.fillHeight: false
+					Layout.alignment: Qt.AlignTop
+				}
+				Text {
+					id: toolTipDescriptionLabel
+					readonly property bool showProperty: eventDescription.showInTooltip && text
+					visible: showProperty
+					text: Shared.renderText(model.description)
+					color: eventToolTip.palette.text
+					font: eventToolTip.font
+					wrapMode: Text.Wrap
+					Layout.fillWidth: true
+				}
+			}
+		}
+	}
 
 
 	//---
@@ -120,6 +172,10 @@ LinkRect {
 				Layout.fillWidth: true
 				wrapMode: Text.Wrap // See warning at eventSummary.wrapMode
 
+				readonly property bool showInTooltip: !showProperty || truncated
+				maximumLineCount: plasmoid.configuration.agendaMaxDescriptionLines
+				elide: Text.ElideRight
+
 				linkColor: PlasmaCore.ColorScope.highlightColor
 				onLinkActivated: Qt.openUrlExternally(link)
 				MouseArea {
@@ -146,22 +202,27 @@ LinkRect {
 				implicitHeight: 4 * units.devicePixelRatio
 			}
 
-			PlasmaComponents3.ToolButton {
-				id: eventHangoutLink
+			Loader {
+				id: eventHangoutLinkLoader
 				readonly property bool showProperty: plasmoid.configuration.agendaShowEventHangoutLink && !!model.hangoutLink
 				visible: showProperty && !editEventForm.visible
-				text: {
-					if (!!model.conferenceData
-						&& !!model.conferenceData.conferenceSolution
-						&& !!model.conferenceData.conferenceSolution.name
-					) {
-						return model.conferenceData.conferenceSolution.name
-					} else {
-						return i18n("Hangout")
+				active: visible
+
+				sourceComponent: PlasmaComponents3.ToolButton {
+					id: eventHangoutLink
+					text: {
+						if (!!model.conferenceData
+							&& !!model.conferenceData.conferenceSolution
+							&& !!model.conferenceData.conferenceSolution.name
+						) {
+							return model.conferenceData.conferenceSolution.name
+						} else {
+							return i18n("Hangout")
+						}
 					}
+					icon.source: plasmoid.file("", "icons/hangouts.svg")
+					onClicked: Qt.openUrlExternally(model.hangoutLink)
 				}
-				icon.source: plasmoid.file("", "icons/hangouts.svg")
-				onClicked: Qt.openUrlExternally(model.hangoutLink)
 			}
 
 		} // eventColumn

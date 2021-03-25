@@ -262,6 +262,9 @@
 		<entry name="agendaEventSpacing" type="uint">
 			<default>10</default>
 		</entry>
+		<entry name="agendaMaxDescriptionLines" type="uint">
+			<default>5</default>
+		</entry>
 		<entry name="agendaShowEventDescription" type="bool">
 			<default>true</default>
 		</entry>
@@ -308,6 +311,18 @@
 		</entry>
 		<entry name="icalCalendarList" type="string" stringType="base64json">
 			<default></default>
+		</entry>
+		<entry name="eventReminderNotificationEnabled" type="bool">
+			<default>true</default>
+		</entry>
+		<entry name="eventReminderSfxEnabled" type="bool">
+			<default>false</default>
+		</entry>
+		<entry name="eventReminderSfxPath" type="string">
+			<default>/usr/share/sounds/Oxygen-Im-Nudge.ogg</default>
+		</entry>
+		<entry name="eventReminderMinutesBefore" type="int">
+			<default>15</default>
 		</entry>
 		<entry name="eventStartingNotificationEnabled" type="bool">
 			<default>true</default>

@@ -1,6 +1,6 @@
 .pragma library
 
-.import "../ui/lib/Requests.js" as Requests
+.import "../lib/Requests.js" as Requests
 
 function weatherIsSetup(config) {
 	return !!config.openWeatherMapCityId
@@ -98,12 +98,12 @@ function parseHourlyData(weatherData) {
 }
 
 function handleError(funcName, callback, err, data, xhr) {
-	console.error(funcName + '.err', err, xhr && xhr.status, data)
+	console.error('[eventcalendar]', funcName + '.err', err, xhr && xhr.status, data)
 	return callback(err, data, xhr)
 }
 
 function updateDailyWeather(config, callback) {
-	console.debug('OpenWeatherMap.fetchDailyWeatherForecast')
+	// console.debug('OpenWeatherMap.fetchDailyWeatherForecast')
 	fetchDailyWeatherForecast({
 		appId: config.openWeatherMapAppId,
 		cityId: config.openWeatherMapCityId,
@@ -120,7 +120,7 @@ function updateDailyWeather(config, callback) {
 }
 
 function updateHourlyWeather(config, callback) {
-	console.debug('OpenWeatherMap.fetchHourlyWeatherForecast')
+	// console.debug('OpenWeatherMap.fetchHourlyWeatherForecast')
 	fetchHourlyWeatherForecast({
 		appId: config.openWeatherMapAppId,
 		cityId: config.openWeatherMapCityId,

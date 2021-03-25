@@ -5,7 +5,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 import "Shared.js" as Shared
-import "../code/WeatherApi.js" as WeatherApi
+import "./weather/WeatherApi.js" as WeatherApi
 
 GridLayout {
 	id: agendaListItem
@@ -94,7 +94,11 @@ GridLayout {
 			PlasmaComponents3.Label {
 				id: itemWeatherTemps
 				visible: showWeather
-				text: tempHigh + '° | ' + tempLow + '°'
+				text: {
+					var high = isNaN(model.tempHigh) ? '?' : model.tempHigh + '°'
+					var low = isNaN(model.tempLow) ? '?' : model.tempLow + '°'
+					return high + ' | ' + low
+				}
 				color: agendaItemIsToday ? inProgressColor : PlasmaCore.ColorScope.textColor
 				opacity: agendaItemIsToday ? 1 : 0.75
 				font.pointSize: -1
@@ -210,13 +214,13 @@ GridLayout {
 	function indexOfEvent(eventId) {
 		for (var i = 0; i < eventsRepeater.model.length; i++) {
 			var event = eventsRepeater.model[i]
-			if (event.id == eventId) {
+			if (event.id === eventId) {
 				return i
 			}
 		}
 		for (var i = 0; i < tasksRepeater.model.length; i++) {
 			var task = tasksRepeater.model[i]
-			if (task.id == eventId) {
+			if (task.id === eventId) {
 				return eventsRepeater.model.length + i
 			}
 		}
